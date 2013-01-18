@@ -17,7 +17,7 @@ public class HelloService {
 
     @GET
     @Path("/d{pips}")
-    public String getRandomDice(@PathParam("pips") int pips) {
+    public String sayHello(@PathParam("pips") int pips) {
         int randomDice = randomService.getRandomDice(pips);
         return "hallo " + randomDice;
     }
