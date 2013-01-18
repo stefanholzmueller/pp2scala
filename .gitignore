@@ -1,6 +1,7 @@
+target/
+test-output/
+classes/
 *.class
-
-# Package Files #
 *.jar
 *.war
 *.ear
