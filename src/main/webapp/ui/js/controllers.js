@@ -2,7 +2,6 @@
 
 /* Controllers */
 
-
 function FormController($scope) {
     var user = $scope.user = {
       name: 'John Smith',
@@ -24,3 +23,15 @@ function FormController($scope) {
       }
     };
   }
+
+function RollController($scope, $http) {
+	$scope.roll = function(pips) {
+	    $http.get('../rest/random/d' + pips).
+	    success(function(data) {
+		$scope.result = data;
+	    }).
+	    error(function(data, status) {
+		alert("status=" + status);
+	    });
+	}
+}

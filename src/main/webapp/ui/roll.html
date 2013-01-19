@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="de" ng-app>
+<head>
+	<meta charset="utf-8">
+	<title>Würfel</title>
+	<link rel="stylesheet" href="css/pp.css"/>
+</head>
+<body>
+	<div ng-controller="RollController">
+		<input type="submit" value="W6" ng-click="roll(6)">
+		result={{result}}
+	</div>
+
+	<script src="lib/angular/angular.js"></script>
+	<script src="js/controllers.js"></script>
+</body>
+</html>
