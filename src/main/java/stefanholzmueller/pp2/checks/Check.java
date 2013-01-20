@@ -1,5 +1,8 @@
 package stefanholzmueller.pp2.checks;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Check {
 
     private int attribute1;
@@ -11,6 +14,10 @@ public class Check {
     private boolean festeMatrix;
     private boolean tollpatsch;
     private boolean spruchhemmung;
+
+    public Check() {
+        // for JAXB
+    }
 
     public Check(int attribute1, int attribute2, int attribute3, int value) {
         this.attribute1 = attribute1;
