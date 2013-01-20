@@ -49,9 +49,9 @@ public class CheckDeciderImpl implements CheckDecider {
         if (leftoverPoints >= 0) {
             int leftoverValue = getMinimumNumber(leftoverPoints, check.getValue());
             int quality = Math.max(leftoverValue, getMinimumEffect(check));
-            int possibleDifficulty = getPossibleDifficultyViaAttributes(dice, attributeTriple.first, attributeTriple.second, attributeTriple.third)
+            int gap = getGapViaAttributes(dice, attributeTriple.first, attributeTriple.second, attributeTriple.third)
                     + leftoverPoints;
-            return new CheckResult(CheckOutcome.SUCCESSFUL, quality, possibleDifficulty);
+            return new CheckResult(CheckOutcome.SUCCESSFUL, quality, gap);
         } else {
             return new CheckResult(CheckOutcome.UNSUCCESSFUL, null, leftoverPoints);
         }
@@ -90,15 +90,15 @@ public class CheckDeciderImpl implements CheckDecider {
     private CheckResult buildUnsuccessfulResultWithoutPoints(IntTriple dice, int reducedAttr1, int reducedAttr2,
             int reducedAttr3) {
 
-        int negativePossibleDifficulty = 0;
-        negativePossibleDifficulty -= getNegativePossibleDifficulty(dice.first, reducedAttr1);
-        negativePossibleDifficulty -= getNegativePossibleDifficulty(dice.second, reducedAttr2);
-        negativePossibleDifficulty -= getNegativePossibleDifficulty(dice.third, reducedAttr3);
+        int negativeGap = 0;
+        negativeGap -= getNegativeGap(dice.first, reducedAttr1);
+        negativeGap -= getNegativeGap(dice.second, reducedAttr2);
+        negativeGap -= getNegativeGap(dice.third, reducedAttr3);
 
-        return new CheckResult(CheckOutcome.UNSUCCESSFUL, null, negativePossibleDifficulty);
+        return new CheckResult(CheckOutcome.UNSUCCESSFUL, null, negativeGap);
     }
 
-    private int getNegativePossibleDifficulty(int die, int attr) {
+    private int getNegativeGap(int die, int attr) {
         return die > attr ? die - attr : 0;
     }
 
@@ -106,17 +106,17 @@ public class CheckDeciderImpl implements CheckDecider {
             int reducedAttr2, int reducedAttr3) {
 
         int minimumQuality = getMinimumEffect(check);
-        int possibleDifficulty = getPossibleDifficultyViaAttributes(dice, reducedAttr1, reducedAttr2, reducedAttr3);
+        int gap = getGapViaAttributes(dice, reducedAttr1, reducedAttr2, reducedAttr3);
 
-        return new CheckResult(CheckOutcome.SUCCESSFUL, minimumQuality, possibleDifficulty);
+        return new CheckResult(CheckOutcome.SUCCESSFUL, minimumQuality, gap);
     }
 
-    private int getPossibleDifficultyViaAttributes(IntTriple dice, int attribute1, int attribute2, int attribute3) {
-        int possibleDifficulty1 = attribute1 - dice.first;
-        int possibleDifficulty2 = attribute2 - dice.second;
-        int possibleDifficulty3 = attribute3 - dice.third;
+    private int getGapViaAttributes(IntTriple dice, int attribute1, int attribute2, int attribute3) {
+        int gap1 = attribute1 - dice.first;
+        int gap2 = attribute2 - dice.second;
+        int gap3 = attribute3 - dice.third;
 
-        return getMinimumNumber(possibleDifficulty1, possibleDifficulty2, possibleDifficulty3);
+        return getMinimumNumber(gap1, gap2, gap3);
     }
 
     private int getMinimumNumber(int... numbers) {
