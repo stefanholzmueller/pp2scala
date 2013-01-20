@@ -1,4 +1,4 @@
-package stfnhlzmllr.service;
+package stefanholzmueller.pp2.service;
 
 import java.security.SecureRandom;
 

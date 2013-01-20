@@ -1,4 +1,4 @@
-package stfnhlzmllr.service;
+package stefanholzmueller.pp2.service;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;

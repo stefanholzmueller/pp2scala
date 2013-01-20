@@ -1,4 +1,4 @@
-package stfnhlzmllr.service;
+package stefanholzmueller.pp2.service;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -9,6 +9,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import stefanholzmueller.pp2.service.HelloService;
+import stefanholzmueller.pp2.service.RandomService;
 
 @Test
 public class HelloServiceTest {
