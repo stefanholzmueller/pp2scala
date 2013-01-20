@@ -18,7 +18,7 @@ public class CheckDeciderTest {
     @BeforeMethod
     public void setUp() throws Exception {
         trivialCheck = new Check(12, 12, 12, 4);
-        decider = new CheckDeciderImpl();
+        decider = new CheckDecider();
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)

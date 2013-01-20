@@ -13,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+
 public class CheckStatisticsCalculatorTest {
 
     private CheckStatisticsCalculator calculator;
@@ -25,7 +26,7 @@ public class CheckStatisticsCalculatorTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        calculator = new CheckStatisticsCalculatorImpl(checkDecider);
+        calculator = new CheckStatisticsCalculator(checkDecider);
         trivialCheck = new Check(12, 12, 12, 4);
     }
 
