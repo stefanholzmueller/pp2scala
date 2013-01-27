@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.ws.rs.Path;
 
-@Path("")
+@Path("asd")
 // workaround for hk2 injection... @Provider does not work
 public class CheckDecider {
 
