@@ -7,7 +7,7 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 import org.glassfish.jersey.filter.LoggingFilter;
-import org.glassfish.jersey.jettison.JettisonFeature;
+import org.glassfish.jersey.jackson.JacksonFeature;
 
 import stefanholzmueller.pp2.checks.CheckDecider;
 import stefanholzmueller.pp2.checks.CheckStatisticsCalculator;
@@ -29,7 +29,7 @@ public class App extends Application {
     @Override
     public Set<Object> getSingletons() {
         final Set<Object> instances = new HashSet<Object>();
-        instances.add(new JettisonFeature());
+        instances.add(new JacksonFeature());
         instances.add(new LoggingFilter());
         return instances;
     }
