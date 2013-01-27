@@ -3,8 +3,8 @@ package stefanholzmueller.pp2.checks;
 import javax.inject.Inject;
 import javax.ws.rs.Path;
 
-@Path("asf")
-//workaround for hk2 injection... @Provider does not work
+@Path("")
+//hack for hk2 injection
 public class CheckStatisticsCalculator {
 
     private static final int DIE_MAX_PIPS = 20;

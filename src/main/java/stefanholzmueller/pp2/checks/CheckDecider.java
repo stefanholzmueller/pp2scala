@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.ws.rs.Path;
 
-@Path("asd")
-// workaround for hk2 injection... @Provider does not work
+@Path("")
+//hack for hk2 injection
 public class CheckDecider {
 
     public CheckResult determineResult(Check check, IntTriple dice) {
