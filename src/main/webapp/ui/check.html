@@ -1,0 +1,29 @@
+<!doctype html>
+<html ng-app>
+  <head>
+    <script src="lib/angular/angular.js"></script>
+    <script src="js/controllers.js"></script>
+  </head>
+  <body>
+    <div ng-controller="CheckController">
+      <label>Eigenschaften:</label>
+      <input type="number" min="1" max="25" step="1" ng-model="check.attribute1">
+      <input type="number" min="1" max="25" step="1" ng-model="check.attribute2">
+      <input type="number" min="1" max="25" step="1" ng-model="check.attribute3">
+      <br />
+      <label>TaW/ZfW:</label>
+      <input type="number" min="-5" max="30" step="1" ng-model="check.value">
+      <label>Erschwernis:</label>
+      <input type="number" min="-20" max="50" step="1" ng-model="check.difficulty">
+      <br />
+      [ <a href="" ng-click="calculate()">calculate</a> ]
+      <div ng-repeat="result in results">
+        {{result | json}}
+        <br />
+      </div>
+      <hr/>
+      Debug:
+      <pre>check={{check | json}}</pre>
+    </div>
+  </body>
+</html>

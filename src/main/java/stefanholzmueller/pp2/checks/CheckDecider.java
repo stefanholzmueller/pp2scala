@@ -5,7 +5,7 @@ import java.util.List;
 import javax.ws.rs.Path;
 
 @Path("")
-// workaround for hk2 injection... @Provider does not work
+//hack for hk2 injection
 public class CheckDecider {
 
     public CheckResult determineResult(Check check, IntTriple dice) {
@@ -144,7 +144,7 @@ public class CheckDecider {
     }
 
     private int getMinimumEffect(Check check) {
-        return check.hasMinimumEffect() ? 1 : 0;
+        return check.hasMinimumQuality() ? 1 : 0;
     }
 
     private CheckOutcome determineSpecialCheckOutcome(Check check, IntTriple dice) {
