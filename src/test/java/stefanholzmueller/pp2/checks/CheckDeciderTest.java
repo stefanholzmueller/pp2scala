@@ -151,7 +151,7 @@ public class CheckDeciderTest {
     @Test
     public void shouldCountZeroValueAsMinimumEffect() throws Exception {
         Check check = new Check(12, 12, 12, 0);
-        check.setMinimumEffect(true);
+        check.setMinimumQuality(true);
         CheckResult result = decider.determineResult(check, ALL_THREES);
 
         assertThat(result.getQuality(), is(1));
@@ -167,7 +167,7 @@ public class CheckDeciderTest {
     @Test
     public void shouldReturnMinimumEffectAsQuality() throws Exception {
         Check check = new Check(12, 12, 12, 0);
-        check.setMinimumEffect(true);
+        check.setMinimumQuality(true);
         CheckResult result = decider.determineResult(check, new IntTriple(1, 1, 1));
 
         assertThat(result.getQuality(), is(1));
@@ -176,7 +176,7 @@ public class CheckDeciderTest {
     @Test
     public void shouldReturnMinimumEffectIfValueIsUsedUp() throws Exception {
         Check check = new Check(12, 12, 12, 3);
-        check.setMinimumEffect(true);
+        check.setMinimumQuality(true);
 
         CheckResult result = decider.determineResult(check, new IntTriple(13, 13, 13));
 

@@ -144,7 +144,7 @@ public class CheckDecider {
     }
 
     private int getMinimumEffect(Check check) {
-        return check.hasMinimumEffect() ? 1 : 0;
+        return check.hasMinimumQuality() ? 1 : 0;
     }
 
     private CheckOutcome determineSpecialCheckOutcome(Check check, IntTriple dice) {

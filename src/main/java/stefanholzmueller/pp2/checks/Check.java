@@ -13,7 +13,7 @@ public class Check {
     private int attribute3;
     private int value;
     private int difficulty;
-    private boolean minimumEffect;
+    private boolean minimumQuality;
     private boolean festeMatrix;
     private boolean tollpatsch;
     private boolean spruchhemmung;
@@ -74,12 +74,12 @@ public class Check {
         this.difficulty = difficulty;
     }
 
-    public boolean hasMinimumEffect() {
-        return minimumEffect;
+    public boolean hasMinimumQuality() {
+        return minimumQuality;
     }
 
-    public void setMinimumEffect(boolean minimumEffectUsed) {
-        this.minimumEffect = minimumEffectUsed;
+    public void setMinimumQuality(boolean minimumQualityUsed) {
+        this.minimumQuality = minimumQualityUsed;
     }
 
     public boolean hasFesteMatrix() {
