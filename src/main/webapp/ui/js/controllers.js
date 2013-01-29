@@ -2,6 +2,10 @@
 
 /* Controllers */
 
+function clone(obj) {
+    return JSON.parse(JSON.stringify(obj));
+}
+
 function CheckController($scope, $http) {
     var check = $scope.check = {
 	attribute1 : 12,
@@ -12,14 +16,19 @@ function CheckController($scope, $http) {
 	minimumQuality : true
     };
     
-    var results = $scope.results = [];
-
+    $scope.results = [];
+    
     $scope.calculate = function() {
 	$http.put('../rest/check/statistics', check).success(function(result) {
-	    results.push(result);
+	    result.check = clone(check);
+	    $scope.results.push(result);
 	}).error(function(data, status) {
 	    alert("status=" + status);
 	});
+    };
+    
+    $scope.clear = function() {
+	$scope.results = [];
     };
 }
 
