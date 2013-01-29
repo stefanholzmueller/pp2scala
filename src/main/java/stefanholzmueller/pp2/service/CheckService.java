@@ -7,25 +7,39 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import stefanholzmueller.pp2.checks.Check;
-import stefanholzmueller.pp2.checks.CheckStatistics;
-import stefanholzmueller.pp2.checks.CheckStatisticsCalculator;
+import stefanholzmueller.pp2.check.Check;
+import stefanholzmueller.pp2.check.CheckResult;
+import stefanholzmueller.pp2.check.CheckResultCalculator;
+import stefanholzmueller.pp2.check.CheckRoll;
+import stefanholzmueller.pp2.check.CheckStatistics;
+import stefanholzmueller.pp2.check.CheckStatisticsCalculator;
+import stefanholzmueller.pp2.util.IntTriple;
 
 @Path("/check")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class CheckService {
 
     private CheckStatisticsCalculator checkStatisticsCalculator;
+    private CheckResultCalculator checkResultCalculator;
 
     @Inject
-    public CheckService(CheckStatisticsCalculator checkStatisticsCalculator) {
+    public CheckService(CheckStatisticsCalculator checkStatisticsCalculator, CheckResultCalculator checkResultCalculator) {
         this.checkStatisticsCalculator = checkStatisticsCalculator;
+        this.checkResultCalculator = checkResultCalculator;
     }
 
     @Path("/statistics")
     @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public CheckStatistics calculate(Check check) {
-        return checkStatisticsCalculator.calculate(check);
+    public CheckStatistics calculateStatistics(Check check) {
+        return checkStatisticsCalculator.calculateStatistics(check);
+    }
+
+    @Path("/result")
+    @PUT
+    public CheckResult calculateResult(CheckRoll checkRoll) {
+        Check check = checkRoll.getCheck();
+        IntTriple dice = checkRoll.getDice();
+        return checkResultCalculator.calculateResult(check, dice);
     }
 }

@@ -9,8 +9,8 @@ import javax.ws.rs.core.Application;
 import org.glassfish.jersey.filter.LoggingFilter;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
-import stefanholzmueller.pp2.checks.CheckDecider;
-import stefanholzmueller.pp2.checks.CheckStatisticsCalculator;
+import stefanholzmueller.pp2.check.CheckResultCalculator;
+import stefanholzmueller.pp2.check.CheckStatisticsCalculator;
 
 @ApplicationPath("/")
 public class App extends Application {
@@ -18,11 +18,10 @@ public class App extends Application {
     @Override
     public Set<Class<?>> getClasses() {
         final Set<Class<?>> classes = new HashSet<Class<?>>();
-        classes.add(HelloService.class);
         classes.add(RandomService.class);
         classes.add(CheckService.class);
         classes.add(CheckStatisticsCalculator.class);
-        classes.add(CheckDecider.class);
+        classes.add(CheckResultCalculator.class);
         return classes;
     }
 

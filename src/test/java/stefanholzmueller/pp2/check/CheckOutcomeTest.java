@@ -1,4 +1,4 @@
-package stefanholzmueller.pp2.checks;
+package stefanholzmueller.pp2.check;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -6,7 +6,9 @@ import static org.hamcrest.Matchers.is;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class CheckSuccessTest {
+import stefanholzmueller.pp2.check.CheckOutcome;
+
+public class CheckOutcomeTest {
 
 	@Test(dataProvider = "isSuccessful")
 	public void isSuccessful(CheckOutcome checkSuccess, boolean expected) throws Exception {

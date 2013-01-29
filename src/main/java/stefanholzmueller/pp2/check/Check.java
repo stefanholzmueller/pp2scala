@@ -1,8 +1,10 @@
-package stefanholzmueller.pp2.checks;
+package stefanholzmueller.pp2.check;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import stefanholzmueller.pp2.util.IntTriple;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement

@@ -1,4 +1,4 @@
-package stefanholzmueller.pp2.checks;
+package stefanholzmueller.pp2.check;
 
 public enum CheckOutcome {
     SUCCESSFUL, UNSUCCESSFUL, SPECTACULAR_SUCCESS, LUCKY_CHECK, SPECTACULAR_FUMBLE, FUMBLE, SPRUCHHEMMUNG;

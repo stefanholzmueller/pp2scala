@@ -1,4 +1,4 @@
-package stefanholzmueller.pp2.checks;
+package stefanholzmueller.pp2.check;
 
 public class CheckResult {
 

@@ -1,7 +1,9 @@
-package stefanholzmueller.pp2.checks;
+package stefanholzmueller.pp2.check;
 
 import javax.inject.Inject;
 import javax.ws.rs.Path;
+
+import stefanholzmueller.pp2.util.IntTriple;
 
 @Path("")
 //hack for hk2 injection
@@ -10,14 +12,14 @@ public class CheckStatisticsCalculator {
     private static final int DIE_MAX_PIPS = 20;
     private static final int NUMBER_OF_CHECKS = DIE_MAX_PIPS * DIE_MAX_PIPS * DIE_MAX_PIPS;
 
-    private final CheckDecider checkDecider;
+    private final CheckResultCalculator checkDecider;
 
     @Inject
-    public CheckStatisticsCalculator(CheckDecider checkDecider) {
+    public CheckStatisticsCalculator(CheckResultCalculator checkDecider) {
         this.checkDecider = checkDecider;
     }
 
-    public CheckStatistics calculate(Check check) {
+    public CheckStatistics calculateStatistics(Check check) {
 
         int successfulChecksTotal = 0;
         int qualityTotal = 0;
@@ -27,7 +29,7 @@ public class CheckStatisticsCalculator {
                 for (int die3 = 1; die3 <= DIE_MAX_PIPS; die3++) {
 
                     IntTriple diceTriple = new IntTriple(die1, die2, die3);
-                    CheckResult checkResult = checkDecider.determineResult(check, diceTriple);
+                    CheckResult checkResult = checkDecider.calculateResult(check, diceTriple);
 
                     successfulChecksTotal = incrementSuccessfulChecksTotal(checkResult, successfulChecksTotal);
                     qualityTotal = incrementQualityTotal(checkResult, qualityTotal);

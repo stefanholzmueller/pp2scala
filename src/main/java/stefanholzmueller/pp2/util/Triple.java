@@ -1,4 +1,4 @@
-package stefanholzmueller.pp2.checks;
+package stefanholzmueller.pp2.util;
 
 import java.util.ArrayList;
 import java.util.List;

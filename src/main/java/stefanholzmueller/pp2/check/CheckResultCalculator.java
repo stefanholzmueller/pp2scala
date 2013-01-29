@@ -1,30 +1,27 @@
-package stefanholzmueller.pp2.checks;
+package stefanholzmueller.pp2.check;
 
 import java.util.List;
 
 import javax.ws.rs.Path;
 
+import stefanholzmueller.pp2.util.IntTriple;
+
 @Path("")
 //hack for hk2 injection
-public class CheckDecider {
+public class CheckResultCalculator {
 
-    public CheckResult determineResult(Check check, IntTriple dice) {
+    public CheckResult calculateResult(Check check, IntTriple dice) {
         if (check == null || dice == null) {
             throw new IllegalArgumentException("arguments must not be null");
         }
 
-        return calculateResult(check, dice);
-    }
-
-    private CheckResult calculateResult(Check check, IntTriple dice) {
-
         int points = getPoints(check);
-
+        
         CheckOutcome specialSuccess = determineSpecialCheckOutcome(check, dice);
         if (specialSuccess != null) {
             return buildSpecialSuccessResult(check, specialSuccess);
         }
-
+        
         if (points > 0) {
             return buildResultWithPoints(check, dice, points);
         } else {

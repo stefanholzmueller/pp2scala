@@ -1,4 +1,4 @@
-package stefanholzmueller.pp2.checks;
+package stefanholzmueller.pp2.check;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -13,6 +13,14 @@ import org.mockito.MockitoAnnotations;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import stefanholzmueller.pp2.check.Check;
+import stefanholzmueller.pp2.check.CheckResultCalculator;
+import stefanholzmueller.pp2.check.CheckOutcome;
+import stefanholzmueller.pp2.check.CheckResult;
+import stefanholzmueller.pp2.check.CheckStatistics;
+import stefanholzmueller.pp2.check.CheckStatisticsCalculator;
+import stefanholzmueller.pp2.util.IntTriple;
+
 
 public class CheckStatisticsCalculatorTest {
 
@@ -20,7 +28,7 @@ public class CheckStatisticsCalculatorTest {
     private Check trivialCheck;
 
     @Mock
-    private CheckDecider checkDecider;
+    private CheckResultCalculator checkDecider;
 
     @BeforeMethod
     public void setUp() throws Exception {
@@ -34,16 +42,16 @@ public class CheckStatisticsCalculatorTest {
     public void shouldRunCheckDecider8000Times() throws Exception {
         allChecksAreSuccessful();
 
-        calculator.calculate(trivialCheck);
+        calculator.calculateStatistics(trivialCheck);
 
-        verify(checkDecider, times(8000)).determineResult(eq(trivialCheck), any(IntTriple.class));
+        verify(checkDecider, times(8000)).calculateResult(eq(trivialCheck), any(IntTriple.class));
     }
 
     @Test
     public void shouldReturnMaximumProbabilityIfEveryCheckIsSuccessful() throws Exception {
         allChecksAreSuccessful();
 
-        CheckStatistics checkStatistics = calculator.calculate(trivialCheck);
+        CheckStatistics checkStatistics = calculator.calculateStatistics(trivialCheck);
 
         assertThat(checkStatistics.getProbabilityOfSuccess(), is(1.0));
     }
@@ -52,7 +60,7 @@ public class CheckStatisticsCalculatorTest {
     public void shouldReturnAverageQualityIfEveryCheckIsSuccessful() throws Exception {
         allChecksAreSuccessful();
 
-        CheckStatistics checkStatistics = calculator.calculate(trivialCheck);
+        CheckStatistics checkStatistics = calculator.calculateStatistics(trivialCheck);
 
         assertThat(checkStatistics.getAverageQuality(), is(4.0));
     }
@@ -61,15 +69,15 @@ public class CheckStatisticsCalculatorTest {
     public void shouldReturnAverageQualityForSuccesses() throws Exception {
         CheckResult successful = new CheckResult(CheckOutcome.SUCCESSFUL, 3, null);
         CheckResult unsuccessful = new CheckResult(CheckOutcome.UNSUCCESSFUL, null, null);
-        when(checkDecider.determineResult(eq(trivialCheck), any(IntTriple.class))).thenReturn(successful, unsuccessful);
+        when(checkDecider.calculateResult(eq(trivialCheck), any(IntTriple.class))).thenReturn(successful, unsuccessful);
 
-        CheckStatistics checkStatistics = calculator.calculate(trivialCheck);
+        CheckStatistics checkStatistics = calculator.calculateStatistics(trivialCheck);
 
         assertThat(checkStatistics.getAverageQualityForSuccesses(), is(3.0));
     }
 
     private void allChecksAreSuccessful() {
         CheckResult checkResult = new CheckResult(CheckOutcome.SUCCESSFUL, 4, null);
-        when(checkDecider.determineResult(eq(trivialCheck), any(IntTriple.class))).thenReturn(checkResult);
+        when(checkDecider.calculateResult(eq(trivialCheck), any(IntTriple.class))).thenReturn(checkResult);
     }
 }
