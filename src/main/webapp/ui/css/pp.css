@@ -1,0 +1,25 @@
+.left {
+	float: left;
+}
+
+.check_form label {
+	width: 100px;
+	display: inline-block;
+}
+
+.check_form input {
+	width: 40px;
+}
+
+.check_form ul {
+	width: 750px;
+	list-style-type: none;
+	list-style-position: outside;
+	margin: 0px;
+	padding: 0px;
+}
+
+.check_form li {
+	padding: 12px;
+	position: relative;
+}
