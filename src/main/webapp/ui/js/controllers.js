@@ -16,19 +16,13 @@ function CheckController($scope, $http) {
 	minimumQuality : true
     };
     
-    $scope.results = [];
-    
-    $scope.calculate = function() {
+    $scope.recalculate = function() {
 	$http.put('../rest/check/statistics', check).success(function(result) {
 	    result.check = clone(check);
-	    $scope.results.push(result);
+	    $scope.result = result;
 	}).error(function(data, status) {
 	    alert("status=" + status);
 	});
-    };
-    
-    $scope.clear = function() {
-	$scope.results = [];
     };
 }
 

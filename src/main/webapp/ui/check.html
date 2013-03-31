@@ -7,52 +7,40 @@
 <script src="js/app.js"></script>
 <script src="js/controllers.js"></script>
 <script src="js/filters.js"></script>
+<link rel="stylesheet" media="screen" href="css/pp.css">
 <title>Probenprophet 2.0</title>
 </head>
 <body>
 	<div data-ng-controller="CheckController">
-		<label>Eigenschaften:</label>
-		<input type="number" min="1" max="25" step="1" data-ng-model="check.attribute1">
-		<input type="number" min="1" max="25" step="1" data-ng-model="check.attribute2">
-		<input type="number" min="1" max="25" step="1" data-ng-model="check.attribute3">
-		<br />
-		<label>Wert:</label>
-		<input type="number" min="-5" max="30" step="1" data-ng-model="check.value">
-		<label>Erschwernis:</label>
-		<input type="number" min="-20" max="50" step="1" data-ng-model="check.difficulty">
-		<br />
-		<input type="checkbox" data-ng-model="check.minimumQuality">Regel zum "Minimaleffekt" aktivieren
-		<br />
-		<input type="button" data-ng-click="calculate()" value="Berechnen"/>
-		<input type="button" data-ng-click="clear()" value="Liste löschen"/>
-		<table border="1">
-			<thead>
-				<tr>
-					<th rowspan="2">Eigenschaften</th>
-					<th rowspan="2">Wert</th>
-					<th rowspan="2">Erschwernis</th>
-					<th rowspan="2">Wahrscheinlichkeit</th>
-					<th colspan="2">Übrige Punkte</th>
-				</tr>
-				<tr>
-					<th>der gelungenen Proben</th>
-					<th>aller Proben</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr data-ng-repeat="result in results">
-					<td>{{result.check.attribute1}} / {{result.check.attribute2}} / {{result.check.attribute3}}</td>
-					<td>{{result.check.value}}</td>
-					<td>{{result.check.difficulty | signed}}</td>
-					<td>{{result.probabilityOfSuccess | percentage}}</td>
-					<td>{{result.averageQualityForSuccesses | number:3}}</td>
-					<td>{{result.averageQuality | number:3}}</td>
-				</tr>
-			</tbody>
-		</table>
-		<hr />
-		Debug:
-		<pre>check={{check | json}}</pre>
+		<div class="left">
+			<fieldset>
+				<ul class="check_form">
+					<li class="check_form">
+						<label class="check_form">Eigenschaften:</label>
+						<input class="check_form" type="number" min="1" max="25" step="1" data-ng-model="check.attribute1" data-ng-change="recalculate()">
+						<input class="check_form" type="number" min="1" max="25" step="1" data-ng-model="check.attribute2" data-ng-change="recalculate()">
+						<input class="check_form" type="number" min="1" max="25" step="1" data-ng-model="check.attribute3" data-ng-change="recalculate()">
+					</li>
+					<li class="check_form">
+						<label class="check_form" for="value">Wert:</label>
+						<input class="check_form" type="number" min="-5" max="30" step="1" id="value" data-ng-model="check.value" data-ng-change="recalculate()">
+					</li>
+					<li class="check_form">
+						<label class="check_form" for="difficulty">Erschwernis:</label>
+						<input class="check_form" type="range" min="-20" max="50" step="1" id="difficulty" data-ng-model="check.difficulty" data-ng-change="recalculate()">
+					</li>
+					<li class="check_form">
+						<input class="check_form" type="checkbox" data-ng-model="check.minimumQuality" data-ng-change="recalculate()">Regel zum "Minimaleffekt" aktivieren
+					</li>
+				</ul>
+			</fieldset>
+			<hr />
+			Debug:
+			<pre>check={{check | json}}</pre>
+		</div>
+		<div style="float: right">
+			<pre>check={{result | json}}</pre>
+		</div>
 	</div>
 </body>
 </html>
