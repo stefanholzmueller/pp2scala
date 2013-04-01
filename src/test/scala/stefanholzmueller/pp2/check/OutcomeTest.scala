@@ -21,4 +21,11 @@ class OutcomeTest {
 
 		assertThat(resultOfMatch, is(true))
 	}
+
+	@Test
+	def isSuccess {
+		assertThat(Outcome.isSuccess(AutomaticSuccess(3, 0)), is(true))
+		assertThat(Outcome.isSuccess(Failure(7)), is(false))
+	}
+
 }
