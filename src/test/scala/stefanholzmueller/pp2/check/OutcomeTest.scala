@@ -11,11 +11,11 @@ class OutcomeTest {
 		val outcome = Success(3, 2): Outcome
 		val resultOfMatch = outcome match {
 			case Success(q, r) => q == 3 && r == 2
-			case AutomaticSuccess(q, r) => false
-			case SpectacularSuccess(q, r) => false
-			case Failure(g) => false
-			case AutomaticFailure(g) => false
-			case SpectacularFailure(g) => false
+			case AutomaticSuccess(_) => false
+			case SpectacularSuccess(_) => false
+			case Failure(_) => false
+			case AutomaticFailure() => false
+			case SpectacularFailure() => false
 			case Spruchhemmung() => false
 		}
 
@@ -24,7 +24,7 @@ class OutcomeTest {
 
 	@Test
 	def isSuccess {
-		assertThat(Outcome.isSuccess(AutomaticSuccess(3, 0)), is(true))
+		assertThat(Outcome.isSuccess(AutomaticSuccess(3)), is(true))
 		assertThat(Outcome.isSuccess(Failure(7)), is(false))
 	}
 
