@@ -1,6 +1,6 @@
 package stefanholzmueller.pp2.util
 
-class ThreeD20(a: Int, b: Int, c: Int) {
+class ThreeD20(a: Int, b: Int, c: Int) { // TODO Dice20(varargs)
 	val elements = Vector(a, b, c)
 	for (x <- elements) {
 		require(x >= 1 && x <= 20)
@@ -12,5 +12,9 @@ class ThreeD20(a: Int, b: Int, c: Int) {
 
 	def twoEqualTo(n: Int) = elements.filter(_ == n).length >= 2
 
-	def twoSameValues() = elements(0) == elements(1) || elements(0) == elements(2) || elements(1) == elements(2)
+	def twoSameValues() = {
+		val groupedLists = elements.groupBy(identity).values
+		val everyValueJustOnce = groupedLists.forall(_.length == 1)
+		!everyValueJustOnce
+	}
 }
