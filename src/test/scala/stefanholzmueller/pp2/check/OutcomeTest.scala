@@ -10,7 +10,7 @@ class OutcomeTest {
 	def patternMatching {
 		val outcome = Success(3, 2): Outcome
 		val resultOfMatch = outcome match {
-			case Success(q, r) => true
+			case Success(q, r) => q == 3 && r == 2
 			case AutomaticSuccess(q, r) => false
 			case SpectacularSuccess(q, r) => false
 			case Failure(g) => false
