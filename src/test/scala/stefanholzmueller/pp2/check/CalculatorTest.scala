@@ -7,7 +7,9 @@ import org.testng.Assert
 
 class CalculatorTest {
 
-	val withSpruchhemmung = new Options(true, false, false, true)
+	val withFesteMatrix = new Options(false, true)
+	val withWildeMagie = new Options(false, true, false)
+	val withSpruchhemmung = new Options(false, false, true)
 	val defaultOptions = new Options(true, false, false, false)
 	val defaultAttributes = (11, 12, 13)
 
@@ -54,27 +56,63 @@ class CalculatorTest {
 	}
 
 	@Test
-	def spruchhemmungVsSpectacularSuccess {
+	def spectacularSuccessVsSpruchhemmung {
 		val outcome = Calculator.examine(withSpruchhemmung, defaultAttributes, 5, 0, new Dice20(1, 1, 1))
 		Assert.assertEquals(outcome, SpectacularSuccess(5))
 	}
 
 	@Test
-	def spruchhemmungVsSpectacularFailure {
+	def spectacularFailureVsSpruchhemmung {
 		val outcome = Calculator.examine(withSpruchhemmung, defaultAttributes, 5, 0, new Dice20(20, 20, 20))
 		Assert.assertEquals(outcome, SpectacularFailure())
 	}
 
 	@Test
-	def spruchhemmungVsAutomaticFailure {
+	def automaticFailureVsSpruchhemmung {
 		val outcome = Calculator.examine(withSpruchhemmung, defaultAttributes, 5, 0, new Dice20(20, 20, 6))
 		Assert.assertEquals(outcome, AutomaticFailure())
 	}
 
 	@Test
-	def spruchhemmungVsAutomaticSuccess {
+	def automaticSuccessVsSpruchhemmung {
 		val outcome = Calculator.examine(withSpruchhemmung, defaultAttributes, 5, 0, new Dice20(18, 1, 1))
 		Assert.assertEquals(outcome, AutomaticSuccess(5))
+	}
+
+	@Test
+	def wildeMagie {
+		val outcome = Calculator.examine(withWildeMagie, defaultAttributes, 5, 0, new Dice20(19, 5, 20))
+		Assert.assertEquals(outcome, AutomaticFailure())
+	}
+
+	@Test
+	def failureVsWildeMagie {
+		val outcome = Calculator.examine(defaultOptions, defaultAttributes, 5, 0, new Dice20(19, 5, 20))
+		Assert.assertEquals(outcome, Success(5, 0)) // TODO
+	}
+
+	@Test
+	def wildeMagieVsSpruchhemmung {
+		val outcome = Calculator.examine(new Options(false, true, true), defaultAttributes, 5, 0, new Dice20(19, 19, 3))
+		Assert.assertEquals(outcome, AutomaticFailure())
+	}
+
+	@Test
+	def wildeMagieVsSpruchhemmungVsSpectacularFailure {
+		val outcome = Calculator.examine(new Options(false, true, true), defaultAttributes, 5, 0, new Dice20(19, 19, 19))
+		Assert.assertEquals(outcome, AutomaticFailure())
+	}
+
+	@Test
+	def festeMatrix {
+		val outcome = Calculator.examine(withFesteMatrix, defaultAttributes, 5, 0, new Dice20(18, 20, 20))
+		Assert.assertEquals(outcome, AutomaticFailure())
+	}
+
+	@Test
+	def failureVsFesteMatrix {
+		val outcome = Calculator.examine(withFesteMatrix, defaultAttributes, 5, 0, new Dice20(20, 17, 20))
+		Assert.assertEquals(outcome, Success(5, 0)) // TODO
 	}
 
 }

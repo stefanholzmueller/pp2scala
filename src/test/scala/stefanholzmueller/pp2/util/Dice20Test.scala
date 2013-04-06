@@ -52,4 +52,9 @@ class Dice20Test {
 		assertThat(new Dice20(1, 1, 1).twoSameValues(), is(true))
 	}
 
+	@Test
+	def sum {
+		assertThat(new Dice20(1, 2, 3).sum, is(6))
+	}
+
 }
