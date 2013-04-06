@@ -9,10 +9,10 @@ import javax.ws.rs.core.MediaType;
 
 import stefanholzmueller.pp2.check.Check;
 import stefanholzmueller.pp2.check.CheckResult;
-import stefanholzmueller.pp2.check.CheckResultCalculator;
 import stefanholzmueller.pp2.check.CheckRoll;
 import stefanholzmueller.pp2.check.CheckStatistics;
 import stefanholzmueller.pp2.check.CheckStatisticsCalculator;
+import stefanholzmueller.pp2.check.OutcomeCalculator;
 import stefanholzmueller.pp2.util.IntTriple;
 
 @Path("/check")
@@ -21,10 +21,10 @@ import stefanholzmueller.pp2.util.IntTriple;
 public class CheckService {
 
     private CheckStatisticsCalculator checkStatisticsCalculator;
-    private CheckResultCalculator checkResultCalculator;
+    private OutcomeCalculator checkResultCalculator;
 
     @Inject
-    public CheckService(CheckStatisticsCalculator checkStatisticsCalculator, CheckResultCalculator checkResultCalculator) {
+    public CheckService(CheckStatisticsCalculator checkStatisticsCalculator, OutcomeCalculator checkResultCalculator) {
         this.checkStatisticsCalculator = checkStatisticsCalculator;
         this.checkResultCalculator = checkResultCalculator;
     }

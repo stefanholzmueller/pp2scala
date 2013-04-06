@@ -13,9 +13,9 @@ import org.testng.annotations.Test;
 import stefanholzmueller.pp2.check.Check;
 import stefanholzmueller.pp2.check.CheckOutcome;
 import stefanholzmueller.pp2.check.CheckResult;
-import stefanholzmueller.pp2.check.CheckResultCalculator;
 import stefanholzmueller.pp2.check.CheckRoll;
 import stefanholzmueller.pp2.check.CheckStatisticsCalculator;
+import stefanholzmueller.pp2.check.OutcomeCalculator;
 import stefanholzmueller.pp2.util.IntTriple;
 
 @Test
@@ -23,7 +23,7 @@ public class CheckServiceTest {
 
     private CheckService checkService;
     @Mock
-    private CheckResultCalculator checkResultCalculator;
+    private OutcomeCalculator checkResultCalculator;
     @Mock
     private CheckStatisticsCalculator checkStatisticsCalculator;
 

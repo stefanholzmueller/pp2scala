@@ -2,7 +2,7 @@ package stefanholzmueller.pp2.check
 
 sealed trait Outcome
 
-case class Success(quality: Int, rest: Int) extends Outcome
+case class Success(quality: Int, gap: Int) extends Outcome
 case class AutomaticSuccess(quality: Int) extends Outcome
 case class SpectacularSuccess(quality: Int) extends Outcome
 case class Failure(gap: Int) extends Outcome
