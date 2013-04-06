@@ -3,13 +3,19 @@ package stefanholzmueller.pp2.check
 import stefanholzmueller.pp2.util.Dice20
 import stefanholzmueller.pp2.util.IntTriple
 
-class Calculator extends OutcomeCalculator {
+object Calculator extends OutcomeCalculator {
 
 	class Options(
-		minimumEffect: Boolean,
-		festeMatrix: Boolean,
-		wildeMagie: Boolean,
-		spruchhemmung: Boolean)
+		val minimumEffect: Boolean,
+		val festeMatrix: Boolean,
+		val wildeMagie: Boolean,
+		val spruchhemmung: Boolean) {
+
+		def this(minimumEffect: Boolean, festeMatrix: Boolean) = this(minimumEffect, festeMatrix, false, false)
+		def this(minimumEffect: Boolean, wildeMagie: Boolean, spruchhemmung: Boolean) = this(minimumEffect, false, wildeMagie, spruchhemmung)
+
+		require(!(festeMatrix && (wildeMagie || spruchhemmung)))
+	}
 
 	type Attributes = (Int, Int, Int)
 
@@ -34,7 +40,28 @@ class Calculator extends OutcomeCalculator {
 	}
 
 	def examine(options: Options, attributes: Attributes, points: Int, difficulty: Int, dice: Dice20): Outcome = {
-		throw new IllegalArgumentException
+		specialOutcome(options, points, dice) match {
+			case Some(outcome) => outcome
+			case None => successOrFailure(options, attributes, points, difficulty, dice)
+		}
+	}
+
+	def specialOutcome(options: Options, points: Int, dice: Dice20): Option[Outcome] = {
+		if (dice.allEqualTo(1))
+			Some(SpectacularSuccess(points))
+		else if (dice.twoEqualTo(1))
+			Some(AutomaticSuccess(points))
+		else if (dice.allEqualTo(20))
+			Some(SpectacularFailure())
+		else if (dice.twoEqualTo(20))
+			Some(AutomaticFailure())
+		else if (options.spruchhemmung && dice.twoSameValues())
+			Some(Spruchhemmung())
+		else None
+	}
+
+	def successOrFailure(options: Options, attributes: Attributes, points: Int, difficulty: Int, dice: Dice20): Outcome = {
+		Success(5, 0)
 	}
 
 }
