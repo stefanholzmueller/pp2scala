@@ -24,8 +24,8 @@ class OutcomeTest {
 
 	@Test
 	def isSuccess {
-		assertThat(Outcome.isSuccess(AutomaticSuccess(3)), is(true))
-		assertThat(Outcome.isSuccess(Failure(7)), is(false))
+		assertThat(AutomaticSuccess(3).isSuccessful, is(true))
+		assertThat(Failure(7).isSuccessful, is(false))
 	}
 
 }

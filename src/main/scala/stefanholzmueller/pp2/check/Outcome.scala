@@ -1,25 +1,22 @@
 package stefanholzmueller.pp2.check
 
-sealed trait Outcome
-
-case class Success(quality: Int, gap: Int) extends Outcome
-case class AutomaticSuccess(quality: Int) extends Outcome
-case class SpectacularSuccess(quality: Int) extends Outcome
-case class Failure(gap: Int) extends Outcome
-case class AutomaticFailure() extends Outcome
-case class SpectacularFailure() extends Outcome
-case class Spruchhemmung() extends Outcome
-
-object Outcome {
-	def isSuccess(outcome: Outcome) = {
-		outcome match {
-			case Success(_, _) => true
-			case AutomaticSuccess(_) => true
-			case SpectacularSuccess(_) => true
-			case Failure(_) => false
-			case AutomaticFailure() => false
-			case SpectacularFailure() => false
-			case Spruchhemmung() => false
-		}
-	}
+sealed trait Outcome {
+	def isSuccessful: Boolean
 }
+
+sealed trait Successful extends Outcome {
+	override def isSuccessful = true
+}
+
+sealed trait Unuccessful extends Outcome {
+	override def isSuccessful = false
+}
+
+case class Success(quality: Int, gap: Int) extends Successful
+case class AutomaticSuccess(quality: Int) extends Successful
+case class SpectacularSuccess(quality: Int) extends Successful
+case class Failure(gap: Int) extends Unuccessful
+case class AutomaticFailure() extends Unuccessful
+case class SpectacularFailure() extends Unuccessful
+case class Spruchhemmung() extends Unuccessful
+
