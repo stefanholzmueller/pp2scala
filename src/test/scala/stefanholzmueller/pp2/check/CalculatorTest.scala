@@ -41,7 +41,7 @@ class CalculatorTest {
 	@Test
 	def withoutSpruchhemmung {
 		val outcome = Calculator.examine(defaultOptions, defaultAttributes, 5, 0, new Dice20(10, 10, 11))
-		Assert.assertEquals(outcome, Success(5, 0))
+		Assert.assertEquals(outcome, Success(5, 1))
 	}
 
 	@Test
