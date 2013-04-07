@@ -6,13 +6,13 @@ import stefanholzmueller.pp2.util.IntTriple
 object Calculator extends OutcomeCalculator {
 
 	class Options(
-		val minimumEffect: Boolean,
+		val minimumQuality: Boolean,
 		val festeMatrix: Boolean,
 		val wildeMagie: Boolean,
 		val spruchhemmung: Boolean) {
 
-		def this(minimumEffect: Boolean, festeMatrix: Boolean) = this(minimumEffect, festeMatrix, false, false)
-		def this(minimumEffect: Boolean, wildeMagie: Boolean, spruchhemmung: Boolean) = this(minimumEffect, false, wildeMagie, spruchhemmung)
+		def this(mq: Boolean, fm: Boolean) = this(mq, fm, false, false)
+		def this(mq: Boolean, wm: Boolean, sh: Boolean) = this(mq, false, wm, sh)
 
 		require(!(festeMatrix && (wildeMagie || spruchhemmung)))
 	}
@@ -41,7 +41,7 @@ object Calculator extends OutcomeCalculator {
 
 	def examine(options: Options, attributes: Attributes, points: Int, difficulty: Int, dice: Dice20): Outcome = {
 		specialOutcome(options, points, dice) match {
-			case Some(outcome) => outcome
+			case Some(special) => special
 			case None => successOrFailure(options, attributes, points, difficulty, dice)
 		}
 	}
@@ -65,7 +65,22 @@ object Calculator extends OutcomeCalculator {
 	}
 
 	def successOrFailure(options: Options, attributes: Attributes, points: Int, difficulty: Int, dice: Dice20): Outcome = {
-		Success(5, 0)
+		val effectivePoints = points - difficulty // TODO quality <- points
+		if (effectivePoints <= 0) {
+			val diff = dice.compareWithAttributes(attributes)
+
+			val exceeded = diff.fold(0)((acc, x) => if (x > 0) acc + x else acc)
+			if (exceeded > 0) {
+				Failure(exceeded)
+			} else {
+				val possibleDifficulty = diff.reduce((a, x) => a max x)
+				val quality = if (options.minimumQuality) 1 else 0
+				Success(quality, -possibleDifficulty)
+			}
+		} else {
+			//			val usedPoints = diff.fold(0)((a, x) => if (x > 0) a + x else a)
+			Success(5, 0) // TODO
+		}
 	}
 
 }

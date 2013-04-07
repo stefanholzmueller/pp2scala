@@ -7,10 +7,11 @@ import org.testng.Assert
 
 class CalculatorTest {
 
+	val defaultOptions = new Options(true, false, false, false)
+	val withoutMinimumQuality = new Options(false, false, false, false)
 	val withFesteMatrix = new Options(false, true)
 	val withWildeMagie = new Options(false, true, false)
 	val withSpruchhemmung = new Options(false, false, true)
-	val defaultOptions = new Options(true, false, false, false)
 	val defaultAttributes = (11, 12, 13)
 
 	@Test
@@ -87,32 +88,86 @@ class CalculatorTest {
 
 	@Test
 	def failureVsWildeMagie {
-		val outcome = Calculator.examine(defaultOptions, defaultAttributes, 5, 0, new Dice20(19, 5, 20))
-		Assert.assertEquals(outcome, Success(5, 0)) // TODO
+		val outcome = Calculator.examine(defaultOptions, defaultAttributes, 0, 0, new Dice20(19, 5, 20))
+		Assert.assertEquals(outcome, Failure(15))
 	}
 
 	@Test
 	def wildeMagieVsSpruchhemmung {
-		val outcome = Calculator.examine(new Options(false, true, true), defaultAttributes, 5, 0, new Dice20(19, 19, 3))
+		val outcome = Calculator.examine(new Options(false, true, true), defaultAttributes, 0, 0, new Dice20(19, 19, 3))
 		Assert.assertEquals(outcome, AutomaticFailure())
 	}
 
 	@Test
 	def wildeMagieVsSpruchhemmungVsSpectacularFailure {
-		val outcome = Calculator.examine(new Options(false, true, true), defaultAttributes, 5, 0, new Dice20(19, 19, 19))
+		val outcome = Calculator.examine(new Options(false, true, true), defaultAttributes, 0, 0, new Dice20(19, 19, 19))
 		Assert.assertEquals(outcome, AutomaticFailure())
 	}
 
 	@Test
 	def festeMatrix {
-		val outcome = Calculator.examine(withFesteMatrix, defaultAttributes, 5, 0, new Dice20(18, 20, 20))
+		val outcome = Calculator.examine(withFesteMatrix, defaultAttributes, 0, 0, new Dice20(18, 20, 20))
 		Assert.assertEquals(outcome, AutomaticFailure())
 	}
 
 	@Test
 	def failureVsFesteMatrix {
-		val outcome = Calculator.examine(withFesteMatrix, defaultAttributes, 5, 0, new Dice20(20, 17, 20))
-		Assert.assertEquals(outcome, Success(5, 0)) // TODO
+		val outcome = Calculator.examine(withFesteMatrix, defaultAttributes, 0, 0, new Dice20(20, 17, 20))
+		Assert.assertEquals(outcome, Failure(21))
+	}
+
+	@Test
+	def success_withoutPoints_noGap {
+		val outcome = Calculator.examine(withoutMinimumQuality, defaultAttributes, 0, 0, new Dice20(11, 12, 13))
+		Assert.assertEquals(outcome, Success(0, 0))
+	}
+
+	@Test
+	def success_withoutPoints_smallGap {
+		val outcome = Calculator.examine(withoutMinimumQuality, defaultAttributes, 0, 0, new Dice20(10, 10, 10))
+		Assert.assertEquals(outcome, Success(0, 1))
+	}
+
+	@Test
+	def failure_withoutPoints_negativeGap {
+		val outcome = Calculator.examine(withoutMinimumQuality, defaultAttributes, 0, 0, new Dice20(15, 15, 15))
+		Assert.assertEquals(outcome, Failure(9))
+	}
+
+	@Test
+	def failure_withoutPoints_mixedGap {
+		val outcome = Calculator.examine(withoutMinimumQuality, defaultAttributes, 0, 0, new Dice20(5, 10, 15))
+		Assert.assertEquals(outcome, Failure(2))
+	}
+
+	@Test
+	def success_withPointsAndSameDifficulty {
+		val outcome = Calculator.examine(withoutMinimumQuality, defaultAttributes, 4, 4, new Dice20(10, 10, 10))
+		Assert.assertEquals(outcome, Success(0, 1))
+	}
+
+	@Test
+	def success_withNegativePointsAndSameDifficulty_zeroQuality {
+		val outcome = Calculator.examine(withoutMinimumQuality, defaultAttributes, -2, -2, new Dice20(11, 12, 13))
+		Assert.assertEquals(outcome, Success(0, 0))
+	}
+
+	@Test
+	def success_withoutPoints_minimumQualtity {
+		val outcome = Calculator.examine(defaultOptions, defaultAttributes, 0, 0, new Dice20(11, 12, 13))
+		Assert.assertEquals(outcome, Success(1, 0))
+	}
+
+	@Test
+	def success_withPointsAndSameDifficulty_minimumQualtity {
+		val outcome = Calculator.examine(defaultOptions, defaultAttributes, 4, 4, new Dice20(11, 12, 13))
+		Assert.assertEquals(outcome, Success(1, 0))
+	}
+
+	@Test
+	def success_withNegativePointsAndSameDifficulty_minimumQualtityAndSmallGap {
+		val outcome = Calculator.examine(defaultOptions, defaultAttributes, -2, -2, new Dice20(10, 10, 10))
+		Assert.assertEquals(outcome, Success(1, 1))
 	}
 
 }
