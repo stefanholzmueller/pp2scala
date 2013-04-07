@@ -24,9 +24,8 @@ class Dice20(values: Int*) {
 
 	def sum() = elements.sum
 
-	def compareWithAttributes(attributes: (Int, Int, Int)) = {
-		val attributeList = List(attributes._1, attributes._2, attributes._3)
+	def compareWithAttributes(attributeList: List[Int]) = {
 		val pairs = elements.zip(attributeList)
-		pairs.map(Function.tupled((die, attr) => die - attr)).to[Vector] // TODO reverse?
+		pairs.map(Function.tupled((die, attr) => die - attr)).to[Vector]
 	}
 }

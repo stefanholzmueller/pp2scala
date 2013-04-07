@@ -66,21 +66,27 @@ object Calculator extends OutcomeCalculator {
 
 	def successOrFailure(options: Options, attributes: Attributes, points: Int, difficulty: Int, dice: Dice20): Outcome = {
 		val effectivePoints = points - difficulty // TODO quality <- points
-		if (effectivePoints <= 0) {
-			val diff = dice.compareWithAttributes(attributes)
+		if (effectivePoints > 0) {
+			successOrFailureWithPoints
+		} else {
+			val attributeList = List(attributes._1, attributes._2, attributes._3)
+			val effectiveAttributes = attributeList.map(_ + effectivePoints)
+			val diff = dice.compareWithAttributes(effectiveAttributes)
 
 			val exceeded = diff.fold(0)((acc, x) => if (x > 0) acc + x else acc)
 			if (exceeded > 0) {
 				Failure(exceeded)
 			} else {
-				val possibleDifficulty = diff.reduce((a, x) => a max x)
+				val possibleDifficulty = diff.reduce(_ max _)
 				val quality = if (options.minimumQuality) 1 else 0
 				Success(quality, -possibleDifficulty)
 			}
-		} else {
-			//			val usedPoints = diff.fold(0)((a, x) => if (x > 0) a + x else a)
-			Success(5, 0) // TODO
 		}
+	}
+
+	private def successOrFailureWithPoints = {
+		//			val usedPoints = diff.fold(0)((a, x) => if (x > 0) a + x else a)
+		Success(5, 0) // TODO
 	}
 
 }

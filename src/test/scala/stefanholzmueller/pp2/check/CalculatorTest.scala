@@ -170,4 +170,58 @@ class CalculatorTest {
 		Assert.assertEquals(outcome, Success(1, 1))
 	}
 
+	@Test
+	def success_withNegativePoints_noGap {
+		val outcome = Calculator.examine(withoutMinimumQuality, defaultAttributes, -2, 0, new Dice20(1, 10, 10))
+		Assert.assertEquals(outcome, Success(0, 0))
+	}
+
+	@Test
+	def success_withNegativePoints_minimumQualtityAndNoGap {
+		val outcome = Calculator.examine(defaultOptions, defaultAttributes, -2, 0, new Dice20(1, 10, 10))
+		Assert.assertEquals(outcome, Success(1, 0))
+	}
+
+	@Test
+	def failure_withNegativePoints_negativeGap {
+		val outcome = Calculator.examine(defaultOptions, defaultAttributes, -2, 0, new Dice20(10, 10, 10))
+		Assert.assertEquals(outcome, Failure(1))
+	}
+
+	@Test
+	def failure_withNegativePointsAndDifficulty_negativeGap {
+		val outcome = Calculator.examine(defaultOptions, defaultAttributes, -2, 2, new Dice20(10, 10, 10))
+		Assert.assertEquals(outcome, Failure(6))
+	}
+
+	@Test
+	def failure_noPointsAndDifficulty_negativeGap {
+		val outcome = Calculator.examine(defaultOptions, defaultAttributes, 0, 5, new Dice20(10, 10, 10))
+		Assert.assertEquals(outcome, Failure(9))
+	}
+
+	@Test
+	def failure_noPointsAndDifficulty_mixedGap {
+		val outcome = Calculator.examine(defaultOptions, defaultAttributes, 0, 4, new Dice20(7, 3, 16))
+		Assert.assertEquals(outcome, Failure(7))
+	}
+
+	@Test
+	def success_smallPointsAndHighDifficulty_noQualityAndGap {
+		val outcome = Calculator.examine(withoutMinimumQuality, defaultAttributes, 2, 9, new Dice20(4, 5, 6))
+		Assert.assertEquals(outcome, Success(0, 0))
+	}
+
+	@Test
+	def success_smallPointsAndHighDifficulty_noQualityButGap {
+		val outcome = Calculator.examine(withoutMinimumQuality, defaultAttributes, 2, 6, new Dice20(4, 5, 6))
+		Assert.assertEquals(outcome, Success(0, 3))
+	}
+
+	@Test
+	def success_smallPointsAndHighDifficulty_minimumQualityAndMixedGap {
+		val outcome = Calculator.examine(defaultOptions, defaultAttributes, 3, 5, new Dice20(7, 3, 6))
+		Assert.assertEquals(outcome, Success(1, 2))
+	}
+
 }

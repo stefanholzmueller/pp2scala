@@ -59,7 +59,7 @@ class Dice20Test {
 
 	@Test
 	def compareWithAttributes {
-		val diff = new Dice20(1, 12, 20).compareWithAttributes((11, 12, 13))
+		val diff = new Dice20(1, 12, 20).compareWithAttributes(List(11, 12, 13))
 		assertThat(diff(0), is(-10))
 		assertThat(diff(1), is(0))
 		assertThat(diff(2), is(7))
