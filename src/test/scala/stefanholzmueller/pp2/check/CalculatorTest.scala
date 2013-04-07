@@ -41,7 +41,7 @@ class CalculatorTest {
 	@Test
 	def withoutSpruchhemmung {
 		val outcome = Calculator.examine(defaultOptions, defaultAttributes, 5, 0, new Dice20(10, 10, 11))
-		Assert.assertEquals(outcome, Success(5, 1))
+		Assert.assertEquals(outcome, Success(5, 6))
 	}
 
 	@Test
@@ -222,6 +222,42 @@ class CalculatorTest {
 	def success_smallPointsAndHighDifficulty_minimumQualityAndMixedGap {
 		val outcome = Calculator.examine(defaultOptions, defaultAttributes, 3, 5, new Dice20(7, 3, 6))
 		Assert.assertEquals(outcome, Success(1, 2))
+	}
+
+	@Test
+	def success_withPoints_fullQuality {
+		val outcome = Calculator.examine(defaultOptions, defaultAttributes, 6, 0, new Dice20(7, 3, 6))
+		Assert.assertEquals(outcome, Success(6, 10))
+	}
+
+	@Test
+	def success_withPoints_mixedQuality {
+		val outcome = Calculator.examine(defaultOptions, defaultAttributes, 6, 0, new Dice20(13, 3, 6))
+		Assert.assertEquals(outcome, Success(4, 4))
+	}
+
+	@Test
+	def success_withPoints_mixedGap {
+		val outcome = Calculator.examine(defaultOptions, defaultAttributes, 6, 0, new Dice20(13, 3, 6))
+		Assert.assertEquals(outcome, Success(4, 4))
+	}
+
+	@Test
+	def spectacularSuccess_negativePoints_zeroQuality {
+		val outcome = Calculator.examine(withoutMinimumQuality, defaultAttributes, -2, -5, new Dice20(1, 1, 1))
+		Assert.assertEquals(outcome, SpectacularSuccess(0))
+	}
+
+	@Test
+	def spectacularSuccess_negativePoints_minimumQuality {
+		val outcome = Calculator.examine(defaultOptions, defaultAttributes, -2, -5, new Dice20(1, 1, 1))
+		Assert.assertEquals(outcome, SpectacularSuccess(1))
+	}
+
+	@Test
+	def automaticSuccess_negativeDifficulty {
+		val outcome = Calculator.examine(defaultOptions, defaultAttributes, 3, -5, new Dice20(1, 9, 1))
+		Assert.assertEquals(outcome, AutomaticSuccess(3))
 	}
 
 }

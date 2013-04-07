@@ -46,11 +46,13 @@ object Calculator extends OutcomeCalculator {
 		}
 	}
 
-	def specialOutcome(options: Options, points: Int, dice: Dice20): Option[Outcome] = {
+	private def specialOutcome(options: Options, points: Int, dice: Dice20): Option[Outcome] = {
+		val quality = boundedQuality(options, points max 0)
+
 		if (dice.allEqualTo(1))
-			Some(SpectacularSuccess(points))
+			Some(SpectacularSuccess(quality))
 		else if (dice.twoEqualTo(1))
-			Some(AutomaticSuccess(points))
+			Some(AutomaticSuccess(quality))
 		else if (dice.allEqualTo(20))
 			Some(SpectacularFailure())
 		else if (options.wildeMagie && dice.twoGreaterThan(18))
@@ -64,7 +66,7 @@ object Calculator extends OutcomeCalculator {
 		else None
 	}
 
-	def successOrFailure(options: Options, attributes: Attributes, points: Int, difficulty: Int, dice: Dice20): Outcome = {
+	private def successOrFailure(options: Options, attributes: Attributes, points: Int, difficulty: Int, dice: Dice20): Outcome = {
 		val diff = points - difficulty
 		val attributeList = List(attributes._1, attributes._2, attributes._3)
 		val effectiveAttributes = if (diff < 0) attributeList.map(_ + diff) else attributeList
@@ -76,10 +78,14 @@ object Calculator extends OutcomeCalculator {
 		if (leftover < 0) {
 			Failure(-leftover)
 		} else {
-			val quality = if (options.minimumQuality) 1 max leftover else leftover
+			val quality = boundedQuality(options, leftover)
 			val possibleDifficulty = comparisons.reduce(_ max _)
-			Success(quality, -possibleDifficulty)
+			Success(quality, effectivePoints - possibleDifficulty)
 		}
+	}
+
+	private def boundedQuality(options: Options, rawQuality: Int): Int = {
+		if (options.minimumQuality) 1 max rawQuality else rawQuality
 	}
 
 }
