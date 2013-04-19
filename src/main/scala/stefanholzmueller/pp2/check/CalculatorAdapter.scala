@@ -7,7 +7,7 @@ class CalculatorAdapter extends OutcomeExaminer {
 
 	def examine(check: Check, diceTriple: IntTriple): CheckResult = {
 		val options = new Options(check.hasMinimumQuality, check.hasFesteMatrix, check.hasTollpatsch, check.hasSpruchhemmung)
-		val attributes = (check.getAttribute1, check.getAttribute2, check.getAttribute3)
+		val attributes = List(check.getAttribute1, check.getAttribute2, check.getAttribute3)
 		val points = check.getValue
 		val difficulty = check.getDifficulty
 		val dice = new Dice(diceTriple.first, diceTriple.second, diceTriple.third)

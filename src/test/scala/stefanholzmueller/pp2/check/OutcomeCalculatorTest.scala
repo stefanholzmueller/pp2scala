@@ -11,7 +11,7 @@ class OutcomeCalculatorTest {
 	val withFesteMatrix = new Options(false, true)
 	val withWildeMagie = new Options(false, true, false)
 	val withSpruchhemmung = new Options(false, false, true)
-	val defaultAttributes = (11, 12, 13)
+	val defaultAttributes = List(11, 12, 13)
 
 	@Test
 	def spectacularSuccess {
@@ -404,7 +404,7 @@ class OutcomeCalculatorTest {
 
 	@Test
 	def scenario_extremeAttributes_smallerDifficulty {
-		val partial = OutcomeCalculator.examine(withoutMinimumQuality, (25, 13, 23), 9, 3)_
+		val partial = OutcomeCalculator.examine(withoutMinimumQuality, List(25, 13, 23), 9, 3)_
 		Assert.assertEquals(partial(new Dice(6, 12, 16)), Success(6, 6 + 1))
 		Assert.assertEquals(partial(new Dice(6, 13, 16)), Success(6, 6 + 0))
 		Assert.assertEquals(partial(new Dice(6, 14, 16)), Success(5, 5))
@@ -415,7 +415,7 @@ class OutcomeCalculatorTest {
 
 	@Test
 	def scenario_extremeAttributes_biggerDifficulty {
-		val partial = OutcomeCalculator.examine(withoutMinimumQuality, (25, 15, 23), 9, 14)_
+		val partial = OutcomeCalculator.examine(withoutMinimumQuality, List(25, 15, 23), 9, 14)_
 		Assert.assertEquals(partial(new Dice(6, 4, 3)), Success(0, 6))
 		Assert.assertEquals(partial(new Dice(6, 4, 16)), Success(0, 2))
 		Assert.assertEquals(partial(new Dice(20, 4, 17)), Success(0, 0))

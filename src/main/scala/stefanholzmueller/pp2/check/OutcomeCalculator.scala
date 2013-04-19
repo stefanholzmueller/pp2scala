@@ -5,9 +5,7 @@ import stefanholzmueller.pp2.util.IntTriple
 
 object OutcomeCalculator {
 
-	type Attributes = (Int, Int, Int)
-
-	def examine(options: Options, attributes: Attributes, points: Int, difficulty: Int)(dice: Dice): Outcome = {
+	def examine(options: Options, attributes: List[Int], points: Int, difficulty: Int)(dice: Dice): Outcome = {
 		specialOutcome(options, points, dice) match {
 			case Some(special) => special
 			case None => successOrFailure(options, attributes, points, difficulty, dice)
@@ -34,14 +32,13 @@ object OutcomeCalculator {
 		else None
 	}
 
-	private def successOrFailure(options: Options, attributes: Attributes, points: Int, difficulty: Int, dice: Dice): Outcome = {
+	private def successOrFailure(options: Options, attributes: List[Int], points: Int, difficulty: Int, dice: Dice): Outcome = {
 		val effectivePoints = points - difficulty
-		val attributeList = List(attributes._1, attributes._2, attributes._3)
+		val effectiveAttributes = if (effectivePoints < 0) attributes.map(_ + effectivePoints) else attributes
+		val comparisons = dice.compareWithAttributes(effectiveAttributes)
+		val usedPoints = comparisons.filter(_ > 0).sum
 
 		if (effectivePoints < 0) {
-			val effectiveAttributes = attributeList.map(_ + effectivePoints)
-			val comparisons = dice.compareWithAttributes(effectiveAttributes)
-			val usedPoints = comparisons.filter(_ > 0).sum
 			if (usedPoints > 0) {
 				Failure(usedPoints)
 			} else {
@@ -50,8 +47,6 @@ object OutcomeCalculator {
 				Success(quality, -worstDie)
 			}
 		} else {
-			val comparisons = dice.compareWithAttributes(attributeList)
-			val usedPoints = comparisons.filter(_ > 0).sum
 			if (usedPoints > effectivePoints) {
 				Failure(usedPoints - effectivePoints)
 			} else {
