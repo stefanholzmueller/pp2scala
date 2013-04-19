@@ -6,6 +6,10 @@ import stefanholzmueller.pp2.util.IntTriple
 object OutcomeCalculator {
 
 	def examine(options: Options, attributes: List[Int], points: Int, difficulty: Int)(dice: Dice): Outcome = {
+		require(options != null, "options must not be null")
+		require(attributes != null && attributes.length == 3, "attributes must be a list of length 3")
+		require(dice != null, "dice must not be null")
+
 		specialOutcome(options, points, dice) match {
 			case Some(special) => special
 			case None => successOrFailure(options, attributes, points, difficulty, dice)
