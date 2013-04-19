@@ -7,7 +7,7 @@ object OutcomeCalculator {
 
 	type Attributes = (Int, Int, Int)
 
-	def examine(options: Options, attributes: Attributes, points: Int, difficulty: Int, dice: Dice): Outcome = {
+	def examine(options: Options, attributes: Attributes, points: Int, difficulty: Int)(dice: Dice): Outcome = {
 		specialOutcome(options, points, dice) match {
 			case Some(special) => special
 			case None => successOrFailure(options, attributes, points, difficulty, dice)
@@ -68,7 +68,7 @@ object OutcomeCalculator {
 						Success(quality, leftoverPoints - worstDie)
 					} else {
 						val quality = applyMinimumQuality(options, leftoverPoints)
-						Success(quality, quality)
+						Success(quality, leftoverPoints)
 					}
 				}
 			}
