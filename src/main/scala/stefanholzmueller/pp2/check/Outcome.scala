@@ -19,4 +19,3 @@ case class Failure(gap: Int) extends Unuccessful
 case class AutomaticFailure() extends Unuccessful
 case class SpectacularFailure() extends Unuccessful
 case class Spruchhemmung() extends Unuccessful
-
