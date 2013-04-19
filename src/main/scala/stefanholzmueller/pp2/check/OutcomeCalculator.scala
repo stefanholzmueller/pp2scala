@@ -33,30 +33,27 @@ object OutcomeCalculator {
 	}
 
 	private def successOrFailure(options: Options, attributes: List[Int], points: Int, difficulty: Int, dice: Dice): Outcome = {
-		val effectivePoints = points - difficulty
-		val effectiveAttributes = if (effectivePoints < 0) attributes.map(_ + effectivePoints) else attributes
+		val relative = points - difficulty
+		val effectivePoints = relative max 0
+		val effectiveAttributes = if (relative < 0) attributes.map(_ + relative) else attributes
 		val comparisons = dice.compareWithAttributes(effectiveAttributes)
 		val usedPoints = comparisons.filter(_ > 0).sum
 
-		if (effectivePoints < 0) {
-			if (usedPoints > 0) {
-				Failure(usedPoints)
-			} else {
+		if (usedPoints > effectivePoints) {
+			Failure(usedPoints - effectivePoints)
+		} else {
+			if (relative < 0) {
 				val quality = applyMinimumQuality(options, 0)
 				val worstDie = comparisons.reduce(_ max _)
 				Success(quality, -worstDie)
-			}
-		} else {
-			if (usedPoints > effectivePoints) {
-				Failure(usedPoints - effectivePoints)
 			} else {
 				if (usedPoints == 0) {
-					val rawQuality = points min effectivePoints
+					val rawQuality = points min relative
 					val quality = applyMinimumQuality(options, rawQuality)
 					val worstDie = comparisons.reduce(_ max _)
-					Success(quality, effectivePoints - worstDie)
+					Success(quality, relative - worstDie)
 				} else {
-					val leftoverPoints = effectivePoints - usedPoints
+					val leftoverPoints = relative - usedPoints
 					if (leftoverPoints >= points) {
 						val quality = applyMinimumQuality(options, points)
 						val worstDie = comparisons.reduce(_ max _) min 0
