@@ -1,6 +1,6 @@
 package stefanholzmueller.pp2.util
 
-class Dice20(values: Int*) {
+class Dice(values: Int*) {
 	val elements = Vector(values: _*)
 	for (x <- elements) {
 		require(x >= 1 && x <= 20, "dice values must be between 1 and 20")

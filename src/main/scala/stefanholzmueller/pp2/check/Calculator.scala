@@ -1,6 +1,6 @@
 package stefanholzmueller.pp2.check
 
-import stefanholzmueller.pp2.util.Dice20
+import stefanholzmueller.pp2.util.Dice
 import stefanholzmueller.pp2.util.IntTriple
 
 object Calculator extends OutcomeCalculator {
@@ -25,7 +25,7 @@ object Calculator extends OutcomeCalculator {
 		val attributes = (check.getAttribute1, check.getAttribute2, check.getAttribute3)
 		val points = check.getValue
 		val difficulty = check.getDifficulty
-		val dice = new Dice20(diceTriple.first, diceTriple.second, diceTriple.third)
+		val dice = new Dice (diceTriple.first, diceTriple.second, diceTriple.third)
 
 		val outcome = examine(options, attributes, points, difficulty, dice)
 
@@ -40,14 +40,14 @@ object Calculator extends OutcomeCalculator {
 		}
 	}
 
-	def examine(options: Options, attributes: Attributes, points: Int, difficulty: Int, dice: Dice20): Outcome = {
+	def examine(options: Options, attributes: Attributes, points: Int, difficulty: Int, dice: Dice): Outcome = {
 		specialOutcome(options, points, dice) match {
 			case Some(special) => special
 			case None => successOrFailure(options, attributes, points, difficulty, dice)
 		}
 	}
 
-	private def specialOutcome(options: Options, points: Int, dice: Dice20): Option[Outcome] = {
+	private def specialOutcome(options: Options, points: Int, dice: Dice): Option[Outcome] = {
 		val quality = applyMinimumQuality(options, points)
 
 		if (dice.allEqualTo(1))
@@ -67,7 +67,7 @@ object Calculator extends OutcomeCalculator {
 		else None
 	}
 
-	private def successOrFailure(options: Options, attributes: Attributes, points: Int, difficulty: Int, dice: Dice20): Outcome = {
+	private def successOrFailure(options: Options, attributes: Attributes, points: Int, difficulty: Int, dice: Dice): Outcome = {
 		val effectivePoints = points - difficulty
 		val attributeList = List(attributes._1, attributes._2, attributes._3)
 
