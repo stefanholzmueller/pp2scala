@@ -3,7 +3,7 @@ package stefanholzmueller.pp2.check
 import stefanholzmueller.pp2.util.Dice
 import stefanholzmueller.pp2.util.IntTriple
 
-class CalculatorAdapter extends OutcomeExaminer {
+class OutcomeCalculatorAdapter extends OutcomeExaminer {
 
 	def examine(check: Check, diceTriple: IntTriple): CheckResult = {
 		val options = new Options(check.hasMinimumQuality, check.hasFesteMatrix, check.hasTollpatsch, check.hasSpruchhemmung)

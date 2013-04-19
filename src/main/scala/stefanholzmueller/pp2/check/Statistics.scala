@@ -1,5 +1,3 @@
 package stefanholzmueller.pp2.check
 
-class Statistics {
-
-}
+case class Statistics(val probability: Double, val average: Double)
