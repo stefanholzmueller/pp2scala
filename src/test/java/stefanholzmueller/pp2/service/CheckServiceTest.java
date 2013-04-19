@@ -14,8 +14,8 @@ import stefanholzmueller.pp2.check.Check;
 import stefanholzmueller.pp2.check.CheckOutcome;
 import stefanholzmueller.pp2.check.CheckResult;
 import stefanholzmueller.pp2.check.CheckRoll;
-import stefanholzmueller.pp2.check.CheckStatisticsCalculator;
-import stefanholzmueller.pp2.check.CheckExaminer;
+import stefanholzmueller.pp2.check.OutcomeExaminer;
+import stefanholzmueller.pp2.check.StatisticsGatherer;
 import stefanholzmueller.pp2.util.IntTriple;
 
 @Test
@@ -23,9 +23,9 @@ public class CheckServiceTest {
 
     private CheckService checkService;
     @Mock
-    private CheckExaminer checkResultCalculator;
+    private OutcomeExaminer checkResultCalculator;
     @Mock
-    private CheckStatisticsCalculator checkStatisticsCalculator;
+    private StatisticsGatherer checkStatisticsCalculator;
 
     @BeforeMethod
     public void setUp() {

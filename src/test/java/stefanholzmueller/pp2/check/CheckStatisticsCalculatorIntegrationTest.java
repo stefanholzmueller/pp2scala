@@ -14,7 +14,7 @@ import stefanholzmueller.pp2.check.CheckStatisticsCalculator;
 
 public class CheckStatisticsCalculatorIntegrationTest {
 
-    private CheckStatisticsCalculator realCalculator;
+    private StatisticsGatherer realCalculator;
     private Check trivialCheck;
 
     @BeforeMethod
@@ -25,21 +25,21 @@ public class CheckStatisticsCalculatorIntegrationTest {
 
     @Test
     public void shouldCalculateProbabilityOfSuccess() throws Exception {
-        CheckStatistics checkStatistics = realCalculator.calculateStatistics(trivialCheck);
+        CheckStatistics checkStatistics = realCalculator.gather(trivialCheck);
 
         assertThat(checkStatistics.getProbabilityOfSuccess(), is(0.461));
     }
 
     @Test
     public void shouldCalculateAverageQuality() throws Exception {
-        CheckStatistics checkStatistics = realCalculator.calculateStatistics(trivialCheck);
+        CheckStatistics checkStatistics = realCalculator.gather(trivialCheck);
 
         assertThat(checkStatistics.getAverageQuality(), is(1.215875));
     }
 
     @Test
     public void shouldCalculateAverageQualityForSuccesses() throws Exception {
-        CheckStatistics checkStatistics = realCalculator.calculateStatistics(trivialCheck);
+        CheckStatistics checkStatistics = realCalculator.gather(trivialCheck);
 
         assertThat(checkStatistics.getAverageQualityForSuccesses(), is(2.6374728850325377));
     }

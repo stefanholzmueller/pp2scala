@@ -24,7 +24,7 @@ import stefanholzmueller.pp2.util.IntTriple;
 
 public class CheckStatisticsCalculatorTest {
 
-    private CheckStatisticsCalculator calculator;
+    private StatisticsGatherer calculator;
     private Check trivialCheck;
 
     @Mock
@@ -42,7 +42,7 @@ public class CheckStatisticsCalculatorTest {
     public void shouldRunCheckDecider8000Times() throws Exception {
         allChecksAreSuccessful();
 
-        calculator.calculateStatistics(trivialCheck);
+        calculator.gather(trivialCheck);
 
         verify(checkDecider, times(8000)).examine(eq(trivialCheck), any(IntTriple.class));
     }
@@ -51,7 +51,7 @@ public class CheckStatisticsCalculatorTest {
     public void shouldReturnMaximumProbabilityIfEveryCheckIsSuccessful() throws Exception {
         allChecksAreSuccessful();
 
-        CheckStatistics checkStatistics = calculator.calculateStatistics(trivialCheck);
+        CheckStatistics checkStatistics = calculator.gather(trivialCheck);
 
         assertThat(checkStatistics.getProbabilityOfSuccess(), is(1.0));
     }
@@ -60,7 +60,7 @@ public class CheckStatisticsCalculatorTest {
     public void shouldReturnAverageQualityIfEveryCheckIsSuccessful() throws Exception {
         allChecksAreSuccessful();
 
-        CheckStatistics checkStatistics = calculator.calculateStatistics(trivialCheck);
+        CheckStatistics checkStatistics = calculator.gather(trivialCheck);
 
         assertThat(checkStatistics.getAverageQuality(), is(4.0));
     }
@@ -71,7 +71,7 @@ public class CheckStatisticsCalculatorTest {
         CheckResult unsuccessful = new CheckResult(CheckOutcome.UNSUCCESSFUL, null, null);
         when(checkDecider.examine(eq(trivialCheck), any(IntTriple.class))).thenReturn(successful, unsuccessful);
 
-        CheckStatistics checkStatistics = calculator.calculateStatistics(trivialCheck);
+        CheckStatistics checkStatistics = calculator.gather(trivialCheck);
 
         assertThat(checkStatistics.getAverageQualityForSuccesses(), is(3.0));
     }

@@ -8,7 +8,7 @@ import stefanholzmueller.pp2.util.IntTriple;
 
 @Path("")
 // hack for hk2 injection
-public class CheckResultCalculator implements CheckExaminer {
+public class CheckResultCalculator implements OutcomeExaminer {
 
 	@Override
 	public CheckResult examine(Check check, IntTriple dice) {

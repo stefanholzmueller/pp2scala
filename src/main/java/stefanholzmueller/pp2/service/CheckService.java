@@ -11,8 +11,8 @@ import stefanholzmueller.pp2.check.Check;
 import stefanholzmueller.pp2.check.CheckResult;
 import stefanholzmueller.pp2.check.CheckRoll;
 import stefanholzmueller.pp2.check.CheckStatistics;
-import stefanholzmueller.pp2.check.CheckStatisticsCalculator;
-import stefanholzmueller.pp2.check.CheckExaminer;
+import stefanholzmueller.pp2.check.OutcomeExaminer;
+import stefanholzmueller.pp2.check.StatisticsGatherer;
 import stefanholzmueller.pp2.util.IntTriple;
 
 @Path("/check")
@@ -20,11 +20,11 @@ import stefanholzmueller.pp2.util.IntTriple;
 @Produces(MediaType.APPLICATION_JSON)
 public class CheckService {
 
-    private CheckStatisticsCalculator checkStatisticsCalculator;
-    private CheckExaminer checkResultCalculator;
+    private StatisticsGatherer checkStatisticsCalculator;
+    private OutcomeExaminer checkResultCalculator;
 
     @Inject
-    public CheckService(CheckStatisticsCalculator checkStatisticsCalculator, CheckExaminer checkResultCalculator) {
+    public CheckService(StatisticsGatherer checkStatisticsCalculator, OutcomeExaminer checkResultCalculator) {
         this.checkStatisticsCalculator = checkStatisticsCalculator;
         this.checkResultCalculator = checkResultCalculator;
     }
@@ -32,7 +32,7 @@ public class CheckService {
     @Path("/statistics")
     @PUT
     public CheckStatistics calculateStatistics(Check check) {
-        return checkStatisticsCalculator.calculateStatistics(check);
+        return checkStatisticsCalculator.gather(check);
     }
 
     @Path("/result")
