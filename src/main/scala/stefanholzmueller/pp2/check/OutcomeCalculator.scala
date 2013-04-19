@@ -38,26 +38,24 @@ object OutcomeCalculator {
 		val effectiveAttributes = attributes.map(_ + (ease min 0))
 		val comparisons = dice.compareWithAttributes(effectiveAttributes)
 		val usedPoints = comparisons.filter(_ > 0).sum
+		val worstDie = comparisons.reduce(_ max _)
 
 		if (usedPoints > effectivePoints) {
 			Failure(usedPoints - effectivePoints)
 		} else {
-			if (ease < 0) {
+			if (ease < 0) { // effectivePoints == 0
 				val quality = applyMinimumQuality(options, 0)
-				val worstDie = comparisons.reduce(_ max _)
 				Success(quality, -worstDie)
 			} else {
 				if (usedPoints == 0) {
 					val rawQuality = points min ease
 					val quality = applyMinimumQuality(options, rawQuality)
-					val worstDie = comparisons.reduce(_ max _)
 					Success(quality, ease - worstDie)
 				} else {
-					val leftoverPoints = ease - usedPoints
+					val leftoverPoints = ease - usedPoints // points - difficulty - usedPoints
 					if (leftoverPoints >= points) {
 						val quality = applyMinimumQuality(options, points)
-						val worstDie = comparisons.reduce(_ max _) min 0
-						Success(quality, leftoverPoints - worstDie)
+						Success(quality, leftoverPoints - (worstDie min 0))
 					} else {
 						val quality = applyMinimumQuality(options, leftoverPoints)
 						Success(quality, leftoverPoints)
