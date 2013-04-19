@@ -22,10 +22,12 @@ class Dice20(values: Int*) {
 		!everyValueJustOnce
 	}
 
-	def sum() = elements.sum
+	def sum = elements.sum
 
 	def compareWithAttributes(attributeList: List[Int]) = {
 		val pairs = elements.zip(attributeList)
 		pairs.map(Function.tupled((die, attr) => die - attr)).to[Vector]
 	}
+
+	override def toString = elements.mkString(", ")
 }

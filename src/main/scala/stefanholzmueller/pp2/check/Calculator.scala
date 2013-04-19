@@ -11,6 +11,7 @@ object Calculator extends OutcomeCalculator {
 		val wildeMagie: Boolean,
 		val spruchhemmung: Boolean) {
 
+		def this(mq: Boolean) = this(mq, false, false, false)
 		def this(mq: Boolean, fm: Boolean) = this(mq, fm, false, false)
 		def this(mq: Boolean, wm: Boolean, sh: Boolean) = this(mq, false, wm, sh)
 
@@ -47,7 +48,7 @@ object Calculator extends OutcomeCalculator {
 	}
 
 	private def specialOutcome(options: Options, points: Int, dice: Dice20): Option[Outcome] = {
-		val quality = boundedQuality(options, points max 0)
+		val quality = applyMinimumQuality(options, points)
 
 		if (dice.allEqualTo(1))
 			Some(SpectacularSuccess(quality))
@@ -67,25 +68,48 @@ object Calculator extends OutcomeCalculator {
 	}
 
 	private def successOrFailure(options: Options, attributes: Attributes, points: Int, difficulty: Int, dice: Dice20): Outcome = {
-		val diff = points - difficulty
+		val effectivePoints = points - difficulty
 		val attributeList = List(attributes._1, attributes._2, attributes._3)
-		val effectiveAttributes = if (diff < 0) attributeList.map(_ + diff) else attributeList
-		val effectivePoints = diff max 0
-		val comparisons = dice.compareWithAttributes(effectiveAttributes)
-		val usedPoints = comparisons.filter(_ > 0).sum
 
-		val leftover = effectivePoints - usedPoints
-		if (leftover < 0) {
-			Failure(-leftover)
+		if (effectivePoints < 0) {
+			val effectiveAttributes = attributeList.map(_ + effectivePoints)
+			val comparisons = dice.compareWithAttributes(effectiveAttributes)
+			val usedPoints = comparisons.filter(_ > 0).sum
+			if (usedPoints > 0) {
+				Failure(usedPoints)
+			} else {
+				val quality = applyMinimumQuality(options, 0)
+				val worstDie = comparisons.reduce(_ max _)
+				Success(quality, -worstDie)
+			}
 		} else {
-			val quality = boundedQuality(options, leftover)
-			val possibleDifficulty = comparisons.reduce(_ max _)
-			Success(quality, effectivePoints - possibleDifficulty)
+			val comparisons = dice.compareWithAttributes(attributeList)
+			val usedPoints = comparisons.filter(_ > 0).sum
+			if (usedPoints > effectivePoints) {
+				Failure(usedPoints - effectivePoints)
+			} else {
+				if (usedPoints == 0) {
+					val rawQuality = points min effectivePoints
+					val quality = applyMinimumQuality(options, rawQuality)
+					val worstDie = comparisons.reduce(_ max _)
+					Success(quality, effectivePoints - worstDie)
+				} else {
+					val leftoverPoints = effectivePoints - usedPoints
+					if (leftoverPoints >= points) {
+						val quality = applyMinimumQuality(options, points)
+						val worstDie = comparisons.reduce(_ max _) min 0
+						Success(quality, leftoverPoints - worstDie)
+					} else {
+						val quality = applyMinimumQuality(options, leftoverPoints)
+						Success(quality, quality)
+					}
+				}
+			}
 		}
 	}
 
-	private def boundedQuality(options: Options, rawQuality: Int): Int = {
-		if (options.minimumQuality) 1 max rawQuality else rawQuality
+	private def applyMinimumQuality(options: Options, rawQuality: Int): Int = {
+		if (options.minimumQuality) rawQuality max 1 else rawQuality max 0
 	}
 
 }
