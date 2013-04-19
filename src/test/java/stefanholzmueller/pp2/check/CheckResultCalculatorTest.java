@@ -15,7 +15,7 @@ public class CheckResultCalculatorTest {
 	private static final IntTriple ALL_THREES = new IntTriple(3, 3, 3);
 
 	private Check trivialCheck;
-	private OutcomeCalculator calculator;
+	private CheckExaminer calculator;
 
 	@BeforeMethod
 	public void setUp() throws Exception {

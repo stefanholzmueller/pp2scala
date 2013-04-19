@@ -2,9 +2,8 @@ package stefanholzmueller.pp2.check
 
 import stefanholzmueller.pp2.util.Dice
 import stefanholzmueller.pp2.util.IntTriple
-import stefanholzmueller.pp2.check.Calculator.Options
 
-class CalculatorAdapter extends OutcomeCalculator {
+class CalculatorAdapter extends CheckExaminer {
 
 	def examine(check: Check, diceTriple: IntTriple): CheckResult = {
 		val options = new Options(check.hasMinimumQuality, check.hasFesteMatrix, check.hasTollpatsch, check.hasSpruchhemmung)
@@ -13,7 +12,7 @@ class CalculatorAdapter extends OutcomeCalculator {
 		val difficulty = check.getDifficulty
 		val dice = new Dice(diceTriple.first, diceTriple.second, diceTriple.third)
 
-		val outcome = Calculator.examine(options, attributes, points, difficulty, dice)
+		val outcome = OutcomeCalculator.examine(options, attributes, points, difficulty, dice)
 
 		outcome match {
 			case Success(q, g) => new CheckResult(CheckOutcome.SUCCESSFUL, q, g)

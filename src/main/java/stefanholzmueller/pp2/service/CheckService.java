@@ -12,7 +12,7 @@ import stefanholzmueller.pp2.check.CheckResult;
 import stefanholzmueller.pp2.check.CheckRoll;
 import stefanholzmueller.pp2.check.CheckStatistics;
 import stefanholzmueller.pp2.check.CheckStatisticsCalculator;
-import stefanholzmueller.pp2.check.OutcomeCalculator;
+import stefanholzmueller.pp2.check.CheckExaminer;
 import stefanholzmueller.pp2.util.IntTriple;
 
 @Path("/check")
@@ -21,10 +21,10 @@ import stefanholzmueller.pp2.util.IntTriple;
 public class CheckService {
 
     private CheckStatisticsCalculator checkStatisticsCalculator;
-    private OutcomeCalculator checkResultCalculator;
+    private CheckExaminer checkResultCalculator;
 
     @Inject
-    public CheckService(CheckStatisticsCalculator checkStatisticsCalculator, OutcomeCalculator checkResultCalculator) {
+    public CheckService(CheckStatisticsCalculator checkStatisticsCalculator, CheckExaminer checkResultCalculator) {
         this.checkStatisticsCalculator = checkStatisticsCalculator;
         this.checkResultCalculator = checkResultCalculator;
     }

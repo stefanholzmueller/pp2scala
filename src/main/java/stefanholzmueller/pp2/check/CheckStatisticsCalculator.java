@@ -12,10 +12,10 @@ public class CheckStatisticsCalculator {
     private static final int DIE_MAX_PIPS = 20;
     private static final int NUMBER_OF_CHECKS = DIE_MAX_PIPS * DIE_MAX_PIPS * DIE_MAX_PIPS;
 
-    private final OutcomeCalculator checkDecider;
+    private final CheckExaminer checkDecider;
 
     @Inject
-    public CheckStatisticsCalculator(OutcomeCalculator checkDecider) {
+    public CheckStatisticsCalculator(CheckExaminer checkDecider) {
         this.checkDecider = checkDecider;
     }
 
