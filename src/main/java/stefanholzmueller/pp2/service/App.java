@@ -15,22 +15,22 @@ import stefanholzmueller.pp2.check.CheckStatisticsCalculator;
 @ApplicationPath("/")
 public class App extends Application {
 
-    @Override
-    public Set<Class<?>> getClasses() {
-        final Set<Class<?>> classes = new HashSet<Class<?>>();
-        classes.add(RandomService.class);
-        classes.add(CheckService.class);
-        classes.add(CheckStatisticsCalculator.class);
-        classes.add(CheckResultCalculator.class);
-        return classes;
-    }
+	@Override
+	public Set<Class<?>> getClasses() {
+		final Set<Class<?>> classes = new HashSet<Class<?>>();
+		classes.add(RandomService.class);
+		classes.add(CheckService.class);
+		classes.add(CheckStatisticsCalculator.class);
+		classes.add(CheckResultCalculator.class);
+		return classes;
+	}
 
-    @Override
-    public Set<Object> getSingletons() {
-        final Set<Object> instances = new HashSet<Object>();
-        instances.add(new JacksonFeature());
-        instances.add(new LoggingFilter());
-        return instances;
-    }
+	@Override
+	public Set<Object> getSingletons() {
+		final Set<Object> instances = new HashSet<Object>();
+		instances.add(new JacksonFeature());
+		instances.add(new LoggingFilter());
+		return instances;
+	}
 
 }

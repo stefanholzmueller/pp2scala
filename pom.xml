@@ -8,7 +8,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jersey.version>2.0-rc1</jersey.version>
+		<jersey.version>2.0-m11</jersey.version>
 		<slf4j.version>1.7.2</slf4j.version>
 	</properties>
 
@@ -46,8 +46,8 @@
 			<scope>test</scope>
 			<exclusions>
 				<exclusion>
-					<groupId>junit</groupId>
-					<artifactId>junit</artifactId>
+					<groupId>org.hamcrest</groupId>
+					<artifactId>hamcrest-core</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
