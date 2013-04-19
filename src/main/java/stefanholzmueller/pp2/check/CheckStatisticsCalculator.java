@@ -29,7 +29,7 @@ public class CheckStatisticsCalculator {
                 for (int die3 = 1; die3 <= DIE_MAX_PIPS; die3++) {
 
                     IntTriple diceTriple = new IntTriple(die1, die2, die3);
-                    CheckResult checkResult = checkDecider.calculateResult(check, diceTriple);
+                    CheckResult checkResult = checkDecider.examine(check, diceTriple);
 
                     successfulChecksTotal = incrementSuccessfulChecksTotal(checkResult, successfulChecksTotal);
                     qualityTotal = incrementQualityTotal(checkResult, qualityTotal);

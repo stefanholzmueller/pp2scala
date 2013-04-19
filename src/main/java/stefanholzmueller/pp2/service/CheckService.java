@@ -40,6 +40,6 @@ public class CheckService {
     public CheckResult calculateResult(CheckRoll checkRoll) {
         Check check = checkRoll.getCheck();
         IntTriple dice = checkRoll.getDice();
-        return checkResultCalculator.calculateResult(check, dice);
+        return checkResultCalculator.examine(check, dice);
     }
 }

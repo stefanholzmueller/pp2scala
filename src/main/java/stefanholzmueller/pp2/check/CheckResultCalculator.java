@@ -11,7 +11,7 @@ import stefanholzmueller.pp2.util.IntTriple;
 public class CheckResultCalculator implements OutcomeCalculator {
 
 	@Override
-	public CheckResult calculateResult(Check check, IntTriple dice) {
+	public CheckResult examine(Check check, IntTriple dice) {
 		if (check == null || dice == null) {
 			throw new IllegalArgumentException("arguments must not be null");
 		}

@@ -20,7 +20,7 @@ object Calculator extends OutcomeCalculator {
 
 	type Attributes = (Int, Int, Int)
 
-	def calculateResult(check: Check, diceTriple: IntTriple): CheckResult = {
+	def examine(check: Check, diceTriple: IntTriple): CheckResult = {
 		val options = new Options(check.hasMinimumQuality, check.hasFesteMatrix, check.hasTollpatsch, check.hasSpruchhemmung)
 		val attributes = (check.getAttribute1, check.getAttribute2, check.getAttribute3)
 		val points = check.getValue

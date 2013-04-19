@@ -44,7 +44,7 @@ public class CheckStatisticsCalculatorTest {
 
         calculator.calculateStatistics(trivialCheck);
 
-        verify(checkDecider, times(8000)).calculateResult(eq(trivialCheck), any(IntTriple.class));
+        verify(checkDecider, times(8000)).examine(eq(trivialCheck), any(IntTriple.class));
     }
 
     @Test
@@ -69,7 +69,7 @@ public class CheckStatisticsCalculatorTest {
     public void shouldReturnAverageQualityForSuccesses() throws Exception {
         CheckResult successful = new CheckResult(CheckOutcome.SUCCESSFUL, 3, null);
         CheckResult unsuccessful = new CheckResult(CheckOutcome.UNSUCCESSFUL, null, null);
-        when(checkDecider.calculateResult(eq(trivialCheck), any(IntTriple.class))).thenReturn(successful, unsuccessful);
+        when(checkDecider.examine(eq(trivialCheck), any(IntTriple.class))).thenReturn(successful, unsuccessful);
 
         CheckStatistics checkStatistics = calculator.calculateStatistics(trivialCheck);
 
@@ -78,6 +78,6 @@ public class CheckStatisticsCalculatorTest {
 
     private void allChecksAreSuccessful() {
         CheckResult checkResult = new CheckResult(CheckOutcome.SUCCESSFUL, 4, null);
-        when(checkDecider.calculateResult(eq(trivialCheck), any(IntTriple.class))).thenReturn(checkResult);
+        when(checkDecider.examine(eq(trivialCheck), any(IntTriple.class))).thenReturn(checkResult);
     }
 }

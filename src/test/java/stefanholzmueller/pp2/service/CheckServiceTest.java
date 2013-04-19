@@ -41,7 +41,7 @@ public class CheckServiceTest {
         when(checkRoll.getCheck()).thenReturn(check);
         when(checkRoll.getDice()).thenReturn(dice);
         CheckResult checkResult = new CheckResult(CheckOutcome.LUCKY_CHECK, 7, 3);
-        when(checkResultCalculator.calculateResult(check, dice)).thenReturn(checkResult);
+        when(checkResultCalculator.examine(check, dice)).thenReturn(checkResult);
 
         CheckResult serviceResult = checkService.calculateResult(checkRoll);
 
