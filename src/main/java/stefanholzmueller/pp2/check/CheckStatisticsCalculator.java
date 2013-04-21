@@ -71,11 +71,10 @@ public class CheckStatisticsCalculator implements StatisticsGatherer {
 			int qualityTotal) {
 		double probabilityOfSuccess = (double) successfulChecksTotal
 				/ NUMBER_OF_CHECKS;
-		double averageQuality = (double) qualityTotal / NUMBER_OF_CHECKS;
 		double averageQualityForSuccesses = (double) qualityTotal
 				/ successfulChecksTotal;
 
-		return new CheckStatistics(probabilityOfSuccess, averageQuality,
+		return new CheckStatistics(probabilityOfSuccess,
 				averageQualityForSuccesses);
 	}
 }
