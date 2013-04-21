@@ -12,3 +12,8 @@ class Options(
 
 	require(!(festeMatrix && (wildeMagie || spruchhemmung)))
 }
+
+object Options {
+	def default = new Options(true, false, false, false)
+	def nothing = new Options(false, false, false, false)
+}

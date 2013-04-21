@@ -16,7 +16,7 @@ object OutcomeCalculator {
 		}
 	}
 
-	private def specialOutcome(options: Options, points: Int, dice: Dice): Option[Outcome] = {
+	def specialOutcome(options: Options, points: Int, dice: Dice): Option[Outcome] = {
 		val quality = applyMinimumQuality(options, points)
 
 		if (dice.allEqualTo(1))
