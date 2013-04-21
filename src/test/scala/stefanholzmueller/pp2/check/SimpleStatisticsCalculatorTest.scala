@@ -46,4 +46,22 @@ class SimpleStatisticsCalculatorTest {
 		val statistics = SimpleStatisticsCalculator.gather(Options.default, List(12, 12, 12), 4, -24)
 		Assert.assertEquals(statistics, Statistics(0.99275, 4))
 	}
+
+	@Test
+	def defaultCheck_withSpruchhemmung {
+		val statistics = SimpleStatisticsCalculator.gather(new Options(true, false, false, true), List(12, 12, 12), 4, 0)
+		Assert.assertEquals(statistics, Statistics(0.38825, 2.713457823567289))
+	}
+
+	@Test
+	def maximumSuccess_withWildeMagie {
+		val statistics = SimpleStatisticsCalculator.gather(new Options(true, false, true, false), List(20, 20, 20), 18, 0)
+		Assert.assertEquals(statistics, Statistics(0.972, 18))
+	}
+
+	@Test
+	def maximumSuccess_withFesteMatrix {
+		val statistics = SimpleStatisticsCalculator.gather(new Options(true, true, false, false), List(20, 20, 20), 18, 0)
+		Assert.assertEquals(statistics, Statistics(0.999125, 18))
+	}
 }
