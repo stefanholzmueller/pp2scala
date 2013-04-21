@@ -12,7 +12,7 @@ sealed trait Unuccessful extends Outcome {
 	override def isSuccessful = false
 }
 
-case class Success(quality: Int, gap: Int) extends Successful
+case class Success(quality: Int, rest: Int) extends Successful
 case class AutomaticSuccess(quality: Int) extends Successful
 case class SpectacularSuccess(quality: Int) extends Successful
 case class Failure(gap: Int) extends Unuccessful
