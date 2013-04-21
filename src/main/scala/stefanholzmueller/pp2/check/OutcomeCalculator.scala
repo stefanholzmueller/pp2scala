@@ -47,22 +47,18 @@ object OutcomeCalculator {
 			Failure(usedPoints - effectivePoints)
 		} else {
 			val worstDie = comparisons.reduce(_ max _)
-			if (ease < 0) { // effectivePoints == 0  // points < difficulty
-				val quality = applyMinimumQuality(options, 0)
-				Success(quality, -worstDie)
+			if (usedPoints == 0) {
+				val nonnegativeEase = ease max 0
+				val rawQuality = points min nonnegativeEase // points min (points - difficulty)
+				val quality = applyMinimumQuality(options, rawQuality)
+				Success(quality, nonnegativeEase - worstDie)
 			} else {
-				if (usedPoints == 0) {
-					val rawQuality = points min ease // points min (points - difficulty)
-					val quality = applyMinimumQuality(options, rawQuality)
-					Success(quality, ease - worstDie)
+				val leftoverPoints = ease - usedPoints // points - difficulty - usedPoints
+				val quality = applyMinimumQuality(options, leftoverPoints min points)
+				if (leftoverPoints >= points) { // difficulty + usedPoints <= 0
+					Success(quality, leftoverPoints - (worstDie min 0))
 				} else {
-					val leftoverPoints = ease - usedPoints // points - difficulty - usedPoints
-					val quality = applyMinimumQuality(options, leftoverPoints min points)
-					if (leftoverPoints >= points) { // difficulty + usedPoints <= 0
-						Success(quality, leftoverPoints - (worstDie min 0))
-					} else {
-						Success(quality, leftoverPoints)
-					}
+					Success(quality, leftoverPoints)
 				}
 			}
 		}
