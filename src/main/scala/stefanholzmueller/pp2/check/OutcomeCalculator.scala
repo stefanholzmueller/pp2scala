@@ -17,12 +17,10 @@ object OutcomeCalculator {
 	}
 
 	private def specialOutcome(options: Options, points: Int, dice: Dice): Option[Outcome] = {
-		val quality = applyMinimumQuality(options, points)
-
 		if (dice.allEqualTo(1))
-			Some(SpectacularSuccess(quality))
+			Some(SpectacularSuccess(applyMinimumQuality(options, points)))
 		else if (dice.twoEqualTo(1))
-			Some(AutomaticSuccess(quality))
+			Some(AutomaticSuccess(applyMinimumQuality(options, points)))
 		else if (dice.allEqualTo(20))
 			Some(SpectacularFailure())
 		else if (options.wildeMagie && dice.twoGreaterThan(18))
@@ -36,10 +34,22 @@ object OutcomeCalculator {
 		else None
 	}
 
-	private def successOrFailure(options: Options, attributes: List[Int], points: Int, difficulty: Int, dice: Dice): Outcome = {
+	private def successOrFailure(options: Options, attributes: List[Int], points: Int, difficulty: Int, dice: Dice) = {
+		val (ease, effectivePoints, effectiveAttributes) = diceIndependentPart(attributes, points, difficulty)
+		successOrFailureInternal(options, points, dice, ease, effectivePoints, effectiveAttributes)
+	}
+
+	private def diceIndependentPart(attributes: List[Int], points: Int, difficulty: Int): (Int, Int, List[Int]) = {
 		val ease = points - difficulty
 		val effectivePoints = ease max 0
-		val effectiveAttributes = attributes.map(_ + (ease min 0))
+		val effectiveAttributes = if (ease < 0) attributes.map(_ + ease) else attributes
+
+		(ease, effectivePoints, effectiveAttributes)
+	}
+
+	private def successOrFailureInternal(options: Options, points: Int, dice: Dice,
+		ease: Int, effectivePoints: Int, effectiveAttributes: List[Int]) = {
+
 		val comparisons = dice.compareWithAttributes(effectiveAttributes)
 		val usedPoints = comparisons.filter(_ > 0).sum
 
