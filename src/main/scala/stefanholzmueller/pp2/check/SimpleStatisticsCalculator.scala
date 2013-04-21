@@ -28,10 +28,16 @@ object SimpleStatisticsCalculator {
 			}
 		}
 
-		val probability: Double = successes / (total: Double)
+		val chance: Double = successes / (total: Double)
 		val average: Double = quality / (successes: Double)
 
-		Statistics(probability, average)
+		Statistics(chance, average)
 	}
 
+	def main(args: Array[String]) {
+		while (true) {
+			val stats = gather(new Options(true, false, false, true), List(13, 11, 15), 8, 3)
+			println(stats.toString)
+		}
+	}
 }
