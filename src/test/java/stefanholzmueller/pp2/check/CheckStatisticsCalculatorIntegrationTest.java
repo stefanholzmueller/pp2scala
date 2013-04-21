@@ -22,15 +22,14 @@ public class CheckStatisticsCalculatorIntegrationTest {
 	public void shouldCalculateProbabilityOfSuccess() throws Exception {
 		CheckStatistics checkStatistics = realCalculator.gather(trivialCheck);
 
-		assertThat(checkStatistics.getProbabilityOfSuccess(), is(0.461));
+		assertThat(checkStatistics.getChance(), is(0.461));
 	}
 
 	@Test
 	public void shouldCalculateAverageQualityForSuccesses() throws Exception {
 		CheckStatistics checkStatistics = realCalculator.gather(trivialCheck);
 
-		assertThat(checkStatistics.getAverageQualityForSuccesses(),
-				is(2.6374728850325377));
+		assertThat(checkStatistics.getAverageQuality(), is(2.6374728850325377));
 	}
 
 }

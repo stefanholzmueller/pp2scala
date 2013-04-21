@@ -48,7 +48,7 @@ public class CheckStatisticsCalculatorTest {
 
 		CheckStatistics checkStatistics = gatherer.gather(trivialCheck);
 
-		assertThat(checkStatistics.getProbabilityOfSuccess(), is(1.0));
+		assertThat(checkStatistics.getChance(), is(1.0));
 	}
 
 	@Test
@@ -58,7 +58,7 @@ public class CheckStatisticsCalculatorTest {
 
 		CheckStatistics checkStatistics = gatherer.gather(trivialCheck);
 
-		assertThat(checkStatistics.getAverageQualityForSuccesses(), is(4.0));
+		assertThat(checkStatistics.getAverageQuality(), is(4.0));
 	}
 
 	@Test
@@ -72,7 +72,7 @@ public class CheckStatisticsCalculatorTest {
 
 		CheckStatistics checkStatistics = gatherer.gather(trivialCheck);
 
-		assertThat(checkStatistics.getAverageQualityForSuccesses(), is(3.0));
+		assertThat(checkStatistics.getAverageQuality(), is(3.0));
 	}
 
 	private void allChecksAreSuccessful() {

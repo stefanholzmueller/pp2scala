@@ -11,11 +11,7 @@ class SimpleStatisticsCalculatorAdapter extends StatisticsGatherer {
 		val points = check.getValue
 		val difficulty = check.getDifficulty
 
-		val statistics = SimpleStatisticsCalculator.gather(options, attributes, points, difficulty)
-
-		statistics match {
-			case Statistics(p, a) => new CheckStatistics(p, a)
-		}
+		SimpleStatisticsCalculator.gather(options, attributes, points, difficulty)
 	}
 
 }
