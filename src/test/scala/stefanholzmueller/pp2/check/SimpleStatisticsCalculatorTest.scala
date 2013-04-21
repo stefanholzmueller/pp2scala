@@ -12,7 +12,7 @@ class SimpleStatisticsCalculatorTest {
 	}
 
 	@Test
-	def withoutMinimumQuality {
+	def defaultCheck_withoutMinimumQuality {
 		val statistics = gatherStatistics(Options.nothing, List(12, 12, 12), 4, 0)
 		Assert.assertEquals(statistics, Statistics(0.461, 2.6374728850325377))
 	}
