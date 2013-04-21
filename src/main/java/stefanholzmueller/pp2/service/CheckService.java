@@ -9,10 +9,10 @@ import javax.ws.rs.core.MediaType;
 import stefanholzmueller.pp2.check.Check;
 import stefanholzmueller.pp2.check.CheckResult;
 import stefanholzmueller.pp2.check.CheckRoll;
-import stefanholzmueller.pp2.check.CheckStatistics;
 import stefanholzmueller.pp2.check.OutcomeExaminer;
 import stefanholzmueller.pp2.check.SimpleStatisticsCalculatorAdapter;
 import stefanholzmueller.pp2.check.StatisticsGatherer;
+import stefanholzmueller.pp2.check.StatisticsGatherer.CheckStatistics;
 import stefanholzmueller.pp2.util.IntTriple;
 
 @Path("/check")

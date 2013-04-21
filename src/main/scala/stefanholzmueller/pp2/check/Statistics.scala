@@ -8,4 +8,7 @@ import scala.beans.BeanProperty
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
-case class Statistics(@BeanProperty val chance: Double, @BeanProperty val averageQuality: Double) extends CheckStatistics
+case class Statistics(
+	@BeanProperty val chance: Double,
+	@BeanProperty val averageQuality: Double)
+	extends StatisticsGatherer.CheckStatistics

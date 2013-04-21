@@ -13,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import stefanholzmueller.pp2.check.StatisticsGatherer.CheckStatistics;
 import stefanholzmueller.pp2.util.IntTriple;
 
 public class CheckStatisticsCalculatorTest {

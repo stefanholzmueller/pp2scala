@@ -6,6 +6,8 @@ import static org.hamcrest.Matchers.is;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import stefanholzmueller.pp2.check.StatisticsGatherer.CheckStatistics;
+
 public class CheckStatisticsCalculatorIntegrationTest {
 
 	private StatisticsGatherer realCalculator;
