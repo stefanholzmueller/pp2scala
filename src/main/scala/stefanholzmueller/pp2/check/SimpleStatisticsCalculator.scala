@@ -2,6 +2,7 @@ package stefanholzmueller.pp2.check
 
 import stefanholzmueller.pp2.util.Dice
 import stefanholzmueller.pp2.util.IntTriple
+import stefanholzmueller.pp2.util.Timer
 
 class SimpleStatisticsCalculatorAdapter extends StatisticsGatherer {
 
@@ -11,7 +12,9 @@ class SimpleStatisticsCalculatorAdapter extends StatisticsGatherer {
 		val points = check.getValue
 		val difficulty = check.getDifficulty
 
-		SimpleStatisticsCalculator.gather(options, attributes, points, difficulty)
+		Timer("gathering statistics").info {
+			SimpleStatisticsCalculator.gather(options, attributes, points, difficulty)
+		}
 	}
 
 }
