@@ -8,6 +8,8 @@ class Dice(values: Int*) {
 
 	def apply(i: Int) = elements(i)
 
+	def sum = elements.sum
+
 	def allEqualTo(n: Int) = elements.forall(_ == n)
 
 	def twoEqualTo(n: Int) = twoWithFilter(_ == n)
@@ -17,17 +19,13 @@ class Dice(values: Int*) {
 	private def twoWithFilter(f: Int => Boolean) = elements.filter(f).length >= 2
 
 	def twoSameValues() = {
-		val groupedLists = elements.groupBy(identity).values
-		val everyValueJustOnce = groupedLists.forall(_.length == 1)
-		!everyValueJustOnce
+		elements.groupBy(identity).values.exists(_.length >= 2)
 	}
 
-	def sum = elements.sum
-
 	def compareWithAttributes(attributeList: List[Int]) = {
-		val pairs = elements.zip(attributeList)
-		pairs.map(Function.tupled((die, attr) => die - attr)).to[Vector]
+		elements.zip(attributeList).map(Function.tupled((die, attr) => die - attr))
 	}
 
 	override def toString = elements.mkString(", ")
+
 }
