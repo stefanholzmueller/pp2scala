@@ -9,9 +9,6 @@ import javax.ws.rs.core.Application;
 import org.glassfish.jersey.filter.LoggingFilter;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
-import stefanholzmueller.pp2.check.CheckResultCalculator;
-import stefanholzmueller.pp2.check.CheckStatisticsCalculator;
-
 @ApplicationPath("/")
 public class App extends Application {
 
@@ -20,8 +17,6 @@ public class App extends Application {
 		final Set<Class<?>> classes = new HashSet<Class<?>>();
 		classes.add(RandomService.class);
 		classes.add(CheckService.class);
-		classes.add(CheckStatisticsCalculator.class);
-		classes.add(CheckResultCalculator.class);
 		return classes;
 	}
 
