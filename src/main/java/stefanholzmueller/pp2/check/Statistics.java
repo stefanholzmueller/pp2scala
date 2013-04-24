@@ -54,4 +54,10 @@ public class Statistics {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "Statistics [chance=" + chance + ", averageQuality="
+				+ averageQuality + "]";
+	}
+
 }
