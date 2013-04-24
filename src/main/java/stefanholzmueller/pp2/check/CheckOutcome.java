@@ -8,7 +8,4 @@ public enum CheckOutcome implements Outcome {
 				|| this == LUCKY_CHECK;
 	}
 
-	boolean isFumble() {
-		return this == FUMBLE || this == SPECTACULAR_FUMBLE;
-	}
 }
