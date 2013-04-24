@@ -21,7 +21,7 @@ public class CheckStatisticsCalculator implements StatisticsGatherer {
 	}
 
 	@Override
-	public CheckStatistics gather(Check check) {
+	public Statistics gather(Check check) {
 
 		int successfulChecksTotal = 0;
 		int qualityTotal = 0;
@@ -67,7 +67,7 @@ public class CheckStatisticsCalculator implements StatisticsGatherer {
 		return result;
 	}
 
-	private CheckStatistics calculateCheckStatistics(int successfulChecksTotal,
+	private Statistics calculateCheckStatistics(int successfulChecksTotal,
 			int qualityTotal) {
 		double probabilityOfSuccess = (double) successfulChecksTotal
 				/ NUMBER_OF_CHECKS;

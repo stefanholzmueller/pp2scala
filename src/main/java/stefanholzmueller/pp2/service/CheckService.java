@@ -11,8 +11,8 @@ import stefanholzmueller.pp2.check.CheckResult;
 import stefanholzmueller.pp2.check.CheckRoll;
 import stefanholzmueller.pp2.check.OutcomeExaminer;
 import stefanholzmueller.pp2.check.SimpleStatisticsCalculatorAdapter;
+import stefanholzmueller.pp2.check.Statistics;
 import stefanholzmueller.pp2.check.StatisticsGatherer;
-import stefanholzmueller.pp2.check.StatisticsGatherer.CheckStatistics;
 import stefanholzmueller.pp2.util.IntTriple;
 
 @Path("/check")
@@ -35,7 +35,7 @@ public class CheckService {
 
 	@Path("/statistics")
 	@PUT
-	public CheckStatistics calculateStatistics(Check check) {
+	public Statistics calculateStatistics(Check check) {
 		return statisticsGatherer.gather(check);
 	}
 

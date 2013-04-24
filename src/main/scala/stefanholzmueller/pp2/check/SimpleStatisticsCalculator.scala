@@ -49,7 +49,7 @@ object SimpleStatisticsCalculator {
 		val chance: Double = successes / (total: Double)
 		val average: Double = quality / (successes: Double)
 
-		Statistics(chance, average)
+		new Statistics(chance, average)
 	}
 
 	def main(args: Array[String]) {

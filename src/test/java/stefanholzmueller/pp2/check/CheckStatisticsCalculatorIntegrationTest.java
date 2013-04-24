@@ -6,8 +6,6 @@ import static org.hamcrest.Matchers.is;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import stefanholzmueller.pp2.check.StatisticsGatherer.CheckStatistics;
-
 public class CheckStatisticsCalculatorIntegrationTest {
 
 	private StatisticsGatherer realCalculator;
@@ -22,16 +20,16 @@ public class CheckStatisticsCalculatorIntegrationTest {
 
 	@Test
 	public void shouldCalculateProbabilityOfSuccess() throws Exception {
-		CheckStatistics checkStatistics = realCalculator.gather(trivialCheck);
+		Statistics statistics = realCalculator.gather(trivialCheck);
 
-		assertThat(checkStatistics.getChance(), is(0.461));
+		assertThat(statistics.getChance(), is(0.461));
 	}
 
 	@Test
 	public void shouldCalculateAverageQualityForSuccesses() throws Exception {
-		CheckStatistics checkStatistics = realCalculator.gather(trivialCheck);
+		Statistics statistics = realCalculator.gather(trivialCheck);
 
-		assertThat(checkStatistics.getAverageQuality(), is(2.6374728850325377));
+		assertThat(statistics.getAverageQuality(), is(2.6374728850325377));
 	}
 
 }

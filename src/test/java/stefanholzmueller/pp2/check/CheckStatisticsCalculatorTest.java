@@ -13,7 +13,6 @@ import org.mockito.MockitoAnnotations;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import stefanholzmueller.pp2.check.StatisticsGatherer.CheckStatistics;
 import stefanholzmueller.pp2.util.IntTriple;
 
 public class CheckStatisticsCalculatorTest {
@@ -47,9 +46,9 @@ public class CheckStatisticsCalculatorTest {
 			throws Exception {
 		allChecksAreSuccessful();
 
-		CheckStatistics checkStatistics = gatherer.gather(trivialCheck);
+		Statistics statistics = gatherer.gather(trivialCheck);
 
-		assertThat(checkStatistics.getChance(), is(1.0));
+		assertThat(statistics.getChance(), is(1.0));
 	}
 
 	@Test
@@ -57,9 +56,9 @@ public class CheckStatisticsCalculatorTest {
 			throws Exception {
 		allChecksAreSuccessful();
 
-		CheckStatistics checkStatistics = gatherer.gather(trivialCheck);
+		Statistics statistics = gatherer.gather(trivialCheck);
 
-		assertThat(checkStatistics.getAverageQuality(), is(4.0));
+		assertThat(statistics.getAverageQuality(), is(4.0));
 	}
 
 	@Test
@@ -71,9 +70,9 @@ public class CheckStatisticsCalculatorTest {
 		when(checkExaminer.examine(eq(trivialCheck), any(IntTriple.class)))
 				.thenReturn(successful, unsuccessful);
 
-		CheckStatistics checkStatistics = gatherer.gather(trivialCheck);
+		Statistics statistics = gatherer.gather(trivialCheck);
 
-		assertThat(checkStatistics.getAverageQuality(), is(3.0));
+		assertThat(statistics.getAverageQuality(), is(3.0));
 	}
 
 	private void allChecksAreSuccessful() {
