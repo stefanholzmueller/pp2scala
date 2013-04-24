@@ -52,10 +52,4 @@ object SimpleStatisticsCalculator {
 		new Statistics(chance, average)
 	}
 
-	def main(args: Array[String]) {
-		while (true) {
-			val stats = gather(new Options(true, false, false, true), List(13, 11, 15), 8, 3)
-			println(stats.toString)
-		}
-	}
 }
