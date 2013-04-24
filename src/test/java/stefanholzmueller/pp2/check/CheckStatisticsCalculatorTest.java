@@ -13,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import stefanholzmueller.pp2.check.OutcomeImpl.OutcomeEnum;
 import stefanholzmueller.pp2.util.IntTriple;
 
 public class CheckStatisticsCalculatorTest {
@@ -63,10 +64,9 @@ public class CheckStatisticsCalculatorTest {
 
 	@Test
 	public void shouldReturnAverageQualityForSuccesses() throws Exception {
-		OutcomeImpl successful = new OutcomeImpl(OutcomeEnum.SUCCESSFUL, 3,
+		OutcomeImpl successful = new OutcomeImpl(OutcomeEnum.SUCCESS, 3, null);
+		OutcomeImpl unsuccessful = new OutcomeImpl(OutcomeEnum.FAILURE, null,
 				null);
-		OutcomeImpl unsuccessful = new OutcomeImpl(OutcomeEnum.UNSUCCESSFUL,
-				null, null);
 		when(checkExaminer.examine(eq(trivialCheck), any(IntTriple.class)))
 				.thenReturn(successful, unsuccessful);
 
@@ -76,8 +76,7 @@ public class CheckStatisticsCalculatorTest {
 	}
 
 	private void allChecksAreSuccessful() {
-		OutcomeImpl checkResult = new OutcomeImpl(OutcomeEnum.SUCCESSFUL, 4,
-				null);
+		OutcomeImpl checkResult = new OutcomeImpl(OutcomeEnum.SUCCESS, 4, null);
 		when(checkExaminer.examine(eq(trivialCheck), any(IntTriple.class)))
 				.thenReturn(checkResult);
 	}

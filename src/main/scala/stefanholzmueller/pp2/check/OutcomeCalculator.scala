@@ -2,6 +2,7 @@ package stefanholzmueller.pp2.check
 
 import stefanholzmueller.pp2.util.Dice
 import stefanholzmueller.pp2.util.IntTriple
+import stefanholzmueller.pp2.check.OutcomeImpl.OutcomeEnum
 
 class OutcomeCalculatorAdapter extends OutcomeExaminer {
 
@@ -15,12 +16,12 @@ class OutcomeCalculatorAdapter extends OutcomeExaminer {
 		val outcome = OutcomeCalculator.examine(options, attributes, points, difficulty)(dice)
 
 		outcome match {
-			case Success(q, g) => new OutcomeImpl(OutcomeEnum.SUCCESSFUL, q, g)
-			case AutomaticSuccess(q) => new OutcomeImpl(OutcomeEnum.LUCKY_CHECK, q, null)
+			case Success(q, g) => new OutcomeImpl(OutcomeEnum.SUCCESS, q, g)
+			case AutomaticSuccess(q) => new OutcomeImpl(OutcomeEnum.AUTOMATIC_SUCCESS, q, null)
 			case SpectacularSuccess(q) => new OutcomeImpl(OutcomeEnum.SPECTACULAR_SUCCESS, q, null)
-			case Failure(g) => new OutcomeImpl(OutcomeEnum.UNSUCCESSFUL, null, -g) // note the negation
-			case AutomaticFailure() => new OutcomeImpl(OutcomeEnum.FUMBLE, null, null)
-			case SpectacularFailure() => new OutcomeImpl(OutcomeEnum.SPECTACULAR_FUMBLE, null, null)
+			case Failure(g) => new OutcomeImpl(OutcomeEnum.FAILURE, null, -g) // note the negation
+			case AutomaticFailure() => new OutcomeImpl(OutcomeEnum.AUTOMATIC_FAILURE, null, null)
+			case SpectacularFailure() => new OutcomeImpl(OutcomeEnum.SPECTACULAR_FAILURE, null, null)
 			case Spruchhemmung() => new OutcomeImpl(OutcomeEnum.SPRUCHHEMMUNG, null, null)
 		}
 	}

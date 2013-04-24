@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ws.rs.Path;
 
+import stefanholzmueller.pp2.check.OutcomeImpl.OutcomeEnum;
 import stefanholzmueller.pp2.util.IntTriple;
 
 @Path("")
@@ -55,10 +56,9 @@ public class CheckResultCalculator implements OutcomeExaminer {
 			int gap = getGapViaAttributes(dice, attributeTriple.first,
 					attributeTriple.second, attributeTriple.third)
 					+ leftoverPoints;
-			return new OutcomeImpl(OutcomeEnum.SUCCESSFUL, quality, gap);
+			return new OutcomeImpl(OutcomeEnum.SUCCESS, quality, gap);
 		} else {
-			return new OutcomeImpl(OutcomeEnum.UNSUCCESSFUL, null,
-					leftoverPoints);
+			return new OutcomeImpl(OutcomeEnum.FAILURE, null, leftoverPoints);
 		}
 	}
 
@@ -105,7 +105,7 @@ public class CheckResultCalculator implements OutcomeExaminer {
 		negativeGap -= getNegativeGap(dice.second, reducedAttr2);
 		negativeGap -= getNegativeGap(dice.third, reducedAttr3);
 
-		return new OutcomeImpl(OutcomeEnum.UNSUCCESSFUL, null, negativeGap);
+		return new OutcomeImpl(OutcomeEnum.FAILURE, null, negativeGap);
 	}
 
 	private int getNegativeGap(int die, int attr) {
@@ -119,7 +119,7 @@ public class CheckResultCalculator implements OutcomeExaminer {
 		int gap = getGapViaAttributes(dice, reducedAttr1, reducedAttr2,
 				reducedAttr3);
 
-		return new OutcomeImpl(OutcomeEnum.SUCCESSFUL, minimumQuality, gap);
+		return new OutcomeImpl(OutcomeEnum.SUCCESS, minimumQuality, gap);
 	}
 
 	private int getGapViaAttributes(IntTriple dice, int attribute1,
@@ -141,7 +141,7 @@ public class CheckResultCalculator implements OutcomeExaminer {
 
 	private OutcomeImpl buildSpecialSuccessResult(Check check,
 			OutcomeEnum outcome) {
-		if (outcome == OutcomeEnum.LUCKY_CHECK
+		if (outcome == OutcomeEnum.AUTOMATIC_SUCCESS
 				|| outcome == OutcomeEnum.SPECTACULAR_SUCCESS) {
 			return new OutcomeImpl(outcome, getMaximumQuality(check), null);
 		} else {
@@ -158,21 +158,20 @@ public class CheckResultCalculator implements OutcomeExaminer {
 		return check.hasMinimumQuality() ? 1 : 0;
 	}
 
-	private OutcomeEnum determineSpecialCheckOutcome(Check check,
-			IntTriple dice) {
+	private OutcomeEnum determineSpecialCheckOutcome(Check check, IntTriple dice) {
 
 		if (dice.first + dice.second + dice.third == 3) {
 			return OutcomeEnum.SPECTACULAR_SUCCESS;
 		}
 		if ((dice.first + dice.second == 2) || (dice.first + dice.third == 2)
 				|| (dice.second + dice.third == 2)) {
-			return OutcomeEnum.LUCKY_CHECK;
+			return OutcomeEnum.AUTOMATIC_SUCCESS;
 		}
 		if (dice.first + dice.second + dice.third == 60) {
-			return OutcomeEnum.SPECTACULAR_FUMBLE;
+			return OutcomeEnum.SPECTACULAR_FAILURE;
 		}
 		if (isFumble(check, dice)) {
-			return OutcomeEnum.FUMBLE;
+			return OutcomeEnum.AUTOMATIC_FAILURE;
 		}
 		if (isSpruchhemmung(check, dice)) {
 			return OutcomeEnum.SPRUCHHEMMUNG;

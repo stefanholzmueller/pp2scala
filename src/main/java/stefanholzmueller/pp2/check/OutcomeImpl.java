@@ -3,18 +3,22 @@ package stefanholzmueller.pp2.check;
 // TODO annotations
 public class OutcomeImpl implements Outcome {
 
-	private OutcomeEnum checkOutcome;
+	public enum OutcomeEnum {
+		SPECTACULAR_SUCCESS, AUTOMATIC_SUCCESS, SUCCESS, FAILURE, AUTOMATIC_FAILURE, SPECTACULAR_FAILURE, SPRUCHHEMMUNG;
+	}
+
+	private OutcomeEnum outcomeEnum;
 	private Integer quality;
 	private Integer gap;
 
-	public OutcomeImpl(OutcomeEnum checkOutcome, Integer quality, Integer gap) {
-		this.checkOutcome = checkOutcome;
+	public OutcomeImpl(OutcomeEnum outcomeEnum, Integer quality, Integer gap) {
+		this.outcomeEnum = outcomeEnum;
 		this.quality = quality;
 		this.gap = gap;
 	}
 
 	public OutcomeEnum getOutcome() {
-		return checkOutcome;
+		return outcomeEnum;
 	}
 
 	public Integer getQuality() {
@@ -27,7 +31,9 @@ public class OutcomeImpl implements Outcome {
 
 	@Override
 	public boolean isSuccessful() {
-		return checkOutcome.isSuccessful();
+		return outcomeEnum == OutcomeEnum.SUCCESS
+				|| outcomeEnum == OutcomeEnum.AUTOMATIC_SUCCESS
+				|| outcomeEnum == OutcomeEnum.SPECTACULAR_SUCCESS;
 	}
 
 }

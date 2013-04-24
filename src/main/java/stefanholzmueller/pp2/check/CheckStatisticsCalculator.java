@@ -60,7 +60,7 @@ public class CheckStatisticsCalculator implements StatisticsGatherer {
 			int successfulChecksTotal) {
 		int result = successfulChecksTotal;
 
-		if (checkResult.getOutcome().isSuccessful()) {
+		if (checkResult.isSuccessful()) {
 			result++;
 		}
 
