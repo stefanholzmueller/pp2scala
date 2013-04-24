@@ -1,9 +1,5 @@
 package stefanholzmueller.pp2.check
 
-sealed trait Outcome {
-	def isSuccessful: Boolean
-}
-
 sealed trait Successful extends Outcome {
 	override def isSuccessful = true
 }
