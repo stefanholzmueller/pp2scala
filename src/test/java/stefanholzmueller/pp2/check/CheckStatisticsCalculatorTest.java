@@ -63,9 +63,9 @@ public class CheckStatisticsCalculatorTest {
 
 	@Test
 	public void shouldReturnAverageQualityForSuccesses() throws Exception {
-		CheckResult successful = new CheckResult(CheckOutcome.SUCCESSFUL, 3,
+		OutcomeImpl successful = new OutcomeImpl(OutcomeEnum.SUCCESSFUL, 3,
 				null);
-		CheckResult unsuccessful = new CheckResult(CheckOutcome.UNSUCCESSFUL,
+		OutcomeImpl unsuccessful = new OutcomeImpl(OutcomeEnum.UNSUCCESSFUL,
 				null, null);
 		when(checkExaminer.examine(eq(trivialCheck), any(IntTriple.class)))
 				.thenReturn(successful, unsuccessful);
@@ -76,7 +76,7 @@ public class CheckStatisticsCalculatorTest {
 	}
 
 	private void allChecksAreSuccessful() {
-		CheckResult checkResult = new CheckResult(CheckOutcome.SUCCESSFUL, 4,
+		OutcomeImpl checkResult = new OutcomeImpl(OutcomeEnum.SUCCESSFUL, 4,
 				null);
 		when(checkExaminer.examine(eq(trivialCheck), any(IntTriple.class)))
 				.thenReturn(checkResult);

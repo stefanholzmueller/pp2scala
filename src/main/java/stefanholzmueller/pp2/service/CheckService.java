@@ -7,7 +7,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import stefanholzmueller.pp2.check.Check;
-import stefanholzmueller.pp2.check.CheckResult;
+import stefanholzmueller.pp2.check.OutcomeImpl;
 import stefanholzmueller.pp2.check.CheckRoll;
 import stefanholzmueller.pp2.check.OutcomeExaminer;
 import stefanholzmueller.pp2.check.SimpleStatisticsCalculatorAdapter;
@@ -41,7 +41,7 @@ public class CheckService {
 
 	@Path("/result")
 	@PUT
-	public CheckResult calculateResult(CheckRoll checkRoll) {
+	public OutcomeImpl calculateResult(CheckRoll checkRoll) {
 		Check check = checkRoll.getCheck();
 		IntTriple dice = checkRoll.getDice();
 		return checkResultCalculator.examine(check, dice);

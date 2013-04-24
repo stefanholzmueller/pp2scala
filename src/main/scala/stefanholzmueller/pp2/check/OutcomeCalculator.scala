@@ -5,7 +5,7 @@ import stefanholzmueller.pp2.util.IntTriple
 
 class OutcomeCalculatorAdapter extends OutcomeExaminer {
 
-	def examine(check: Check, diceTriple: IntTriple): CheckResult = {
+	def examine(check: Check, diceTriple: IntTriple): OutcomeImpl = {
 		val options = new Options(check.hasMinimumQuality, check.hasFesteMatrix, check.hasTollpatsch, check.hasSpruchhemmung)
 		val attributes = List(check.getAttribute1, check.getAttribute2, check.getAttribute3)
 		val points = check.getValue
@@ -15,13 +15,13 @@ class OutcomeCalculatorAdapter extends OutcomeExaminer {
 		val outcome = OutcomeCalculator.examine(options, attributes, points, difficulty)(dice)
 
 		outcome match {
-			case Success(q, g) => new CheckResult(CheckOutcome.SUCCESSFUL, q, g)
-			case AutomaticSuccess(q) => new CheckResult(CheckOutcome.LUCKY_CHECK, q, null)
-			case SpectacularSuccess(q) => new CheckResult(CheckOutcome.SPECTACULAR_SUCCESS, q, null)
-			case Failure(g) => new CheckResult(CheckOutcome.UNSUCCESSFUL, null, -g) // note the negation
-			case AutomaticFailure() => new CheckResult(CheckOutcome.FUMBLE, null, null)
-			case SpectacularFailure() => new CheckResult(CheckOutcome.SPECTACULAR_FUMBLE, null, null)
-			case Spruchhemmung() => new CheckResult(CheckOutcome.SPRUCHHEMMUNG, null, null)
+			case Success(q, g) => new OutcomeImpl(OutcomeEnum.SUCCESSFUL, q, g)
+			case AutomaticSuccess(q) => new OutcomeImpl(OutcomeEnum.LUCKY_CHECK, q, null)
+			case SpectacularSuccess(q) => new OutcomeImpl(OutcomeEnum.SPECTACULAR_SUCCESS, q, null)
+			case Failure(g) => new OutcomeImpl(OutcomeEnum.UNSUCCESSFUL, null, -g) // note the negation
+			case AutomaticFailure() => new OutcomeImpl(OutcomeEnum.FUMBLE, null, null)
+			case SpectacularFailure() => new OutcomeImpl(OutcomeEnum.SPECTACULAR_FUMBLE, null, null)
+			case Spruchhemmung() => new OutcomeImpl(OutcomeEnum.SPRUCHHEMMUNG, null, null)
 		}
 	}
 

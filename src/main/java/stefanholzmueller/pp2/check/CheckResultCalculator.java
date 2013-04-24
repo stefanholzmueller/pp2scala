@@ -11,14 +11,14 @@ import stefanholzmueller.pp2.util.IntTriple;
 public class CheckResultCalculator implements OutcomeExaminer {
 
 	@Override
-	public CheckResult examine(Check check, IntTriple dice) {
+	public OutcomeImpl examine(Check check, IntTriple dice) {
 		if (check == null || dice == null) {
 			throw new IllegalArgumentException("arguments must not be null");
 		}
 
 		int points = getPoints(check);
 
-		CheckOutcome specialSuccess = determineSpecialCheckOutcome(check, dice);
+		OutcomeEnum specialSuccess = determineSpecialCheckOutcome(check, dice);
 		if (specialSuccess != null) {
 			return buildSpecialSuccessResult(check, specialSuccess);
 		}
@@ -42,7 +42,7 @@ public class CheckResultCalculator implements OutcomeExaminer {
 		return value - difficulty;
 	}
 
-	private CheckResult buildResultWithPoints(Check check, IntTriple dice,
+	private OutcomeImpl buildResultWithPoints(Check check, IntTriple dice,
 			int points) {
 		IntTriple attributeTriple = check.getAttributeTriple();
 
@@ -55,9 +55,9 @@ public class CheckResultCalculator implements OutcomeExaminer {
 			int gap = getGapViaAttributes(dice, attributeTriple.first,
 					attributeTriple.second, attributeTriple.third)
 					+ leftoverPoints;
-			return new CheckResult(CheckOutcome.SUCCESSFUL, quality, gap);
+			return new OutcomeImpl(OutcomeEnum.SUCCESSFUL, quality, gap);
 		} else {
-			return new CheckResult(CheckOutcome.UNSUCCESSFUL, null,
+			return new OutcomeImpl(OutcomeEnum.UNSUCCESSFUL, null,
 					leftoverPoints);
 		}
 	}
@@ -80,7 +80,7 @@ public class CheckResultCalculator implements OutcomeExaminer {
 		return leftoverPoints;
 	}
 
-	private CheckResult buildResultWithoutPoints(Check check, IntTriple dice,
+	private OutcomeImpl buildResultWithoutPoints(Check check, IntTriple dice,
 			int points) {
 
 		int reducedAttr1 = check.getAttribute1() + points;
@@ -97,7 +97,7 @@ public class CheckResultCalculator implements OutcomeExaminer {
 		}
 	}
 
-	private CheckResult buildUnsuccessfulResultWithoutPoints(IntTriple dice,
+	private OutcomeImpl buildUnsuccessfulResultWithoutPoints(IntTriple dice,
 			int reducedAttr1, int reducedAttr2, int reducedAttr3) {
 
 		int negativeGap = 0;
@@ -105,21 +105,21 @@ public class CheckResultCalculator implements OutcomeExaminer {
 		negativeGap -= getNegativeGap(dice.second, reducedAttr2);
 		negativeGap -= getNegativeGap(dice.third, reducedAttr3);
 
-		return new CheckResult(CheckOutcome.UNSUCCESSFUL, null, negativeGap);
+		return new OutcomeImpl(OutcomeEnum.UNSUCCESSFUL, null, negativeGap);
 	}
 
 	private int getNegativeGap(int die, int attr) {
 		return die > attr ? die - attr : 0;
 	}
 
-	private CheckResult buildSuccessfulResultWithoutPoints(Check check,
+	private OutcomeImpl buildSuccessfulResultWithoutPoints(Check check,
 			IntTriple dice, int reducedAttr1, int reducedAttr2, int reducedAttr3) {
 
 		int minimumQuality = getMinimumEffect(check);
 		int gap = getGapViaAttributes(dice, reducedAttr1, reducedAttr2,
 				reducedAttr3);
 
-		return new CheckResult(CheckOutcome.SUCCESSFUL, minimumQuality, gap);
+		return new OutcomeImpl(OutcomeEnum.SUCCESSFUL, minimumQuality, gap);
 	}
 
 	private int getGapViaAttributes(IntTriple dice, int attribute1,
@@ -139,13 +139,13 @@ public class CheckResultCalculator implements OutcomeExaminer {
 		return result;
 	}
 
-	private CheckResult buildSpecialSuccessResult(Check check,
-			CheckOutcome outcome) {
-		if (outcome == CheckOutcome.LUCKY_CHECK
-				|| outcome == CheckOutcome.SPECTACULAR_SUCCESS) {
-			return new CheckResult(outcome, getMaximumQuality(check), null);
+	private OutcomeImpl buildSpecialSuccessResult(Check check,
+			OutcomeEnum outcome) {
+		if (outcome == OutcomeEnum.LUCKY_CHECK
+				|| outcome == OutcomeEnum.SPECTACULAR_SUCCESS) {
+			return new OutcomeImpl(outcome, getMaximumQuality(check), null);
 		} else {
-			return new CheckResult(outcome, null, null);
+			return new OutcomeImpl(outcome, null, null);
 		}
 	}
 
@@ -158,24 +158,24 @@ public class CheckResultCalculator implements OutcomeExaminer {
 		return check.hasMinimumQuality() ? 1 : 0;
 	}
 
-	private CheckOutcome determineSpecialCheckOutcome(Check check,
+	private OutcomeEnum determineSpecialCheckOutcome(Check check,
 			IntTriple dice) {
 
 		if (dice.first + dice.second + dice.third == 3) {
-			return CheckOutcome.SPECTACULAR_SUCCESS;
+			return OutcomeEnum.SPECTACULAR_SUCCESS;
 		}
 		if ((dice.first + dice.second == 2) || (dice.first + dice.third == 2)
 				|| (dice.second + dice.third == 2)) {
-			return CheckOutcome.LUCKY_CHECK;
+			return OutcomeEnum.LUCKY_CHECK;
 		}
 		if (dice.first + dice.second + dice.third == 60) {
-			return CheckOutcome.SPECTACULAR_FUMBLE;
+			return OutcomeEnum.SPECTACULAR_FUMBLE;
 		}
 		if (isFumble(check, dice)) {
-			return CheckOutcome.FUMBLE;
+			return OutcomeEnum.FUMBLE;
 		}
 		if (isSpruchhemmung(check, dice)) {
-			return CheckOutcome.SPRUCHHEMMUNG;
+			return OutcomeEnum.SPRUCHHEMMUNG;
 		}
 
 		return null;

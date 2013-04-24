@@ -11,8 +11,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import stefanholzmueller.pp2.check.Check;
-import stefanholzmueller.pp2.check.CheckOutcome;
-import stefanholzmueller.pp2.check.CheckResult;
+import stefanholzmueller.pp2.check.OutcomeEnum;
+import stefanholzmueller.pp2.check.OutcomeImpl;
 import stefanholzmueller.pp2.check.CheckRoll;
 import stefanholzmueller.pp2.check.OutcomeExaminer;
 import stefanholzmueller.pp2.check.StatisticsGatherer;
@@ -40,10 +40,10 @@ public class CheckServiceTest {
         IntTriple dice = new IntTriple(1, 16, 1);
         when(checkRoll.getCheck()).thenReturn(check);
         when(checkRoll.getDice()).thenReturn(dice);
-        CheckResult checkResult = new CheckResult(CheckOutcome.LUCKY_CHECK, 7, 3);
+        OutcomeImpl checkResult = new OutcomeImpl(OutcomeEnum.LUCKY_CHECK, 7, 3);
         when(checkResultCalculator.examine(check, dice)).thenReturn(checkResult);
 
-        CheckResult serviceResult = checkService.calculateResult(checkRoll);
+        OutcomeImpl serviceResult = checkService.calculateResult(checkRoll);
 
         assertThat(serviceResult, is(checkResult));
     }

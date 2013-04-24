@@ -31,7 +31,7 @@ public class CheckStatisticsCalculator implements StatisticsGatherer {
 				for (int die3 = 1; die3 <= DIE_MAX_PIPS; die3++) {
 
 					IntTriple diceTriple = new IntTriple(die1, die2, die3);
-					CheckResult checkResult = checkExaminer.examine(check,
+					OutcomeImpl checkResult = checkExaminer.examine(check,
 							diceTriple);
 
 					successfulChecksTotal = incrementSuccessfulChecksTotal(
@@ -45,7 +45,7 @@ public class CheckStatisticsCalculator implements StatisticsGatherer {
 		return calculateCheckStatistics(successfulChecksTotal, qualityTotal);
 	}
 
-	private int incrementQualityTotal(CheckResult checkResult, int qualityTotal) {
+	private int incrementQualityTotal(OutcomeImpl checkResult, int qualityTotal) {
 		int result = qualityTotal;
 
 		Integer quality = checkResult.getQuality();
@@ -56,7 +56,7 @@ public class CheckStatisticsCalculator implements StatisticsGatherer {
 		return result;
 	}
 
-	private int incrementSuccessfulChecksTotal(CheckResult checkResult,
+	private int incrementSuccessfulChecksTotal(OutcomeImpl checkResult,
 			int successfulChecksTotal) {
 		int result = successfulChecksTotal;
 
