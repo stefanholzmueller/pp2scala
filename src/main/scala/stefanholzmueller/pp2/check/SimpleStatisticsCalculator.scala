@@ -3,6 +3,7 @@ package stefanholzmueller.pp2.check
 import stefanholzmueller.pp2.util.Dice
 import stefanholzmueller.pp2.util.IntTriple
 import stefanholzmueller.pp2.util.Timer
+import stefanholzmueller.pp2.util.Timer.time
 
 class SimpleStatisticsCalculatorAdapter extends StatisticsGatherer {
 
@@ -12,7 +13,7 @@ class SimpleStatisticsCalculatorAdapter extends StatisticsGatherer {
 		val points = check.getValue
 		val difficulty = check.getDifficulty
 
-		Timer("gathering statistics").info {
+		time("gathering statistics") {
 			SimpleStatisticsCalculator.gather(options, attributes, points, difficulty)
 		}
 	}

@@ -20,4 +20,6 @@ object Timer {
 
 	def apply(description: String) = new Timer(description)
 
+	def time[T](description: String)(f: => T) = new Timer(description).info(f)
+
 }
