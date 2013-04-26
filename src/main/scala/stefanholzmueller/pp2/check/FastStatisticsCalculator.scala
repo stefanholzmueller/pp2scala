@@ -4,6 +4,7 @@ import stefanholzmueller.pp2.util.Dice
 import stefanholzmueller.pp2.util.IntTriple
 import stefanholzmueller.pp2.util.Timer
 import stefanholzmueller.pp2.util.Timer.time
+import scala.collection.mutable.ListBuffer
 
 class FastStatisticsCalculatorAdapter extends StatisticsGatherer {
 
@@ -27,27 +28,31 @@ object FastStatisticsCalculator {
 	val total = MAX_PIPS * MAX_PIPS * MAX_PIPS
 
 	def gather(options: Options, attributes: List[Int], points: Int, difficulty: Int) = {
-		val (ease, effectivePoints, effectiveAttributes) = OutcomeCalculator.diceIndependentPart(attributes, points, difficulty)
+		val futures = pips.par.map { die1 =>
+			val successes: ListBuffer[Int] = ListBuffer()
+
+			for (die2 <- pips; die3 <- pips) {
+				val dice = new Dice(die1, die2, die3)
+				val outcome = OutcomeCalculator.examine(options, attributes, points, difficulty)(dice)
+
+				outcome match {
+					case Success(q, _) => successes += q
+					case AutomaticSuccess(q) => successes += q
+					case SpectacularSuccess(q) => successes += q
+					case _ =>
+				}
+			}
+
+			successes
+		}
+
+		val qualities = futures.flatten.seq
 
 		var successes = 0
 		var quality = 0
-
-		for (die1 <- pips; die2 <- pips; die3 <- pips) {
-			val dice = new Dice(die1, die2, die3)
-			val outcome = OutcomeCalculator.specialOutcome(options, points, dice) match {
-				case Some(special) => special
-				case None => OutcomeCalculator.successOrFailureInternal(options, points, dice, ease, effectivePoints, effectiveAttributes)
-			}
-
-			if (outcome.isSuccessful) {
-				successes += 1
-				quality += (outcome match {
-					case Success(q, _) => q
-					case AutomaticSuccess(q) => q
-					case SpectacularSuccess(q) => q
-					case _ => 0
-				})
-			}
+		for (q <- qualities) {
+			successes += 1
+			quality += q
 		}
 
 		val chance: Double = successes / (total: Double)
