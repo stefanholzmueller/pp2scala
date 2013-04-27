@@ -1,6 +1,11 @@
 package stefanholzmueller.pp2.check;
 
-// TODO annotations
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 public class OutcomeImpl implements Outcome {
 
 	public enum OutcomeEnum {

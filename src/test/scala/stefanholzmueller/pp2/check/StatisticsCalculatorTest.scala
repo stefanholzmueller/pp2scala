@@ -3,7 +3,7 @@ package stefanholzmueller.pp2.check
 import org.testng.annotations.Test
 import org.testng.Assert
 
-class SimpleStatisticsCalculatorTest {
+class StatisticsCalculatorTest {
 
 	@Test
 	def defaultCheck {
@@ -65,7 +65,11 @@ class SimpleStatisticsCalculatorTest {
 		Assert.assertEquals(statistics, new Statistics(0.999125, 18))
 	}
 
-	private def gatherStatistics(options: Options, attributes: List[Int], points: Int, difficulty: Int) =
-		SimpleStatisticsCalculator.gather(options, attributes, points, difficulty)
+	private def gatherStatistics(options: Options, attributes: List[Int], points: Int, difficulty: Int) = {
+		val simple = SimpleStatisticsCalculator.gather(options, attributes, points, difficulty)
+		val fast = ParallelStatisticsCalculator.gather(options, attributes, points, difficulty)
+		Assert.assertEquals(fast, simple)
+		fast
+	}
 
 }
