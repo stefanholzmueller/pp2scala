@@ -41,7 +41,7 @@ object OutcomeCalculator {
 		}
 	}
 
-	def specialOutcome(options: Options, points: Int, dice: Dice): Option[Outcome] = {
+	private def specialOutcome(options: Options, points: Int, dice: Dice): Option[Outcome] = {
 		if (dice.allEqualTo(1))
 			Some(SpectacularSuccess(applyMinimumQuality(options, points)))
 		else if (dice.twoEqualTo(1))
@@ -64,7 +64,7 @@ object OutcomeCalculator {
 		successOrFailureInternal(options, points, dice, ease, effectivePoints, effectiveAttributes)
 	}
 
-	def diceIndependentPart(attributes: List[Int], points: Int, difficulty: Int): (Int, Int, List[Int]) = {
+	private def diceIndependentPart(attributes: List[Int], points: Int, difficulty: Int): (Int, Int, List[Int]) = {
 		val ease = points - difficulty
 		val effectivePoints = ease max 0
 		val effectiveAttributes = if (ease < 0) attributes.map(_ + ease) else attributes
@@ -72,7 +72,7 @@ object OutcomeCalculator {
 		(ease, effectivePoints, effectiveAttributes)
 	}
 
-	def successOrFailureInternal(options: Options, points: Int, dice: Dice,
+	private def successOrFailureInternal(options: Options, points: Int, dice: Dice,
 		ease: Int, effectivePoints: Int, effectiveAttributes: List[Int]) = {
 
 		val comparisons = dice.compareWithAttributes(effectiveAttributes)
