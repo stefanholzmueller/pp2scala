@@ -67,7 +67,7 @@ class StatisticsCalculatorTest {
 
 	private def gatherStatistics(options: Options, attributes: List[Int], points: Int, difficulty: Int) = {
 		val simple = SimpleStatisticsCalculator.gather(options, attributes, points, difficulty)
-		val fast = ParallelStatisticsCalculator.gather(options, attributes, points, difficulty)
+		val fast = FastStatisticsCalculator.gather(options, attributes, points, difficulty)
 		Assert.assertEquals(fast, simple)
 		fast
 	}
