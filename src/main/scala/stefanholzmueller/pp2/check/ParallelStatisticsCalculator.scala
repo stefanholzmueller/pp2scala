@@ -6,7 +6,7 @@ import stefanholzmueller.pp2.util.Timer
 import stefanholzmueller.pp2.util.Timer.time
 import scala.collection.mutable.ListBuffer
 
-class FastStatisticsCalculatorAdapter extends StatisticsGatherer {
+class ParallelStatisticsCalculatorAdapter extends StatisticsGatherer {
 
 	def gather(check: Check) = {
 		val options = new Options(check.hasMinimumQuality, check.hasFesteMatrix, check.hasTollpatsch, check.hasSpruchhemmung)
@@ -15,20 +15,20 @@ class FastStatisticsCalculatorAdapter extends StatisticsGatherer {
 		val difficulty = check.getDifficulty
 
 		time("gathering statistics") {
-			FastStatisticsCalculator.gather(options, attributes, points, difficulty)
+			ParallelStatisticsCalculator.gather(options, attributes, points, difficulty)
 		}
 	}
 
 }
 
-object FastStatisticsCalculator {
+object ParallelStatisticsCalculator {
 
 	val MAX_PIPS = 20
 	val pips = 1 to MAX_PIPS
 	val total = MAX_PIPS * MAX_PIPS * MAX_PIPS
 
 	def gather(options: Options, attributes: List[Int], points: Int, difficulty: Int) = {
-		val futures = pips.par.map { die1 =>
+		val parallelQualities = pips.par.map { die1 =>
 			val successes: ListBuffer[Int] = ListBuffer()
 
 			for (die2 <- pips; die3 <- pips) {
@@ -46,7 +46,7 @@ object FastStatisticsCalculator {
 			successes
 		}
 
-		val qualities = futures.flatten.seq
+		val qualities = parallelQualities.flatten.seq
 
 		var successes = 0
 		var quality = 0
