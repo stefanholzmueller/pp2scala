@@ -46,7 +46,7 @@ public class CheckServiceTest {
 		when(checkResultCalculator.examine(check, dice))
 				.thenReturn(checkResult);
 
-		OutcomeImpl serviceResult = checkService.examineOutcome(checkRoll);
+		OutcomeImpl serviceResult = checkService.calculateResult(checkRoll);
 
 		assertThat(serviceResult, is(checkResult));
 	}

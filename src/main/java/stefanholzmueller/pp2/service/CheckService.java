@@ -7,10 +7,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import stefanholzmueller.pp2.check.Check;
-import stefanholzmueller.pp2.check.CheckRoll;
-import stefanholzmueller.pp2.check.OutcomeCalculatorAdapter;
-import stefanholzmueller.pp2.check.OutcomeExaminer;
 import stefanholzmueller.pp2.check.OutcomeImpl;
+import stefanholzmueller.pp2.check.CheckRoll;
+import stefanholzmueller.pp2.check.OutcomeExaminer;
 import stefanholzmueller.pp2.check.SimpleStatisticsCalculatorAdapter;
 import stefanholzmueller.pp2.check.Statistics;
 import stefanholzmueller.pp2.check.StatisticsGatherer;
@@ -22,29 +21,29 @@ import stefanholzmueller.pp2.util.IntTriple;
 public class CheckService {
 
 	private StatisticsGatherer statisticsGatherer = new SimpleStatisticsCalculatorAdapter();
-	private OutcomeExaminer outcomeExaminer = new OutcomeCalculatorAdapter();
+	private OutcomeExaminer checkResultCalculator;
 
 	public CheckService() {
 	}
 
 	// @Inject
-	public CheckService(StatisticsGatherer statisticsGatherer,
-			OutcomeExaminer outcomeExaminer) {
-		this.statisticsGatherer = statisticsGatherer;
-		this.outcomeExaminer = outcomeExaminer;
+	public CheckService(StatisticsGatherer checkStatisticsCalculator,
+			OutcomeExaminer checkResultCalculator) {
+		this.statisticsGatherer = checkStatisticsCalculator;
+		this.checkResultCalculator = checkResultCalculator;
 	}
 
 	@Path("/statistics")
 	@PUT
-	public Statistics gatherStatistics(Check check) {
+	public Statistics calculateStatistics(Check check) {
 		return statisticsGatherer.gather(check);
 	}
 
 	@Path("/result")
 	@PUT
-	public OutcomeImpl examineOutcome(CheckRoll checkRoll) {
+	public OutcomeImpl calculateResult(CheckRoll checkRoll) {
 		Check check = checkRoll.getCheck();
 		IntTriple dice = checkRoll.getDice();
-		return outcomeExaminer.examine(check, dice);
+		return checkResultCalculator.examine(check, dice);
 	}
 }
