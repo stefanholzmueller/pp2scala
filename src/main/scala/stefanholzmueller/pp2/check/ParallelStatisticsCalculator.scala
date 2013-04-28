@@ -9,7 +9,7 @@ import scala.collection.mutable.ListBuffer
 class ParallelStatisticsCalculatorAdapter extends StatisticsGatherer {
 
 	def gather(check: Check) = {
-		val options = new Options(check.hasMinimumQuality, check.hasFesteMatrix, check.hasTollpatsch, check.hasSpruchhemmung)
+		val options = new Options(check.hasMinimumQuality, check.hasFesteMatrix, check.hasWildeMagie, check.hasSpruchhemmung)
 		val attributes = List(check.getAttribute1, check.getAttribute2, check.getAttribute3)
 		val points = check.getValue
 		val difficulty = check.getDifficulty

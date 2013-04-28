@@ -17,7 +17,7 @@ public class Check {
 	private int difficulty;
 	private boolean minimumQuality;
 	private boolean festeMatrix;
-	private boolean tollpatsch;
+	private boolean wildeMagie;
 	private boolean spruchhemmung;
 
 	public Check() {
@@ -93,12 +93,12 @@ public class Check {
 		this.festeMatrix = festeMatrix;
 	}
 
-	public boolean hasTollpatsch() {
-		return tollpatsch;
+	public boolean hasWildeMagie() {
+		return wildeMagie;
 	}
 
-	public void setTollpatsch(boolean tollpatsch) {
-		this.tollpatsch = tollpatsch;
+	public void setWildeMagie(boolean wildeMagie) {
+		this.wildeMagie = wildeMagie;
 	}
 
 	public boolean hasSpruchhemmung() {

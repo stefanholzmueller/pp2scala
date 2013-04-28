@@ -6,7 +6,7 @@ import stefanholzmueller.pp2.util.IntTriple
 class OutcomeCalculatorAdapter extends OutcomeExaminer {
 
 	def examine(check: Check, diceTriple: IntTriple): Outcome = {
-		val options = new Options(check.hasMinimumQuality, check.hasFesteMatrix, check.hasTollpatsch, check.hasSpruchhemmung)
+		val options = new Options(check.hasMinimumQuality, check.hasFesteMatrix, check.hasWildeMagie, check.hasSpruchhemmung)
 		val attributes = List(check.getAttribute1, check.getAttribute2, check.getAttribute3)
 		val points = check.getValue
 		val difficulty = check.getDifficulty
@@ -20,10 +20,6 @@ class OutcomeCalculatorAdapter extends OutcomeExaminer {
 object OutcomeCalculator {
 
 	def examine(options: Options, attributes: List[Int], points: Int, difficulty: Int)(dice: Dice): Outcome = {
-		require(options != null, "options must not be null")
-		require(attributes != null && attributes.length == 3, "attributes must be a list of length 3")
-		require(dice != null, "dice must not be null")
-
 		specialOutcome(options, points, dice) match {
 			case Some(special) => special
 			case None => successOrFailure(options, attributes, points, difficulty, dice)
