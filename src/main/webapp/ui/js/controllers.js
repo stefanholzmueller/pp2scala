@@ -16,11 +16,27 @@ function CheckController($scope, $http) {
 		minimumQuality : true
 	};
 
+	var checkRoll = {
+		check : check,
+		die1 : 11,
+		die2 : 12,
+		die3 : 13
+	}
+
 	$scope.recalculate = function() {
-		$http.put('../rest/check/statistics', check).success(function(result) {
-			result.check = clone(check);
-			$scope.result = result;
-		}).error(function(data, status) {
+		$http.put('../rest/check/statistics', check).success(
+				function(statistics) {
+					statistics.check = clone(check);
+					$scope.statistics = statistics;
+				}).error(function(data, status) {
+			alert("status=" + status);
+		});
+
+		$http.put('../rest/check/outcome', checkRoll).success(
+				function(outcome) {
+					outcome.check = clone(check);
+					$scope.outcome = outcome;
+				}).error(function(data, status) {
 			alert("status=" + status);
 		});
 	};
