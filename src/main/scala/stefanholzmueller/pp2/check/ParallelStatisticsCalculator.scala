@@ -48,15 +48,8 @@ object ParallelStatisticsCalculator {
 
 		val qualities = parallelQualities.flatten.seq
 
-		var successes = 0
-		var quality = 0
-		for (q <- qualities) {
-			successes += 1
-			quality += q
-		}
-
-		val chance: Double = successes / (total: Double)
-		val average: Double = quality / (successes: Double)
+		val chance: Double = qualities.size / (total: Double)
+		val average: Double = qualities.sum / (qualities.size: Double)
 
 		new Statistics(chance, average)
 	}
