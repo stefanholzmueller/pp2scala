@@ -40,7 +40,7 @@ public class CheckService {
 		return statisticsGatherer.gather(check);
 	}
 
-	@Path("/result")
+	@Path("/outcome")
 	@PUT
 	public OutcomeImpl examineOutcome(CheckRoll checkRoll) {
 		Check check = checkRoll.getCheck();
