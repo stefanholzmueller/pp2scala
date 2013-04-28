@@ -30,16 +30,23 @@
 						<input class="check_form" type="number" min="-20" max="50" step="1" id="difficulty" data-ng-model="check.difficulty" data-ng-change="recalculate()">
 					</li>
 					<li class="check_form">
-						<input class="check_form" type="checkbox" data-ng-model="check.minimumQuality" data-ng-change="recalculate()" id="checkboxMinimumQuality"><label for="checkboxMinimumQuality">Regel zum "Minimaleffekt" aktivieren</label>
+						<input class="check_form" type="checkbox" data-ng-model="check.minimumQuality" id="checkboxMinimumQuality" data-ng-change="recalculate()">
+						<label for="checkboxMinimumQuality">Regel zum "Minimaleffekt" aktivieren</label>
 					</li>
 					<li class="check_form">
-						<input class="check_form" type="checkbox" data-ng-model="check.festeMatrix" data-ng-change="recalculate()" id="checkboxFesteMatrix"><label for="checkboxFesteMatrix">Vorteil "Feste Matrix"</label>
+						<input class="check_form" type="checkbox" id="checkboxFesteMatrix" data-ng-change="recalculate()" 
+								data-ng-model="check.festeMatrix" ng-disabled="check.wildeMagie || check.spruchhemmung">
+						<label for="checkboxFesteMatrix">Vorteil "Feste Matrix"</label>
 					</li>
 					<li class="check_form">
-						<input class="check_form" type="checkbox" data-ng-model="check.wildeMagie" data-ng-change="recalculate()" id="checkboxWildeMagie"><label for="checkboxWildeMagie">Nachteil "Wilde Magie"</label>
+						<input class="check_form" type="checkbox" id="checkboxWildeMagie" data-ng-change="recalculate()" 
+								data-ng-model="check.wildeMagie" ng-disabled="check.festeMatrix">
+						<label for="checkboxWildeMagie">Nachteil "Wilde Magie"</label>
 					</li>
 					<li class="check_form">
-						<input class="check_form" type="checkbox" data-ng-model="check.spruchhemmung" data-ng-change="recalculate()" id="checkboxSpruchhemmung"><label for="checkboxSpruchhemmung">Nachteil "Spruchhemmung"</label>
+						<input class="check_form" type="checkbox" id="checkboxSpruchhemmung" data-ng-change="recalculate()" 
+								data-ng-model="check.spruchhemmung" ng-disabled="check.festeMatrix">
+						<label for="checkboxSpruchhemmung">Nachteil "Spruchhemmung"</label>
 					</li>
 				</ul>
 			</fieldset>
