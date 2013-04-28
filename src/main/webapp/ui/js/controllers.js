@@ -21,7 +21,7 @@ function CheckController($scope, $http) {
 		die1 : 11,
 		die2 : 12,
 		die3 : 13
-	}
+	};
 
 	$scope.recalculate = function() {
 		$http.put('../rest/check/statistics', check).success(
@@ -34,7 +34,7 @@ function CheckController($scope, $http) {
 
 		$http.put('../rest/check/outcome', checkRoll).success(
 				function(outcome) {
-					outcome.check = clone(check);
+					outcome.checkRoll = clone(checkRoll);
 					$scope.outcome = outcome;
 				}).error(function(data, status) {
 			alert("status=" + status);
