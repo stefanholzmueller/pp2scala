@@ -28,6 +28,16 @@ function CheckController($scope, $http) {
 				function(statistics) {
 					statistics.check = clone(check);
 					$scope.statistics = statistics;
+					var data = [ {
+						value : statistics.chance,
+						color : "#00ff00"
+					}, {
+						value : (1 - statistics.chance),
+						color : "#ff0000"
+					} ];
+					var ctx = document.getElementById("chanceChart")
+							.getContext("2d");
+					var myNewChart = new Chart(ctx).Pie(data);
 				}).error(function(data, status) {
 			alert("status=" + status);
 		});

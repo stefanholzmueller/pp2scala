@@ -7,6 +7,7 @@
 <script src="js/app.js"></script>
 <script src="js/controllers.js"></script>
 <script src="js/filters.js"></script>
+<script src="lib/Chart.js"></script>
 <link rel="stylesheet" media="screen" href="css/pp.css">
 <title>Probenprophet 2.0</title>
 </head>
@@ -51,6 +52,7 @@
 				</ul>
 			</fieldset>
 		</div>
+		<canvas id="chanceChart" width="300" height="300"></canvas>
 		<div style="float: right">
 			<pre>statistics={{statistics | json}}</pre>
 			<pre>outcome={{outcome | json}}</pre>
