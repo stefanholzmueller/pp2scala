@@ -6,10 +6,7 @@ import stefanholzmueller.pp2.util.IntTriple
 class OutcomeCalculatorAdapter extends OutcomeExaminer {
 
 	def examine(check: Check, diceTriple: IntTriple): Outcome = {
-		val options = new Options(check.hasMinimumQuality, check.hasFesteMatrix, check.hasWildeMagie, check.hasSpruchhemmung)
-		val attributes = List(check.getAttribute1, check.getAttribute2, check.getAttribute3)
-		val points = check.getValue
-		val difficulty = check.getDifficulty
+		val (options, attributes, points, difficulty) = OutcomeCalculator.javaCheckToscalaTuple(check)
 		val dice = new Dice(diceTriple.first, diceTriple.second, diceTriple.third)
 
 		OutcomeCalculator.examine(options, attributes, points, difficulty)(dice)
@@ -18,6 +15,15 @@ class OutcomeCalculatorAdapter extends OutcomeExaminer {
 }
 
 object OutcomeCalculator {
+
+	def javaCheckToscalaTuple(check: Check): (Options, List[Int], Int, Int) = {
+		val options = new Options(check.hasMinimumQuality, check.hasFesteMatrix, check.hasWildeMagie, check.hasSpruchhemmung)
+		val attributes = List(check.getAttribute1, check.getAttribute2, check.getAttribute3)
+		val points = check.getValue
+		val difficulty = check.getDifficulty
+
+		(options, attributes, points, difficulty)
+	}
 
 	def examine(options: Options, attributes: List[Int], points: Int, difficulty: Int)(dice: Dice): Outcome = {
 		specialOutcome(options, points, dice) match {
