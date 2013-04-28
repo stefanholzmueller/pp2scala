@@ -11,7 +11,7 @@ import stefanholzmueller.pp2.check.CheckRoll;
 import stefanholzmueller.pp2.check.Outcome;
 import stefanholzmueller.pp2.check.OutcomeCalculatorAdapter;
 import stefanholzmueller.pp2.check.OutcomeExaminer;
-import stefanholzmueller.pp2.check.SimpleStatisticsCalculatorAdapter;
+import stefanholzmueller.pp2.check.ParallelStatisticsCalculatorAdapter;
 import stefanholzmueller.pp2.check.Statistics;
 import stefanholzmueller.pp2.check.StatisticsGatherer;
 import stefanholzmueller.pp2.util.IntTriple;
@@ -21,7 +21,7 @@ import stefanholzmueller.pp2.util.IntTriple;
 @Produces(MediaType.APPLICATION_JSON)
 public class CheckService {
 
-	private StatisticsGatherer statisticsGatherer = new SimpleStatisticsCalculatorAdapter();
+	private StatisticsGatherer statisticsGatherer = new ParallelStatisticsCalculatorAdapter();
 	private OutcomeExaminer outcomeExaminer = new OutcomeCalculatorAdapter();
 
 	public CheckService() {

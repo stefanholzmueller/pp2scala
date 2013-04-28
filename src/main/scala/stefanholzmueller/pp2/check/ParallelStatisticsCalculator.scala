@@ -14,7 +14,7 @@ class ParallelStatisticsCalculatorAdapter extends StatisticsGatherer {
 		val points = check.getValue
 		val difficulty = check.getDifficulty
 
-		time("gathering statistics") {
+		time("gathering statistics in parallel") {
 			ParallelStatisticsCalculator.gather(options, attributes, points, difficulty)
 		}
 	}
