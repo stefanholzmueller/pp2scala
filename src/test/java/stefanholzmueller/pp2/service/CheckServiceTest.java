@@ -12,9 +12,8 @@ import org.testng.annotations.Test;
 
 import stefanholzmueller.pp2.check.Check;
 import stefanholzmueller.pp2.check.CheckRoll;
+import stefanholzmueller.pp2.check.Outcome;
 import stefanholzmueller.pp2.check.OutcomeExaminer;
-import stefanholzmueller.pp2.check.OutcomeImpl;
-import stefanholzmueller.pp2.check.OutcomeImpl.OutcomeEnum;
 import stefanholzmueller.pp2.check.StatisticsGatherer;
 import stefanholzmueller.pp2.util.IntTriple;
 
@@ -23,16 +22,17 @@ public class CheckServiceTest {
 
 	private CheckService checkService;
 	@Mock
-	private OutcomeExaminer checkResultCalculator;
+	private Outcome outcome;
 	@Mock
-	private StatisticsGatherer checkStatisticsCalculator;
+	private OutcomeExaminer outcomeExaminer;
+	@Mock
+	private StatisticsGatherer statisticsGatherer;
 
 	@BeforeMethod
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 
-		checkService = new CheckService(checkStatisticsCalculator,
-				checkResultCalculator);
+		checkService = new CheckService(statisticsGatherer, outcomeExaminer);
 	}
 
 	public void delegatesToCheckResultCalculator() {
@@ -41,13 +41,10 @@ public class CheckServiceTest {
 		IntTriple dice = new IntTriple(1, 16, 1);
 		when(checkRoll.getCheck()).thenReturn(check);
 		when(checkRoll.getDice()).thenReturn(dice);
-		OutcomeImpl checkResult = new OutcomeImpl(
-				OutcomeEnum.AUTOMATIC_SUCCESS, 7, 3);
-		when(checkResultCalculator.examine(check, dice))
-				.thenReturn(checkResult);
+		when(outcomeExaminer.examine(check, dice)).thenReturn(outcome);
 
-		OutcomeImpl serviceResult = checkService.examineOutcome(checkRoll);
+		Outcome serviceResult = checkService.examineOutcome(checkRoll);
 
-		assertThat(serviceResult, is(checkResult));
+		assertThat(serviceResult, is(outcome));
 	}
 }

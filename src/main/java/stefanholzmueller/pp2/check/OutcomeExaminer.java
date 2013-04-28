@@ -4,6 +4,6 @@ import stefanholzmueller.pp2.util.IntTriple;
 
 public interface OutcomeExaminer {
 
-	OutcomeImpl examine(Check check, IntTriple dice);
+	Outcome examine(Check check, IntTriple dice);
 
 }

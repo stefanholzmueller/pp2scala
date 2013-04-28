@@ -8,9 +8,9 @@ import javax.ws.rs.core.MediaType;
 
 import stefanholzmueller.pp2.check.Check;
 import stefanholzmueller.pp2.check.CheckRoll;
+import stefanholzmueller.pp2.check.Outcome;
 import stefanholzmueller.pp2.check.OutcomeCalculatorAdapter;
 import stefanholzmueller.pp2.check.OutcomeExaminer;
-import stefanholzmueller.pp2.check.OutcomeImpl;
 import stefanholzmueller.pp2.check.SimpleStatisticsCalculatorAdapter;
 import stefanholzmueller.pp2.check.Statistics;
 import stefanholzmueller.pp2.check.StatisticsGatherer;
@@ -42,7 +42,7 @@ public class CheckService {
 
 	@Path("/outcome")
 	@PUT
-	public OutcomeImpl examineOutcome(CheckRoll checkRoll) {
+	public Outcome examineOutcome(CheckRoll checkRoll) {
 		Check check = checkRoll.getCheck();
 		IntTriple dice = checkRoll.getDice();
 		return outcomeExaminer.examine(check, dice);

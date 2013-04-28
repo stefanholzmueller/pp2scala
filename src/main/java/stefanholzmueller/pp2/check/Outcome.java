@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public interface Outcome {
 
-	// TODO getName / getMessageKey
+	String getMessage();
 
 	boolean isSuccessful();
 

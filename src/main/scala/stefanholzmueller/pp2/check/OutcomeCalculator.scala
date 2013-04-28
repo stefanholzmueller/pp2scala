@@ -2,28 +2,17 @@ package stefanholzmueller.pp2.check
 
 import stefanholzmueller.pp2.util.Dice
 import stefanholzmueller.pp2.util.IntTriple
-import stefanholzmueller.pp2.check.OutcomeImpl.OutcomeEnum
 
 class OutcomeCalculatorAdapter extends OutcomeExaminer {
 
-	def examine(check: Check, diceTriple: IntTriple): OutcomeImpl = {
+	def examine(check: Check, diceTriple: IntTriple): Outcome = {
 		val options = new Options(check.hasMinimumQuality, check.hasFesteMatrix, check.hasTollpatsch, check.hasSpruchhemmung)
 		val attributes = List(check.getAttribute1, check.getAttribute2, check.getAttribute3)
 		val points = check.getValue
 		val difficulty = check.getDifficulty
 		val dice = new Dice(diceTriple.first, diceTriple.second, diceTriple.third)
 
-		val outcome = OutcomeCalculator.examine(options, attributes, points, difficulty)(dice)
-
-		outcome match {
-			case Success(q, g) => new OutcomeImpl(OutcomeEnum.SUCCESS, q, g)
-			case AutomaticSuccess(q) => new OutcomeImpl(OutcomeEnum.AUTOMATIC_SUCCESS, q, null)
-			case SpectacularSuccess(q) => new OutcomeImpl(OutcomeEnum.SPECTACULAR_SUCCESS, q, null)
-			case Failure(g) => new OutcomeImpl(OutcomeEnum.FAILURE, null, -g) // note the negation
-			case AutomaticFailure() => new OutcomeImpl(OutcomeEnum.AUTOMATIC_FAILURE, null, null)
-			case SpectacularFailure() => new OutcomeImpl(OutcomeEnum.SPECTACULAR_FAILURE, null, null)
-			case Spruchhemmung() => new OutcomeImpl(OutcomeEnum.SPRUCHHEMMUNG, null, null)
-		}
+		OutcomeCalculator.examine(options, attributes, points, difficulty)(dice)
 	}
 
 }
