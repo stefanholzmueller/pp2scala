@@ -9,7 +9,7 @@ import scala.collection.mutable.ListBuffer
 class ParallelStatisticsCalculatorAdapter extends StatisticsGatherer {
 
 	def gather(check: Check) = {
-		val (options, attributes, points, difficulty) = OutcomeCalculator.javaCheckToscalaTuple(check)
+		val (options, attributes, points, difficulty) = OutcomeCalculator.javaCheckToScalaTuple(check)
 
 		time("gathering statistics in parallel") {
 			ParallelStatisticsCalculator.gather(options, attributes, points, difficulty)

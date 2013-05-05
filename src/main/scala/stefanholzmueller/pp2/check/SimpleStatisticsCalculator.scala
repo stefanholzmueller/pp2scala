@@ -8,7 +8,7 @@ import stefanholzmueller.pp2.util.Timer.time
 class SimpleStatisticsCalculatorAdapter extends StatisticsGatherer {
 
 	def gather(check: Check) = {
-		val (options, attributes, points, difficulty) = OutcomeCalculator.javaCheckToscalaTuple(check)
+		val (options, attributes, points, difficulty) = OutcomeCalculator.javaCheckToScalaTuple(check)
 
 		time("gathering statistics") {
 			SimpleStatisticsCalculator.gather(options, attributes, points, difficulty)
