@@ -6,7 +6,7 @@ import stefanholzmueller.pp2.util.IntTriple
 class OutcomeCalculatorAdapter extends OutcomeExaminer {
 
 	def examine(check: Check, diceTriple: IntTriple): Outcome = {
-		val (options, attributes, points, difficulty) = OutcomeCalculator.javaCheckToscalaTuple(check)
+		val (options, attributes, points, difficulty) = OutcomeCalculator.javaCheckToScalaTuple(check)
 		val dice = new Dice(diceTriple.first, diceTriple.second, diceTriple.third)
 
 		OutcomeCalculator.examine(options, attributes, points, difficulty)(dice)
@@ -16,7 +16,7 @@ class OutcomeCalculatorAdapter extends OutcomeExaminer {
 
 object OutcomeCalculator {
 
-	def javaCheckToscalaTuple(check: Check): (Options, List[Int], Int, Int) = {
+	def javaCheckToScalaTuple(check: Check): (Options, List[Int], Int, Int) = {
 		val options = new Options(check.hasMinimumQuality, check.hasFesteMatrix, check.hasWildeMagie, check.hasSpruchhemmung)
 		val attributes = List(check.getAttribute1, check.getAttribute2, check.getAttribute3)
 		val points = check.getValue
@@ -71,14 +71,15 @@ object OutcomeCalculator {
 
 		if (usedPoints > effectivePoints) {
 			Failure(usedPoints - effectivePoints)
-		} else if (usedPoints == 0) {
-			val quality = applyMinimumQuality(options, effectivePoints min points)
-			val worstDie = comparisons.reduce(_ max _) // is <= 0 in this case
-			Success(quality, effectivePoints - worstDie)
 		} else {
-			val leftoverPoints = ease - usedPoints
+			val leftoverPoints = effectivePoints - usedPoints
 			val quality = applyMinimumQuality(options, leftoverPoints min points)
-			Success(quality, leftoverPoints)
+			if (usedPoints == 0) {
+				val worstDie = comparisons.reduce(_ max _) // is <= 0 in this case
+				Success(quality, effectivePoints - worstDie)
+			} else {
+				Success(quality, leftoverPoints)
+			}
 		}
 	}
 
