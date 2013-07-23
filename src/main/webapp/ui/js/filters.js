@@ -1,19 +1,19 @@
 'use strict';
 
-/* Filters */
 
-angular.module('ppCheck.filters', [])
-	.filter('percentage', [ '$filter', function(filter) {
-	    return function(number, fractionSize) {
+var module = angular.module('pp2.filters', []);
+
+module.filter('percentage', [ '$filter', function(filter) {
+	return function(number, fractionSize) {
 		return filter('number')(number * 100, fractionSize) + " %"
-	    }
-	}])
-	.filter('signed', function() {
-	    return function(number) {
+	}
+} ]);
+module.filter('signed', function() {
+	return function(number) {
 		if (number > 0) {
-		    return "+" + number;
+			return "+" + number;
 		} else {
-		    return number;
+			return number;
 		}
-	    }
-	});
+	}
+});

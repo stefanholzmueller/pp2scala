@@ -6,3 +6,4 @@ classes/
 *.war
 *.ear
 /.cache
+/.metadata
