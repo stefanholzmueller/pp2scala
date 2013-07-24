@@ -2,61 +2,20 @@
 
 var module = angular.module('pp2.controllers', []);
 
-module.controller('RangedController', function($scope) {
-	$scope.sizes = Object.freeze([ {
-		index : 0,
-		text : "winzig",
-		difficulty : 8
-	}, {
-		index : 1,
-		text : "sehr klein",
-		difficulty : 6
-	}, {
-		index : 2,
-		text : "klein",
-		difficulty : 4
-	}, {
-		index : 3,
-		text : "mittel",
-		difficulty : 2
-	}, {
-		index : 4,
-		text : "groß",
-		difficulty : 0
-	}, {
-		index : 5,
-		text : "sehr groß",
-		difficulty : -2
-	} ]);
+module.controller('RangedController', [ '$scope', 'RangedService', function($scope, service) {
+	$scope.sizes = service.options.size;
+	$scope.ranges = service.options.range;
 
-	$scope.ranges = Object.freeze([ {
-		index : 0,
-		text : "sehr nah",
-		difficulty : -2
-	}, {
-		index : 1,
-		text : "nah",
-		difficulty : 0
-	}, {
-		index : 2,
-		text : "mittel",
-		difficulty : 4
-	}, {
-		index : 3,
-		text : "weit",
-		difficulty : 8
-	}, {
-		index : 4,
-		text : "extrem weit",
-		difficulty : 12
-	} ]);
-
-	$scope.modifications = {
-		size : 2,
-		range : 0,
+	$scope.options = {
+		size : $scope.sizes[3],
+		range : $scope.ranges[1],
 		other : 0
 	};
-});
+	
+	$scope.$watch('options', function() {
+		$scope.difficulty = service.calculate($scope.options);
+	}, true);
+} ]);
 
 function clone(obj) {
 	return JSON.parse(JSON.stringify(obj));

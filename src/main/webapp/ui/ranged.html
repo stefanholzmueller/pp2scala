@@ -7,6 +7,7 @@
 <script src="js/app.js"></script>
 <script src="js/controllers.js"></script>
 <script src="js/filters.js"></script>
+<script src="js/services.js"></script>
 <link rel="stylesheet" media="screen" href="css/pp.css">
 <title>Probenprophet 2.0 - Fernkampf</title>
 </head>
@@ -14,18 +15,30 @@
 	<table>
 		<tr>
 			<td>Zielgröße</td>
-			<td><select data-ng-model="modifications.size" data-ng-options="s.difficulty as s.text for s in sizes"></select></td>
-			<td>{{ modifications.size | signed }}</td>
+			<!-- TODO Deckung -->
+			<td><select data-ng-model="options.size" data-ng-options="s.text for s in sizes" ></select></td>
+			<td>{{ difficulty.size | signed }}</td>
 		</tr>
 		<tr>
 			<td>Entfernung</td>
-			<td><select data-ng-model="modifications.range" data-ng-options="r.difficulty as r.text for r in ranges"></select></td>
-			<td>{{ modifications.range | signed }}</td>
+			<td><select data-ng-model="options.range" data-ng-options="r.text for r in ranges"></select></td>
+			<td>{{ difficulty.range | signed }}</td>
 		</tr>
+<!-- 		<tr> -->
+<!-- 			<td>Steilschuss / -wurf</td> -->
+<!-- 			<td><select data-ng-model="options.steep" data-ng-options="s.difficulty as s.text for s in steeps" size="2"></select></td> -->
+<!-- 			<td>{{ difficulty.steep | signed }}</td> -->
+<!-- 		</tr> -->
+<!-- 		<tr> -->
+<!-- 			<td>Zweiter Schuss pro KR</td> -->
+			<!-- TODO Wurf: +2 -->
+<!-- 			<td><input type="checkbox" data-ng-model="options.second"  data-ng-false-value="0" data-ng-true-value="4"></td> -->
+<!-- 			<td>{{ difficulty.second | signed }}</td> -->
+<!-- 		</tr> -->
 		<tr>
 			<td>Sonstiges</td>
-			<td><input type="number" data-ng-model="modifications.other"></td>
-			<td>{{ modifications.other | signed }}</td>
+			<td><input type="number" data-ng-model="options.other"></td>
+			<td>{{ difficulty.other | signed }}</td>
 		</tr>
 	</table>
 </body>
