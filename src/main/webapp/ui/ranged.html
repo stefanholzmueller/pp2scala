@@ -16,7 +16,7 @@
 		<tr>
 			<td>Zielgröße</td>
 			<!-- TODO Deckung -->
-			<td><select data-ng-model="options.size" data-ng-options="s.text for s in sizes" ></select></td>
+			<td><select data-ng-model="options.size" data-ng-options="s.text for s in sizes"></select></td>
 			<td>{{ difficulty.size | signed }}</td>
 		</tr>
 		<tr>
@@ -24,17 +24,36 @@
 			<td><select data-ng-model="options.range" data-ng-options="r.text for r in ranges"></select></td>
 			<td>{{ difficulty.range | signed }}</td>
 		</tr>
-<!-- 		<tr> -->
-<!-- 			<td>Steilschuss / -wurf</td> -->
-<!-- 			<td><select data-ng-model="options.steep" data-ng-options="s.difficulty as s.text for s in steeps" size="2"></select></td> -->
-<!-- 			<td>{{ difficulty.steep | signed }}</td> -->
-<!-- 		</tr> -->
-<!-- 		<tr> -->
-<!-- 			<td>Zweiter Schuss pro KR</td> -->
-			<!-- TODO Wurf: +2 -->
-<!-- 			<td><input type="checkbox" data-ng-model="options.second"  data-ng-false-value="0" data-ng-true-value="4"></td> -->
-<!-- 			<td>{{ difficulty.second | signed }}</td> -->
-<!-- 		</tr> -->
+		<tr>
+			<td><label> <input type="radio" name="movement" value="target" data-ng-model="options.movement.type">Bewegung
+			</label><br /> <label><input type="radio" name="movement" value="combat" data-ng-model="options.movement.type">Kampfgetümmel</label></td>
+			<td>
+				<div data-ng-switch data-on="options.movement.type">
+					<div data-ng-switch-when="target">
+						<select data-ng-model="options.movement.target" data-ng-options="m.text for m in movements"></select>
+					</div>
+					<div data-ng-switch-when="combat">
+						<input type="number" min="0" data-ng-model="options.movement.combat.h">in H<br /> <input type="number"
+							min="0" data-ng-model="options.movement.combat.ns">in N/S
+					</div>
+				</div>
+			</td>
+			<td>{{ difficulty.movement | signed }}</td>
+		</tr>
+		<!-- TODO Bewegung eines Körperteils -->
+		<tr>
+			<td>Steilschuss / -wurf</td>
+			<td><label><input type="checkbox" data-ng-model="options.steep" data-ng-true-value="down">nach
+					unten</label> <br /> <label><input type="checkbox" data-ng-model="options.steep" data-ng-true-value="up">nach
+					oben</label></td>
+			<td>{{ difficulty.steep | signed }}</td>
+		</tr>
+		<!-- 		<tr> -->
+		<!-- 			<td>Zweiter Schuss pro KR</td> -->
+		<!-- TODO Wurf: +2 -->
+		<!-- 			<td><input type="checkbox" data-ng-model="options.second"  data-ng-false-value="0" data-ng-true-value="4"></td> -->
+		<!-- 			<td>{{ difficulty.second | signed }}</td> -->
+		<!-- 		</tr> -->
 		<tr>
 			<td>Sonstiges</td>
 			<td><input type="number" data-ng-model="options.other"></td>

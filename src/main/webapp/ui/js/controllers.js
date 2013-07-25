@@ -5,10 +5,20 @@ var module = angular.module('pp2.controllers', []);
 module.controller('RangedController', [ '$scope', 'RangedService', function($scope, service) {
 	$scope.sizes = service.options.size;
 	$scope.ranges = service.options.range;
+	$scope.movements = service.options.movement;
 
 	$scope.options = {
 		size : $scope.sizes[3],
 		range : $scope.ranges[1],
+		movement : {
+			type : "target",
+			target : service.options.movement[2],
+			combat : {
+				h : 0,
+				ns : 0
+			}
+		},
+		steep : {},
 		other : 0
 	};
 	
