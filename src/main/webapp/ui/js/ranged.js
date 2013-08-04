@@ -62,7 +62,7 @@ module.factory('RangedService', function() {
 					difficulty.steep = 0;
 			}
 
-			switch (modifications.sidewind) {
+			switch (modifications.sidewind) { // TODO as map
 				case "normal":
 					difficulty.sidewind = 4;
 					break;
@@ -70,12 +70,13 @@ module.factory('RangedService', function() {
 					difficulty.sidewind = 8;
 					break;
 				default:
-					difficulty.sidewind= 0;
+					difficulty.sidewind = 0;
 			}
 
 			difficulty.sight = modifications.sight.difficulty;
 			difficulty.size = modifications.size.difficulty;
 			difficulty.range = modifications.range.difficulty;
+			difficulty.fast = modifications.fast ? 2 : 0; // TODO N/S/M
 			difficulty.second = modifications.second ? character.hasThrowingWeapon ? 2 : 4 : 0;
 			difficulty.other = modifications.other;
 			return difficulty;
