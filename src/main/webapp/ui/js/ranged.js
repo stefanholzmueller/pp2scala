@@ -1,6 +1,8 @@
 'use strict';
 
+
 var module = angular.module('pp2.ranged', [ 'pp2.filters' ]);
+
 
 module.controller('RangedController', [ '$scope', 'RangedService', function($scope, service) {
 	$scope.sizes = service.options.size;
@@ -8,8 +10,8 @@ module.controller('RangedController', [ '$scope', 'RangedService', function($sco
 	$scope.movements = service.options.movement;
 
 	$scope.options = {
-		size : $scope.sizes[3],
-		range : $scope.ranges[1],
+		size : service.options.size[3],
+		range : service.options.range[1],
 		movement : {
 			type : "target",
 			target : service.options.movement[2],
@@ -35,6 +37,7 @@ module.controller('RangedController', [ '$scope', 'RangedService', function($sco
 
 	$scope.$watch('options', recalculate, true);
 } ]);
+
 
 module.factory('RangedService', function() {
 	return {
