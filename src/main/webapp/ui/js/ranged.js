@@ -53,7 +53,7 @@ module.factory('RangedService', function() {
 
 			switch (modifications.steep) {
 				case "down":
-					difficulty.steep = 2;
+					difficulty.steep = character.hasSlingWeapon ? 8 : 2; // HACK
 					break;
 				case "up":
 					difficulty.steep = character.hasThrowingWeapon ? 8 : 4; // HACK
@@ -62,9 +62,20 @@ module.factory('RangedService', function() {
 					difficulty.steep = 0;
 			}
 
+			switch (modifications.sidewind) {
+				case "normal":
+					difficulty.sidewind = 4;
+					break;
+				case "strong":
+					difficulty.sidewind = 8;
+					break;
+				default:
+					difficulty.sidewind= 0;
+			}
+
+			difficulty.sight = modifications.sight.difficulty;
 			difficulty.size = modifications.size.difficulty;
 			difficulty.range = modifications.range.difficulty;
-			difficulty.sight = modifications.sight.difficulty;
 			difficulty.second = modifications.second ? character.hasThrowingWeapon ? 2 : 4 : 0;
 			difficulty.other = modifications.other;
 			return difficulty;
@@ -125,7 +136,7 @@ module.factory('RangedService', function() {
 			} ]),
 
 			sight : Object.freeze([ {
-				text : "Normale Sicht",
+				text : "normal",
 				difficulty : 0
 			}, {
 				text : "Dunst",
@@ -133,7 +144,7 @@ module.factory('RangedService', function() {
 			}, {
 				text : "Nebel",
 				difficulty : 4
-			}, {
+			}, { // TODO missing attribute 'darkness : true'
 				text : "Dämmerung",
 				difficulty : 2
 			}, {

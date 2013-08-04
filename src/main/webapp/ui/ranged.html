@@ -54,6 +54,13 @@
 			<td>{{ difficulty.steep | signed }}</td>
 		</tr>
 		<tr>
+			<td>Seitenwind</td>
+			<td><label><input type="checkbox" data-ng-model="modifications.sidewind" data-ng-true-value="normal">normal</label>
+				&nbsp;&nbsp;&nbsp;&nbsp; <label><input type="checkbox" data-ng-model="modifications.sidewind"
+					data-ng-true-value="strong">heftig</label></td>
+			<td>{{ difficulty.sidewind | signed }}</td>
+		</tr>
+		<tr>
 			<td>Zweite Aktion</td>
 			<td><label><input type="checkbox" data-ng-model="modifications.second">Zweiter Schuss/Wurf pro
 					KR</label></td>
