@@ -11,7 +11,17 @@
 <title>Probenprophet 2.0 - Fernkampf</title>
 </head>
 <body data-ng-controller="RangedController">
-	<table>
+	<table style="display:inline-block;">
+		<tr>
+			<td><label> <input type="radio" name="shooter" value="normal" data-ng-model="character.sf.shooter">normal
+			</label> &nbsp;&nbsp;&nbsp;&nbsp; <label> <input type="radio" name="shooter" value="sharp"
+					data-ng-model="character.sf.shooter">SF Scharfschütze
+			</label> &nbsp;&nbsp;&nbsp;&nbsp; <label> <input type="radio" name="shooter" value="master"
+					data-ng-model="character.sf.shooter">SF Meisterschütze
+			</label></td>
+		</tr>
+	</table>
+	<table style="display:inline-block;">
 		<tr>
 			<td>Zielgröße</td>
 			<!-- TODO Deckung -->
