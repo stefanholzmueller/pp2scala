@@ -47,12 +47,11 @@
 					oben</label></td>
 			<td>{{ difficulty.steep | signed }}</td>
 		</tr>
-		<!-- 		<tr> -->
-		<!-- 			<td>Zweiter Schuss pro KR</td> -->
-		<!-- TODO Wurf: +2 -->
-		<!-- 			<td><input type="checkbox" data-ng-model="options.second"  data-ng-false-value="0" data-ng-true-value="4"></td> -->
-		<!-- 			<td>{{ difficulty.second | signed }}</td> -->
-		<!-- 		</tr> -->
+		<tr>
+			<td>Zweiter Schuss/Wurf pro KR</td>
+			<td><input type="checkbox" data-ng-model="options.second"></td>
+			<td>{{ difficulty.second | signed }}</td>
+		</tr>
 		<tr>
 			<td>Sonstiges</td>
 			<td><input type="number" data-ng-model="options.other"></td>

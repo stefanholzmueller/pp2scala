@@ -21,6 +21,7 @@ module.controller('RangedController', [ '$scope', 'RangedService', function($sco
 			}
 		},
 		steep : "",
+		second : false,
 		other : 0
 	};
 
@@ -42,6 +43,7 @@ module.controller('RangedController', [ '$scope', 'RangedService', function($sco
 module.factory('RangedService', function() {
 	return {
 		calculate : function(options, character) {
+			character = {}; // HACK
 			var difficulty = {};
 
 			switch (options.movement.type) {
@@ -58,7 +60,6 @@ module.factory('RangedService', function() {
 					difficulty.steep = 2;
 					break;
 				case "up":
-					character = {}; // HACK
 					difficulty.steep = character.hasThrowingWeapon ? 8 : 4; // HACK
 					break;
 				default:
@@ -67,6 +68,7 @@ module.factory('RangedService', function() {
 
 			difficulty.size = options.size.difficulty;
 			difficulty.range = options.range.difficulty;
+			difficulty.second = options.second ? character.hasThrowingWeapon ? 2 : 4 : 0;
 			difficulty.other = options.other;
 			return difficulty;
 		},
