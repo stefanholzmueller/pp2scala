@@ -18,16 +18,22 @@ module.controller('RangedController', [ '$scope', 'RangedService', function($sco
 				ns : 0
 			}
 		},
-		steep : {},
+		steep : "",
 		other : 0
 	};
 
-	$scope.$watch('options', function() {
-		$scope.difficulty = service.calculate($scope.options);
-		$scope.difficultySum = _.reduce($scope.difficulty, function(acc, num) {
+	function sum(collection) {
+		return _.reduce(collection, function(acc, num) {
 			return acc + num;
 		}, 0);
-	}, true);
+	}
+
+	function recalculate(newOptions) {
+		$scope.difficulty = service.calculate(newOptions);
+		$scope.difficultySum = sum($scope.difficulty);
+	}
+
+	$scope.$watch('options', recalculate, true);
 } ]);
 
 module.factory('RangedService', function() {
