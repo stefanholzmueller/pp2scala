@@ -39,43 +39,28 @@ module.controller('RangedController', [ '$scope', 'RangedService', function($sco
 module.factory('RangedService', function() {
 	return {
 		calculate : function(modifications, character) {
+			function lookup(key, map, otherwise) {
+				return map.hasOwnProperty(key) ? map[key] : otherwise;
+			}
+
 			character = {}; // HACK
+
 			var difficulty = {};
-
-			switch (modifications.movement.type) {
-				case "target":
-					difficulty.movement = modifications.movement.target.difficulty;
-					break;
-				case "combat":
-					difficulty.movement = modifications.movement.combat.h * 3 + modifications.movement.combat.ns * 2;
-					break;
-			}
-
-			switch (modifications.steep) {
-				case "down":
-					difficulty.steep = character.hasSlingWeapon ? 8 : 2; // HACK
-					break;
-				case "up":
-					difficulty.steep = character.hasThrowingWeapon ? 8 : 4; // HACK
-					break;
-				default:
-					difficulty.steep = 0;
-			}
-
-			switch (modifications.sidewind) { // TODO as map
-				case "normal":
-					difficulty.sidewind = 4;
-					break;
-				case "strong":
-					difficulty.sidewind = 8;
-					break;
-				default:
-					difficulty.sidewind = 0;
-			}
-
-			difficulty.sight = modifications.sight.difficulty;
 			difficulty.size = modifications.size.difficulty;
 			difficulty.range = modifications.range.difficulty;
+			difficulty.movement = lookup(modifications.movement.type, {
+				"target" : modifications.movement.target.difficulty,
+				"combat" : modifications.movement.combat.h * 3 + modifications.movement.combat.ns * 2
+			});
+			difficulty.sight = modifications.sight.difficulty;
+			difficulty.steep = lookup(modifications.steep, {
+				"down" : character.hasSlingWeapon ? 8 : 2,
+				"up" : character.hasThrowingWeapon ? 8 : 4
+			}, 0);
+			difficulty.sidewind = lookup(modifications.sidewind, {
+				"normal" : 4,
+				"strong" : 8
+			}, 0);
 			difficulty.fast = modifications.fast ? 2 : 0; // TODO N/S/M
 			difficulty.second = modifications.second ? character.hasThrowingWeapon ? 2 : 4 : 0;
 			difficulty.other = modifications.other;
