@@ -1,15 +1,11 @@
 'use strict';
 
-
 var module = angular.module('pp2.ranged', [ 'pp2.filters' ]);
 
-
 module.controller('RangedController', [ '$scope', 'RangedService', function($scope, service) {
-	$scope.sizes = service.options.size;
-	$scope.ranges = service.options.range;
-	$scope.movements = service.options.movement;
+	$scope.options = service.options;
 
-	$scope.options = {
+	$scope.modifications = {
 		size : service.options.size[3],
 		range : service.options.range[1],
 		movement : {
@@ -20,6 +16,7 @@ module.controller('RangedController', [ '$scope', 'RangedService', function($sco
 				ns : 0
 			}
 		},
+		sight : service.options.sight[0],
 		steep : "",
 		second : false,
 		other : 0
@@ -31,31 +28,30 @@ module.controller('RangedController', [ '$scope', 'RangedService', function($sco
 		}, 0);
 	}
 
-	function recalculate(newOptions) {
-		$scope.difficulty = service.calculate(newOptions);
+	function recalculate(newValue) {
+		$scope.difficulty = service.calculate(newValue);
 		$scope.difficultySum = sum($scope.difficulty);
 	}
 
-	$scope.$watch('options', recalculate, true);
+	$scope.$watch('modifications', recalculate, true);
 } ]);
-
 
 module.factory('RangedService', function() {
 	return {
-		calculate : function(options, character) {
+		calculate : function(modifications, character) {
 			character = {}; // HACK
 			var difficulty = {};
 
-			switch (options.movement.type) {
+			switch (modifications.movement.type) {
 				case "target":
-					difficulty.movement = options.movement.target.difficulty;
+					difficulty.movement = modifications.movement.target.difficulty;
 					break;
 				case "combat":
-					difficulty.movement = options.movement.combat.h * 3 + options.movement.combat.ns * 2;
+					difficulty.movement = modifications.movement.combat.h * 3 + modifications.movement.combat.ns * 2;
 					break;
 			}
 
-			switch (options.steep) {
+			switch (modifications.steep) {
 				case "down":
 					difficulty.steep = 2;
 					break;
@@ -66,81 +62,92 @@ module.factory('RangedService', function() {
 					difficulty.steep = 0;
 			}
 
-			difficulty.size = options.size.difficulty;
-			difficulty.range = options.range.difficulty;
-			difficulty.second = options.second ? character.hasThrowingWeapon ? 2 : 4 : 0;
-			difficulty.other = options.other;
+			difficulty.size = modifications.size.difficulty;
+			difficulty.range = modifications.range.difficulty;
+			difficulty.sight = modifications.sight.difficulty;
+			difficulty.second = modifications.second ? character.hasThrowingWeapon ? 2 : 4 : 0;
+			difficulty.other = modifications.other;
 			return difficulty;
 		},
 		options : {
 			size : Object.freeze([ {
-				index : 0,
 				text : "winzig",
 				difficulty : 8
 			}, {
-				index : 1,
 				text : "sehr klein",
 				difficulty : 6
 			}, {
-				index : 2,
 				text : "klein",
 				difficulty : 4
 			}, {
-				index : 3,
 				text : "mittel",
 				difficulty : 2
 			}, {
-				index : 4,
 				text : "groß",
 				difficulty : 0
 			}, {
-				index : 5,
 				text : "sehr groß",
 				difficulty : -2
 			} ]),
 
 			range : Object.freeze([ {
-				index : 0,
 				text : "sehr nah",
 				difficulty : -2
 			}, {
-				index : 1,
 				text : "nah",
 				difficulty : 0
 			}, {
-				index : 2,
 				text : "mittel",
 				difficulty : 4
 			}, {
-				index : 3,
 				text : "weit",
 				difficulty : 8
 			}, {
-				index : 4,
 				text : "extrem weit",
 				difficulty : 12
 			} ]),
 
 			movement : Object.freeze([ {
-				index : 0,
 				text : "unbewegliches / fest montiertes Ziel",
 				difficulty : -4
 			}, {
-				index : 1,
 				text : "stillstehendes Ziel",
 				difficulty : -2
 			}, {
-				index : 2,
 				text : "leichte Bewegung des Ziels",
 				difficulty : 0
 			}, {
-				index : 3,
 				text : "schnelle Bewegung des Ziels",
 				difficulty : 2
 			}, {
-				index : 4,
 				text : "sehr schnell / Ausweichbewegungen",
 				difficulty : 4
+			} ]),
+
+			sight : Object.freeze([ {
+				text : "Normale Sicht",
+				difficulty : 0
+			}, {
+				text : "Dunst",
+				difficulty : 2
+			}, {
+				text : "Nebel",
+				difficulty : 4
+			}, {
+				text : "Dämmerung",
+				difficulty : 2
+			}, {
+				text : "Mondlicht",
+				difficulty : 4
+			}, {
+				text : "Sternenlicht",
+				difficulty : 6
+			}, {
+				text : "Finsternis",
+				difficulty : 8
+			}, {
+				text : "Unsichtbares Ziel",
+				difficulty : 8
 			} ])
 		}
 	};

@@ -15,46 +15,53 @@
 		<tr>
 			<td>Zielgröße</td>
 			<!-- TODO Deckung -->
-			<td><select data-ng-model="options.size" data-ng-options="s.text for s in sizes"></select></td>
+			<td><select data-ng-model="modifications.size" data-ng-options="s.text for s in options.size"></select></td>
 			<td>{{ difficulty.size | signed }}</td>
 		</tr>
 		<tr>
 			<td>Entfernung</td>
-			<td><select data-ng-model="options.range" data-ng-options="r.text for r in ranges"></select></td>
+			<td><select data-ng-model="modifications.range" data-ng-options="r.text for r in options.range"></select></td>
 			<td>{{ difficulty.range | signed }}</td>
 		</tr>
 		<tr>
-			<td><label> <input type="radio" name="movement" value="target" data-ng-model="options.movement.type">Bewegung
-			</label><br /> <label><input type="radio" name="movement" value="combat" data-ng-model="options.movement.type">Kampfgetümmel</label></td>
+			<td><label> <input type="radio" name="movement" value="target"
+					data-ng-model="modifications.movement.type">Bewegung
+			</label><br /> <label><input type="radio" name="movement" value="combat" data-ng-model="modifications.movement.type">Kampfgetümmel</label></td>
 			<td>
-				<div data-ng-switch data-on="options.movement.type">
+				<div data-ng-switch data-on="modifications.movement.type">
 					<div data-ng-switch-when="target">
-						<select data-ng-model="options.movement.target" data-ng-options="m.text for m in movements"></select>
+						<select data-ng-model="modifications.movement.target" data-ng-options="m.text for m in options.movement"></select>
 					</div>
 					<div data-ng-switch-when="combat">
-						<input type="number" min="0" data-ng-model="options.movement.combat.h">in H<br /> <input type="number"
-							min="0" data-ng-model="options.movement.combat.ns">in N/S
+						<input type="number" min="0" data-ng-model="modifications.movement.combat.h">in H<br /> <input
+							type="number" min="0" data-ng-model="modifications.movement.combat.ns">in N/S
 					</div>
 				</div>
 			</td>
 			<td>{{ difficulty.movement | signed }}</td>
 		</tr>
+		<tr>
+			<td>Sichtverhältnisse</td>
+			<td><select data-ng-model="modifications.sight" data-ng-options="s.text for s in options.sight"></select></td>
+			<td>{{ difficulty.sight | signed }}</td>
+		</tr>
 		<!-- TODO Bewegung eines Körperteils -->
 		<tr>
 			<td>Steilschuss / -wurf</td>
-			<td><label><input type="checkbox" data-ng-model="options.steep" data-ng-true-value="down">nach
-					unten</label> <br /> <label><input type="checkbox" data-ng-model="options.steep" data-ng-true-value="up">nach
-					oben</label></td>
+			<td><label><input type="checkbox" data-ng-model="modifications.steep" data-ng-true-value="down">nach
+					unten</label> &nbsp;&nbsp;&nbsp;&nbsp; <label><input type="checkbox" data-ng-model="modifications.steep"
+					data-ng-true-value="up">nach oben</label></td>
 			<td>{{ difficulty.steep | signed }}</td>
 		</tr>
 		<tr>
-			<td>Zweiter Schuss/Wurf pro KR</td>
-			<td><input type="checkbox" data-ng-model="options.second"></td>
+			<td>Zweite Aktion</td>
+			<td><label><input type="checkbox" data-ng-model="modifications.second">Zweiter Schuss/Wurf pro
+					KR</label></td>
 			<td>{{ difficulty.second | signed }}</td>
 		</tr>
 		<tr>
 			<td>Sonstiges</td>
-			<td><input type="number" data-ng-model="options.other"></td>
+			<td><input type="number" data-ng-model="modifications.other"></td>
 			<td>{{ difficulty.other | signed }}</td>
 		</tr>
 		<tr>
