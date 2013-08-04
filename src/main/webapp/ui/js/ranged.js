@@ -18,13 +18,18 @@ module.controller('RangedController', [ '$scope', 'RangedService', function($sco
 		},
 		sight : service.options.sight[0],
 		steep : "",
+		sidewind : "",
+		fast : true,
 		second : false,
 		other : 0
 	};
-	
+
 	$scope.character = {
+		sf : {
+			shooter : "master" // "sharp"
+		},
 		weapon : {
-			type : "shoot"
+			type : "shoot" // "sling", "throw"
 		}
 	};
 
@@ -65,8 +70,11 @@ module.factory('RangedService', function() {
 				"normal" : 4,
 				"strong" : 8
 			}, 0);
-			difficulty.fast = modifications.fast ? 2 : 0; // TODO N/S/M
-			difficulty.second = modifications.second ? character.weapon.type === "throw" ? 2 : 4 : 0;
+			difficulty.fast = modifications.fast ? lookup(character.sf.shooter, {
+				"master" : 0,
+				"sharp" : 1
+			}, 2) : 0;
+			difficulty.second = modifications.second ? (character.weapon.type === "throw" ? 2 : 4) : 0;
 			difficulty.other = modifications.other;
 			return difficulty;
 		},
