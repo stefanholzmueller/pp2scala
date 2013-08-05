@@ -1,5 +1,11 @@
 'use strict';
 
+function sum(collection) {
+	return _.reduce(collection, function(acc, num) {
+		return acc + num;
+	}, 0);
+}
+
 var module = angular.module('pp2.ranged', [ 'pp2.filters' ]);
 
 module.controller('RangedController', [ '$scope', 'RangedService', function($scope, service) {
@@ -40,12 +46,6 @@ module.controller('RangedController', [ '$scope', 'RangedService', function($sco
 		}
 	};
 
-	function sum(collection) {
-		return _.reduce(collection, function(acc, num) {
-			return acc + num;
-		}, 0);
-	}
-
 	function recalculate(newValue) {
 		$scope.difficulty = service.calculateDifficulty(newValue[0], newValue[1]);
 		$scope.difficultySum = sum($scope.difficulty);
@@ -60,6 +60,14 @@ module.factory('RangedService', function() {
 			function lookup(key, map, otherwise) {
 				return map.hasOwnProperty(key) ? map[key] : otherwise;
 			}
+			
+			function calculcateAim(difficulty, character) {
+				var aim = modifications.aim;
+				var ease = character.sf.shooter === "n" ? Math.floor(aim / 2) : Math.min(aim, 4);
+				var difficultyForAim = sum(difficulty) - difficulty.zone - difficulty.bidding;
+				var positiveDifficulty = Math.max(difficultyForAim, 0);
+				return -Math.min(positiveDifficulty, ease);
+			}
 
 			var difficulty = {
 				size : modifications.size.difficulty,
@@ -72,6 +80,7 @@ module.factory('RangedService', function() {
 					"humanoid" : modifications.zone.humanoid.difficulty[character.sf.shooter],
 					"quadruped" : modifications.zone.quadruped.difficulty[character.sf.shooter],
 				}, 0) + (modifications.zone.moving ? 2 : 0),
+				bidding : 0, // TODO not yet implemented
 				sight : modifications.sight.difficulty,
 				steep : character.sf.shooter === "m" ? 0 : lookup(modifications.steep, {
 					"down" : character.weapon.type === "sling" ? 8 : 2,
@@ -88,6 +97,8 @@ module.factory('RangedService', function() {
 				second : modifications.second ? (character.weapon.type === "throw" ? 2 : 4) : 0,
 				other : modifications.other
 			};
+			
+			difficulty.aim = calculcateAim(difficulty, character);
 
 			return difficulty;
 		},

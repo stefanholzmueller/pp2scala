@@ -74,6 +74,12 @@
 			<td>{{ difficulty.sight | signed }}</td>
 		</tr>
 		<tr>
+			<td>Zweite Aktion</td>
+			<td><label><input type="checkbox" data-ng-model="modifications.second">Zweiter Schuss/Wurf pro
+					KR</label></td>
+			<td>{{ difficulty.second | signed }}</td>
+		</tr>
+		<tr>
 			<td>Steilschuss / -wurf</td>
 			<td><label><input type="checkbox" data-ng-model="modifications.steep" data-ng-true-value="down">nach
 					unten</label> &nbsp;&nbsp;&nbsp;&nbsp; <label><input type="checkbox" data-ng-model="modifications.steep"
@@ -91,12 +97,6 @@
 			<td>Schnellschuss</td>
 			<td><label><input type="checkbox" data-ng-model="modifications.fast">Auf 'Visieren' verzichten</label></td>
 			<td>{{ difficulty.fast | signed }}</td>
-		</tr>
-		<tr>
-			<td>Zweite Aktion</td>
-			<td><label><input type="checkbox" data-ng-model="modifications.second">Zweiter Schuss/Wurf pro
-					KR</label></td>
-			<td>{{ difficulty.second | signed }}</td>
 		</tr>
 		<tr>
 			<td>Zielen</td>
