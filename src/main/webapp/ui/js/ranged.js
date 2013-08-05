@@ -40,7 +40,7 @@ module.controller('RangedController', [ '$scope', 'RangedService', function($sco
 	}
 
 	function recalculate(newValue) {
-		$scope.difficulty = service.calculate(newValue[0], newValue[1]);
+		$scope.difficulty = service.calculateDifficulty(newValue[0], newValue[1]);
 		$scope.difficultySum = sum($scope.difficulty);
 	}
 
@@ -49,34 +49,34 @@ module.controller('RangedController', [ '$scope', 'RangedService', function($sco
 
 module.factory('RangedService', function() {
 	return {
-		calculate : function(modifications, character) {
+		calculateDifficulty : function(modifications, character) {
 			function lookup(key, map, otherwise) {
 				return map.hasOwnProperty(key) ? map[key] : otherwise;
 			}
 
-			var difficulty = {};
-			difficulty.size = modifications.size.difficulty;
-			difficulty.range = modifications.range.difficulty;
-			difficulty.movement = lookup(modifications.movement.type, {
-				"target" : modifications.movement.target.difficulty,
-				"combat" : modifications.movement.combat.h * 3 + modifications.movement.combat.ns * 2
-			});
-			difficulty.sight = modifications.sight.difficulty;
-			difficulty.steep = character.sf.shooter === "master" ? 0 : lookup(modifications.steep, {
-				"down" : character.weapon.type === "sling" ? 8 : 2,
-				"up" : character.weapon.type === "throw" ? 8 : 4
-			}, 0);
-			difficulty.sidewind = character.sf.shooter === "master" ? 0 : lookup(modifications.sidewind, {
-				"normal" : 4,
-				"strong" : 8
-			}, 0);
-			difficulty.fast = modifications.fast ? lookup(character.sf.shooter, {
-				"master" : 0,
-				"sharp" : 1
-			}, 2) : 0;
-			difficulty.second = modifications.second ? (character.weapon.type === "throw" ? 2 : 4) : 0;
-			difficulty.other = modifications.other;
-			return difficulty;
+			return {
+				size : modifications.size.difficulty,
+				range : modifications.range.difficulty,
+				movement : lookup(modifications.movement.type, {
+					"target" : modifications.movement.target.difficulty,
+					"combat" : modifications.movement.combat.h * 3 + modifications.movement.combat.ns * 2
+				}),
+				sight : modifications.sight.difficulty,
+				steep : character.sf.shooter === "master" ? 0 : lookup(modifications.steep, {
+					"down" : character.weapon.type === "sling" ? 8 : 2,
+					"up" : character.weapon.type === "throw" ? 8 : 4
+				}, 0),
+				sidewind : character.sf.shooter === "master" ? 0 : lookup(modifications.sidewind, {
+					"normal" : 4,
+					"strong" : 8
+				}, 0),
+				fast : modifications.fast ? lookup(character.sf.shooter, {
+					"master" : 0,
+					"sharp" : 1
+				}, 2) : 0,
+				second : modifications.second ? (character.weapon.type === "throw" ? 2 : 4) : 0,
+				other : modifications.other
+			};
 		},
 		options : {
 			size : Object.freeze([ {
