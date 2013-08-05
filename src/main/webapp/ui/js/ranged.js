@@ -62,11 +62,11 @@ module.factory('RangedService', function() {
 				"combat" : modifications.movement.combat.h * 3 + modifications.movement.combat.ns * 2
 			});
 			difficulty.sight = modifications.sight.difficulty;
-			difficulty.steep = lookup(modifications.steep, {
+			difficulty.steep = character.sf.shooter === "master" ? 0 : lookup(modifications.steep, {
 				"down" : character.weapon.type === "sling" ? 8 : 2,
 				"up" : character.weapon.type === "throw" ? 8 : 4
 			}, 0);
-			difficulty.sidewind = lookup(modifications.sidewind, {
+			difficulty.sidewind = character.sf.shooter === "master" ? 0 : lookup(modifications.sidewind, {
 				"normal" : 4,
 				"strong" : 8
 			}, 0);
