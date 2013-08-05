@@ -11,17 +11,17 @@
 <title>Probenprophet 2.0 - Fernkampf</title>
 </head>
 <body data-ng-controller="RangedController">
-	<table style="display:inline-block;">
+	<table style="display: inline-block;">
 		<tr>
-			<td><label> <input type="radio" name="shooter" value="normal" data-ng-model="character.sf.shooter">normal
-			</label> &nbsp;&nbsp;&nbsp;&nbsp; <label> <input type="radio" name="shooter" value="sharp"
+			<td><label> <input type="radio" name="shooter" value="n" data-ng-model="character.sf.shooter">normal
+			</label> &nbsp;&nbsp;&nbsp;&nbsp; <label> <input type="radio" name="shooter" value="s"
 					data-ng-model="character.sf.shooter">SF Scharfschütze
-			</label> &nbsp;&nbsp;&nbsp;&nbsp; <label> <input type="radio" name="shooter" value="master"
+			</label> &nbsp;&nbsp;&nbsp;&nbsp; <label> <input type="radio" name="shooter" value="m"
 					data-ng-model="character.sf.shooter">SF Meisterschütze
 			</label></td>
 		</tr>
 	</table>
-	<table style="display:inline-block;">
+	<table style="display: inline-block;">
 		<tr>
 			<td>Zielgröße</td>
 			<!-- TODO Deckung -->
@@ -49,6 +49,21 @@
 				</div>
 			</td>
 			<td>{{ difficulty.movement | signed }}</td>
+		</tr>
+		<tr>
+			<td>Gezielter Schuss</td>
+			<td><label><input type="checkbox" data-ng-model="modifications.zone.type" data-ng-true-value="humanoid">Zweibeiner</label>
+				&nbsp;&nbsp;&nbsp;&nbsp; <label><input type="checkbox" data-ng-model="modifications.zone.type"
+					data-ng-true-value="quadruped">Vierbeiner</label><br />
+				<div data-ng-switch data-on="modifications.zone.type">
+					<div data-ng-switch-when="humanoid">
+						<select data-ng-model="modifications.zone.humanoid" data-ng-options="x.text for x in options.zone.humanoid"></select>
+					</div>
+					<div data-ng-switch-when="quadruped">
+						<select data-ng-model="modifications.zone.quadruped" data-ng-options="x.text for x in options.zone.quadruped"></select>
+					</div>
+				</div></td>
+			<td>{{ difficulty.zone | signed }}</td>
 		</tr>
 		<tr>
 			<td>Sichtverhältnisse</td>

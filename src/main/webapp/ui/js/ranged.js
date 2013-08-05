@@ -16,6 +16,11 @@ module.controller('RangedController', [ '$scope', 'RangedService', function($sco
 				ns : 0
 			}
 		},
+		zone : {
+			type : "",
+			humanoid : service.options.zone.humanoid[3],
+			quadruped : service.options.zone.quadruped[2]
+		},
 		sight : service.options.sight[0],
 		steep : "",
 		sidewind : "",
@@ -26,7 +31,7 @@ module.controller('RangedController', [ '$scope', 'RangedService', function($sco
 
 	$scope.character = {
 		sf : {
-			shooter : "master" // "sharp"
+			shooter : "m" // "n", "s"
 		},
 		weapon : {
 			type : "shoot" // "sling", "throw"
@@ -61,18 +66,22 @@ module.factory('RangedService', function() {
 					"target" : modifications.movement.target.difficulty,
 					"combat" : modifications.movement.combat.h * 3 + modifications.movement.combat.ns * 2
 				}),
+				zone : lookup(modifications.zone.type, {
+					"humanoid" : modifications.zone.humanoid.difficulty[character.sf.shooter],
+					"quadruped" : modifications.zone.quadruped.difficulty[character.sf.shooter],
+				}, 0),
 				sight : modifications.sight.difficulty,
-				steep : character.sf.shooter === "master" ? 0 : lookup(modifications.steep, {
+				steep : character.sf.shooter === "m" ? 0 : lookup(modifications.steep, {
 					"down" : character.weapon.type === "sling" ? 8 : 2,
 					"up" : character.weapon.type === "throw" ? 8 : 4
 				}, 0),
-				sidewind : character.sf.shooter === "master" ? 0 : lookup(modifications.sidewind, {
+				sidewind : character.sf.shooter === "m" ? 0 : lookup(modifications.sidewind, {
 					"normal" : 4,
 					"strong" : 8
 				}, 0),
 				fast : modifications.fast ? lookup(character.sf.shooter, {
-					"master" : 0,
-					"sharp" : 1
+					"m" : 0,
+					"s" : 1
 				}, 2) : 0,
 				second : modifications.second ? (character.weapon.type === "throw" ? 2 : 4) : 0,
 				other : modifications.other
@@ -157,7 +166,89 @@ module.factory('RangedService', function() {
 			}, {
 				text : "Unsichtbares Ziel",
 				difficulty : 8
-			} ])
+			} ]),
+
+			zone : {
+				humanoid : Object.freeze([ {
+					text : "Kopf",
+					difficulty : {
+						n : 10,
+						s : 7,
+						m : 5
+					}
+				}, {
+					text : "Brust",
+					difficulty : {
+						n : 6,
+						s : 4,
+						m : 3
+					}
+				}, {
+					text : "Arme",
+					difficulty : {
+						n : 10,
+						s : 7,
+						m : 5
+					}
+				}, {
+					text : "Bauch",
+					difficulty : {
+						n : 6,
+						s : 4,
+						m : 3
+					}
+				}, {
+					text : "Beine",
+					difficulty : {
+						n : 8,
+						s : 5,
+						m : 4
+					}
+				}, {
+					text : "Hand/Fuß",
+					difficulty : {
+						n : 16,
+						s : 11,
+						m : 8
+					}
+				}, {
+					text : "Auge/Herz",
+					difficulty : {
+						n : 20,
+						s : 13,
+						m : 10
+					}
+				} ]),
+				quadruped : Object.freeze([ {
+					text : "Rumpf",
+					difficulty : {
+						n : 4,
+						s : 3,
+						m : 2
+					}
+				}, {
+					text : "Bein",
+					difficulty : {
+						n : 10,
+						s : 7,
+						m : 5
+					}
+				}, {
+					text : "verwundbare Stelle",
+					difficulty : {
+						n : 12,
+						s : 8,
+						m : 6
+					}
+				}, {
+					text : "Kopf",
+					difficulty : {
+						n : 16,
+						s : 11,
+						m : 8
+					}
+				} ])
+			}
 		}
 	};
 });
