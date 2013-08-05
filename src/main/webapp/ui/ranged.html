@@ -58,11 +58,14 @@
 				<div data-ng-switch data-on="modifications.zone.type">
 					<div data-ng-switch-when="humanoid">
 						<select data-ng-model="modifications.zone.humanoid" data-ng-options="x.text for x in options.zone.humanoid"></select>
+						<label><input type="checkbox" data-ng-model="modifications.zone.moving">bewegt</label>
 					</div>
 					<div data-ng-switch-when="quadruped">
 						<select data-ng-model="modifications.zone.quadruped" data-ng-options="x.text for x in options.zone.quadruped"></select>
+						<label><input type="checkbox" data-ng-model="modifications.zone.moving">bewegt</label>
 					</div>
 				</div></td>
+			<!-- TODO Bewegung eines Körperteils -->
 			<td>{{ difficulty.zone | signed }}</td>
 		</tr>
 		<tr>
@@ -70,7 +73,6 @@
 			<td><select data-ng-model="modifications.sight" data-ng-options="s.text for s in options.sight"></select></td>
 			<td>{{ difficulty.sight | signed }}</td>
 		</tr>
-		<!-- TODO Bewegung eines Körperteils -->
 		<tr>
 			<td>Steilschuss / -wurf</td>
 			<td><label><input type="checkbox" data-ng-model="modifications.steep" data-ng-true-value="down">nach
@@ -95,6 +97,11 @@
 			<td><label><input type="checkbox" data-ng-model="modifications.second">Zweiter Schuss/Wurf pro
 					KR</label></td>
 			<td>{{ difficulty.second | signed }}</td>
+		</tr>
+		<tr>
+			<td>Zielen</td>
+			<td><input type="number" min="0" max="8" data-ng-model="modifications.aim"> Aktionen</td>
+			<td>{{ difficulty.aim | signed }}</td>
 		</tr>
 		<tr>
 			<td>Sonstiges</td>

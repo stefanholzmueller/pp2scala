@@ -19,13 +19,15 @@ module.controller('RangedController', [ '$scope', 'RangedService', function($sco
 		zone : {
 			type : "",
 			humanoid : service.options.zone.humanoid[3],
-			quadruped : service.options.zone.quadruped[2]
+			quadruped : service.options.zone.quadruped[2],
+			moving : false
 		},
 		sight : service.options.sight[0],
 		steep : "",
 		sidewind : "",
 		fast : true,
 		second : false,
+		aim : 0,
 		other : 0
 	};
 
@@ -59,7 +61,7 @@ module.factory('RangedService', function() {
 				return map.hasOwnProperty(key) ? map[key] : otherwise;
 			}
 
-			return {
+			var difficulty = {
 				size : modifications.size.difficulty,
 				range : modifications.range.difficulty,
 				movement : lookup(modifications.movement.type, {
@@ -69,7 +71,7 @@ module.factory('RangedService', function() {
 				zone : lookup(modifications.zone.type, {
 					"humanoid" : modifications.zone.humanoid.difficulty[character.sf.shooter],
 					"quadruped" : modifications.zone.quadruped.difficulty[character.sf.shooter],
-				}, 0),
+				}, 0) + (modifications.zone.moving ? 2 : 0),
 				sight : modifications.sight.difficulty,
 				steep : character.sf.shooter === "m" ? 0 : lookup(modifications.steep, {
 					"down" : character.weapon.type === "sling" ? 8 : 2,
@@ -86,6 +88,8 @@ module.factory('RangedService', function() {
 				second : modifications.second ? (character.weapon.type === "throw" ? 2 : 4) : 0,
 				other : modifications.other
 			};
+
+			return difficulty;
 		},
 		options : {
 			size : Object.freeze([ {
