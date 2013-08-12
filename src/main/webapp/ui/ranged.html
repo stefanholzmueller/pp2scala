@@ -13,92 +13,161 @@
 <body data-ng-controller="RangedController">
 	<table style="display: inline-block;">
 		<tr>
-			<td><label> <input type="radio" name="shooter" value="n" data-ng-model="character.sf.shooter">normal
-			</label> &nbsp;&nbsp;&nbsp;&nbsp; <label> <input type="radio" name="shooter" value="s"
-					data-ng-model="character.sf.shooter">SF Scharfschütze
-			</label> &nbsp;&nbsp;&nbsp;&nbsp; <label> <input type="radio" name="shooter" value="m"
-					data-ng-model="character.sf.shooter">SF Meisterschütze
-			</label></td>
+			<td>
+				<label>
+					<input type="radio" name="shooter" value="n" data-ng-model="character.sf.shooter">
+					normal
+				</label>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<label>
+					<input type="radio" name="shooter" value="s" data-ng-model="character.sf.shooter">
+					SF Scharfschütze
+				</label>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<label>
+					<input type="radio" name="shooter" value="m" data-ng-model="character.sf.shooter">
+					SF Meisterschütze
+				</label>
+			</td>
 		</tr>
 	</table>
 	<table style="display: inline-block;">
 		<tr>
 			<td>Zielgröße</td>
 			<!-- TODO Deckung -->
-			<td><select data-ng-model="modifications.size" data-ng-options="s.text for s in options.size"></select></td>
+			<td>
+				<select data-ng-model="modifications.size" data-ng-options="s.text for s in options.size"></select>
+			</td>
 			<td>{{ difficulty.size | signed }}</td>
 		</tr>
 		<tr>
 			<td>Entfernung</td>
-			<td><select data-ng-model="modifications.range" data-ng-options="r.text for r in options.range"></select></td>
+			<td>
+				<select data-ng-model="modifications.range" data-ng-options="r.text for r in options.range"></select>
+			</td>
 			<td>{{ difficulty.range | signed }}</td>
 		</tr>
 		<tr>
-			<td><label> <input type="radio" name="movement" value="target"
-					data-ng-model="modifications.movement.type">Bewegung
-			</label></td>
-			<td><select data-ng-model="modifications.movement.target"
-				data-ng-disabled="modifications.movement.type!='target'" data-ng-options="m.text for m in options.movement"></select>
+			<td>
+				<label>
+					<input type="radio" name="movement" value="target" data-ng-model="modifications.movement.type">
+					Bewegung
+				</label>
+			</td>
+			<td>
+				<select data-ng-model="modifications.movement.target" data-ng-disabled="modifications.movement.type!='target'" data-ng-options="m.text for m in options.movement"></select>
 			</td>
 			<td>{{ difficulty.movement | signed }}</td>
 		</tr>
 		<tr>
-			<td><label><input type="radio" name="movement" value="combat"
-					data-ng-model="modifications.movement.type">Kampfgetümmel</label></td>
-			<td><input type="number" min="0" data-ng-model="modifications.movement.combat.h"
-				data-ng-disabled="modifications.movement.type!='combat'">in H<br /> <input type="number" min="0"
-				data-ng-model="modifications.movement.combat.ns" data-ng-disabled="modifications.movement.type!='combat'">in
-				N/S</td>
+			<td>
+				<label>
+					<input type="radio" name="movement" value="combat" data-ng-model="modifications.movement.type">
+					Kampfgetümmel
+				</label>
+			</td>
+			<td>
+				<input type="number" min="0" data-ng-model="modifications.movement.combat.h" data-ng-disabled="modifications.movement.type!='combat'">
+				in H
+				<br />
+				<input type="number" min="0" data-ng-model="modifications.movement.combat.ns" data-ng-disabled="modifications.movement.type!='combat'">
+				in N/S
+			</td>
 			<td>{{ difficulty.combat | signed }}</td>
 		</tr>
 		<tr>
 			<td>Gezielter Schuss</td>
-			<td><label><input type="checkbox" data-ng-model="modifications.zone.type" data-ng-true-value="humanoid">Zweibeiner</label>
-				&nbsp;&nbsp;&nbsp; <select data-ng-model="modifications.zone.humanoid" data-ng-disabled="modifications.zone.type!='humanoid'"
-				data-ng-options="x.text for x in options.zone.humanoid"></select><br /> <label><input type="checkbox"
-					data-ng-model="modifications.zone.type" data-ng-true-value="quadruped">Vierbeiner</label> &nbsp;&nbsp;&nbsp;&nbsp;
+			<td>
+				<label>
+					<input type="checkbox" data-ng-model="modifications.zone.type" data-ng-true-value="humanoid">
+					Zweibeiner
+				</label>
+				&nbsp;&nbsp;&nbsp;
+				<select data-ng-model="modifications.zone.humanoid" data-ng-disabled="modifications.zone.type!='humanoid'" data-ng-options="x.text for x in options.zone.humanoid"></select>
+				<br />
+				<label>
+					<input type="checkbox" data-ng-model="modifications.zone.type" data-ng-true-value="quadruped">
+					Vierbeiner
+				</label>
+				&nbsp;&nbsp;&nbsp;&nbsp;
 				<select data-ng-model="modifications.zone.quadruped" data-ng-disabled="modifications.zone.type!='quadruped'" data-ng-options="x.text for x in options.zone.quadruped"></select>
-				<br /> <label><input type="checkbox" data-ng-model="modifications.zone.moving" data-ng-disabled="modifications.zone.type==''">bewegtes Körperteil</label>
+				<br />
+				<label>
+					<input type="checkbox" data-ng-model="modifications.zone.moving" data-ng-disabled="modifications.zone.type==''">
+					bewegtes Körperteil
+				</label>
 			<td>{{ difficulty.zone | signed }}</td>
 		</tr>
 		<tr>
 			<td>Sichtverhältnisse</td>
-			<td><select data-ng-model="modifications.sight" data-ng-options="s.text for s in options.sight"></select></td>
+			<td>
+				<select data-ng-model="modifications.sight" data-ng-options="s.text for s in options.sight"></select>
+			</td>
 			<td>{{ difficulty.sight | signed }}</td>
 		</tr>
 		<tr>
 			<td>Zweite Aktion</td>
-			<td><label><input type="checkbox" data-ng-model="modifications.second">Zweiter Schuss/Wurf pro
-					KR</label></td>
+			<td>
+				<label>
+					<input type="checkbox" data-ng-model="modifications.second">
+					Zweiter Schuss/Wurf pro KR
+				</label>
+			</td>
 			<td>{{ difficulty.second | signed }}</td>
 		</tr>
 		<tr>
 			<td>Steilschuss / -wurf</td>
-			<td><label><input type="checkbox" data-ng-model="modifications.steep" data-ng-true-value="down">nach
-					unten</label> &nbsp;&nbsp;&nbsp;&nbsp; <label><input type="checkbox" data-ng-model="modifications.steep"
-					data-ng-true-value="up">nach oben</label></td>
+			<td>
+				<label>
+					<input type="checkbox" data-ng-model="modifications.steep" data-ng-true-value="down">
+					nach unten
+				</label>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<label>
+					<input type="checkbox" data-ng-model="modifications.steep" data-ng-true-value="up">
+					nach oben
+				</label>
+			</td>
 			<td>{{ difficulty.steep | signed }}</td>
 		</tr>
 		<tr>
 			<td>Seitenwind</td>
-			<td><label><input type="checkbox" data-ng-model="modifications.sidewind" data-ng-true-value="normal">normal</label>
-				&nbsp;&nbsp;&nbsp;&nbsp; <label><input type="checkbox" data-ng-model="modifications.sidewind"
-					data-ng-true-value="strong">heftig</label></td>
+			<td>
+				<label>
+					<input type="checkbox" data-ng-model="modifications.sidewind" data-ng-true-value="normal">
+					normal
+				</label>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<label>
+					<input type="checkbox" data-ng-model="modifications.sidewind" data-ng-true-value="strong">
+					heftig
+				</label>
+			</td>
 			<td>{{ difficulty.sidewind | signed }}</td>
 		</tr>
 		<tr>
 			<td>Schnellschuss</td>
-			<td><label><input type="checkbox" data-ng-model="modifications.fast">Auf 'Visieren' verzichten</label></td>
+			<td>
+				<label>
+					<input type="checkbox" data-ng-model="modifications.fast">
+					Auf 'Visieren' verzichten
+				</label>
+			</td>
 			<td>{{ difficulty.fast | signed }}</td>
 		</tr>
 		<tr>
 			<td>Zielen</td>
-			<td><input type="number" min="0" max="8" data-ng-model="modifications.aim"> Aktionen</td>
+			<td>
+				<input type="number" data-ng-model="modifications.aim" min="0" max="8">
+				Aktionen
+			</td>
 			<td>{{ difficulty.aim | signed }}</td>
 		</tr>
 		<tr>
 			<td>Sonstiges</td>
-			<td><input type="number" data-ng-model="modifications.other"></td>
+			<td>
+				<input type="number" data-ng-model="modifications.other">
+			</td>
 			<td>{{ difficulty.other | signed }}</td>
 		</tr>
 		<tr>
