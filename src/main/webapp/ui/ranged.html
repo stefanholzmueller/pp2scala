@@ -36,19 +36,20 @@
 		<tr>
 			<td><label> <input type="radio" name="movement" value="target"
 					data-ng-model="modifications.movement.type">Bewegung
-			</label><br /> <label><input type="radio" name="movement" value="combat" data-ng-model="modifications.movement.type">Kampfgetümmel</label></td>
-			<td>
-				<div data-ng-switch data-on="modifications.movement.type">
-					<div data-ng-switch-when="target">
-						<select data-ng-model="modifications.movement.target" data-ng-options="m.text for m in options.movement"></select>
-					</div>
-					<div data-ng-switch-when="combat">
-						<input type="number" min="0" data-ng-model="modifications.movement.combat.h">in H<br /> <input
-							type="number" min="0" data-ng-model="modifications.movement.combat.ns">in N/S
-					</div>
-				</div>
+			</label></td>
+			<td><select data-ng-model="modifications.movement.target"
+				data-ng-disabled="modifications.movement.type!='target'" data-ng-options="m.text for m in options.movement"></select>
 			</td>
 			<td>{{ difficulty.movement | signed }}</td>
+		</tr>
+		<tr>
+			<td><label><input type="radio" name="movement" value="combat"
+					data-ng-model="modifications.movement.type">Kampfgetümmel</label></td>
+			<td><input type="number" min="0" data-ng-model="modifications.movement.combat.h"
+				data-ng-disabled="modifications.movement.type!='combat'">in H<br /> <input type="number" min="0"
+				data-ng-model="modifications.movement.combat.ns" data-ng-disabled="modifications.movement.type!='combat'">in
+				N/S</td>
+			<td>{{ difficulty.combat | signed }}</td>
 		</tr>
 		<tr>
 			<td>Gezielter Schuss</td>
