@@ -1,14 +1,8 @@
 'use strict';
 
-function sum(collection) {
-	return _.reduce(collection, function(acc, num) {
-		return acc + num;
-	}, 0);
-}
+var module = angular.module('pp2.ranged', [ 'pp2.utils' ]);
 
-var module = angular.module('pp2.ranged', [ 'pp2.filters' ]);
-
-module.controller('RangedController', [ '$scope', 'RangedService', function($scope, service) {
+module.controller('RangedController', [ '$scope', 'RangedService', 'Util', function($scope, service, util) {
 	$scope.options = service.options;
 
 	$scope.modifications = {
@@ -48,23 +42,23 @@ module.controller('RangedController', [ '$scope', 'RangedService', function($sco
 
 	function recalculate(newValue) {
 		$scope.difficulty = service.calculateDifficulty(newValue[0], newValue[1]);
-		$scope.difficultySum = sum($scope.difficulty);
+		$scope.difficultySum = util.sum($scope.difficulty);
 	}
 
 	$scope.$watch('[ modifications, character ]', recalculate, true);
 } ]);
 
-module.factory('RangedService', function() {
+module.factory('RangedService', [ 'Util', function(util) {
 	return {
 		calculateDifficulty : function(modifications, character) {
 			function lookup(key, map, otherwise) {
 				return map.hasOwnProperty(key) ? map[key] : otherwise;
 			}
-			
+
 			function calculcateAim(difficulty, character) {
 				var aim = modifications.aim;
 				var ease = character.sf.shooter === "n" ? Math.floor(aim / 2) : Math.min(aim, 4);
-				var difficultyForAim = sum(difficulty) - difficulty.zone - difficulty.bidding;
+				var difficultyForAim = util.sum(difficulty) - difficulty.zone - difficulty.bidding;
 				var positiveDifficulty = Math.max(difficultyForAim, 0);
 				return -Math.min(positiveDifficulty, ease);
 			}
@@ -97,7 +91,7 @@ module.factory('RangedService', function() {
 				second : modifications.second ? (character.weapon.type === "throw" ? 2 : 4) : 0,
 				other : modifications.other
 			};
-			
+
 			difficulty.aim = calculcateAim(difficulty, character);
 
 			return difficulty;
@@ -266,4 +260,4 @@ module.factory('RangedService', function() {
 			}
 		}
 	};
-});
+} ]);
