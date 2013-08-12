@@ -6,6 +6,9 @@ module.factory('Util', function() {
 		clone : function(obj) {
 			return JSON.parse(JSON.stringify(obj));
 		},
+		roll : function(pips) {
+			return Math.floor((Math.random() * pips) + 1);
+		},
 		sum : function(collection) {
 			return _.reduce(collection, function(acc, num) {
 				return acc + num;
