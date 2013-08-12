@@ -54,19 +54,11 @@
 		<tr>
 			<td>Gezielter Schuss</td>
 			<td><label><input type="checkbox" data-ng-model="modifications.zone.type" data-ng-true-value="humanoid">Zweibeiner</label>
-				&nbsp;&nbsp;&nbsp;&nbsp; <label><input type="checkbox" data-ng-model="modifications.zone.type"
-					data-ng-true-value="quadruped">Vierbeiner</label><br />
-				<div data-ng-switch data-on="modifications.zone.type">
-					<div data-ng-switch-when="humanoid">
-						<select data-ng-model="modifications.zone.humanoid" data-ng-options="x.text for x in options.zone.humanoid"></select>
-						<label><input type="checkbox" data-ng-model="modifications.zone.moving">bewegt</label>
-					</div>
-					<div data-ng-switch-when="quadruped">
-						<select data-ng-model="modifications.zone.quadruped" data-ng-options="x.text for x in options.zone.quadruped"></select>
-						<label><input type="checkbox" data-ng-model="modifications.zone.moving">bewegt</label>
-					</div>
-				</div></td>
-			<!-- TODO Bewegung eines Körperteils -->
+				&nbsp;&nbsp;&nbsp; <select data-ng-model="modifications.zone.humanoid" data-ng-disabled="modifications.zone.type!='humanoid'"
+				data-ng-options="x.text for x in options.zone.humanoid"></select><br /> <label><input type="checkbox"
+					data-ng-model="modifications.zone.type" data-ng-true-value="quadruped">Vierbeiner</label> &nbsp;&nbsp;&nbsp;&nbsp;
+				<select data-ng-model="modifications.zone.quadruped" data-ng-disabled="modifications.zone.type!='quadruped'" data-ng-options="x.text for x in options.zone.quadruped"></select>
+				<br /> <label><input type="checkbox" data-ng-model="modifications.zone.moving" data-ng-disabled="modifications.zone.type==''">bewegtes Körperteil</label>
 			<td>{{ difficulty.zone | signed }}</td>
 		</tr>
 		<tr>
