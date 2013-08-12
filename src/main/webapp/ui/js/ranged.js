@@ -23,10 +23,10 @@ module.controller('RangedController', [ '$scope', 'RangedService', 'Util', funct
 			moving : false
 		},
 		sight : service.options.sight[0],
+		second : false,
 		steep : "",
 		sidewind : "",
 		fast : true,
-		second : false,
 		aim : 0,
 		other : 0
 	};
@@ -36,7 +36,7 @@ module.controller('RangedController', [ '$scope', 'RangedService', 'Util', funct
 			shooter : "m" // "n", "s"
 		},
 		weapon : {
-			type : "shoot" // "sling", "throw"
+			type : "shoot" // "sling", "thrown"
 		}
 	};
 
@@ -68,7 +68,8 @@ module.factory('RangedService', [
 					var difficulty = {
 						size : modifications.size.difficulty,
 						range : modifications.range.difficulty,
-						movement : modifications.movement.type === "target" ? modifications.movement.target.difficulty : 0,
+						movement : modifications.movement.type === "target" ? modifications.movement.target.difficulty
+								: 0,
 						combat : modifications.movement.type === "combat" ? modifications.movement.combat.h * 3
 								+ modifications.movement.combat.ns * 2 : 0,
 						zone : lookup(modifications.zone.type, {
@@ -79,7 +80,7 @@ module.factory('RangedService', [
 						sight : modifications.sight.difficulty,
 						steep : character.sf.shooter === "m" ? 0 : lookup(modifications.steep, {
 							"down" : character.weapon.type === "sling" ? 8 : 2,
-							"up" : character.weapon.type === "throw" ? 8 : 4
+							"up" : character.weapon.type === "thrown" ? 8 : 4
 						}, 0),
 						sidewind : character.sf.shooter === "m" ? 0 : lookup(modifications.sidewind, {
 							"normal" : 4,
@@ -89,7 +90,7 @@ module.factory('RangedService', [
 							"m" : 0,
 							"s" : 1
 						}, 2) : 0,
-						second : modifications.second ? (character.weapon.type === "throw" ? 2 : 4) : 0,
+						second : modifications.second ? (character.weapon.type === "thrown" ? 2 : 4) : 0,
 						other : modifications.other
 					};
 

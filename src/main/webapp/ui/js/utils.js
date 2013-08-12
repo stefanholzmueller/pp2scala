@@ -1,6 +1,7 @@
 'use strict';
 
 var module = angular.module('pp2.utils', []);
+
 module.factory('Util', function() {
 	return {
 		clone : function(obj) {
@@ -16,11 +17,13 @@ module.factory('Util', function() {
 		}
 	}
 });
+
 module.filter('percentage', [ '$filter', function(filter) {
 	return function(number, fractionSize) {
 		return filter('number')(number * 100, fractionSize) + " %"
 	}
 } ]);
+
 module.filter('signed', function() {
 	return function(number) {
 		if (number > 0) {
