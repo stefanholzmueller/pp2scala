@@ -52,13 +52,13 @@ module.factory('RangedService', [
 		'Util',
 		function(util) {
 			return {
-				calculateDifficulty : function(modifications, character) {
+				calculateDifficulty : function(mods, character) {
 					function lookup(key, map, otherwise) {
 						return map.hasOwnProperty(key) ? map[key] : otherwise;
 					}
 
 					function calculcateAim(difficulty, character) {
-						var aim = modifications.aim;
+						var aim = mods.aim;
 						var ease = character.sf.shooter === "n" ? Math.floor(aim / 2) : Math.min(aim, 4);
 						var difficultyForAim = util.sum(difficulty) - difficulty.zone - difficulty.bidding;
 						var positiveDifficulty = Math.max(difficultyForAim, 0);
@@ -66,32 +66,31 @@ module.factory('RangedService', [
 					}
 
 					var difficulty = {
-						size : modifications.size.difficulty,
-						range : modifications.range.difficulty,
-						movement : modifications.movement.type === "target" ? modifications.movement.target.difficulty
-								: 0,
-						combat : modifications.movement.type === "combat" ? modifications.movement.combat.h * 3
-								+ modifications.movement.combat.ns * 2 : 0,
-						zone : lookup(modifications.zone.type, {
-							"humanoid" : modifications.zone.humanoid.difficulty[character.sf.shooter],
-							"quadruped" : modifications.zone.quadruped.difficulty[character.sf.shooter],
-						}, 0) + (modifications.zone.moving ? 2 : 0),
+						size : mods.size.difficulty,
+						range : mods.range.difficulty,
+						movement : mods.movement.type === "target" ? mods.movement.target.difficulty : 0,
+						combat : mods.movement.type === "combat" ? mods.movement.combat.h * 3 + mods.movement.combat.ns
+								* 2 : 0,
+						zone : lookup(mods.zone.type, {
+							"humanoid" : mods.zone.humanoid.difficulty[character.sf.shooter],
+							"quadruped" : mods.zone.quadruped.difficulty[character.sf.shooter],
+						}, 0) + (mods.zone.moving ? 2 : 0),
 						bidding : 0, // TODO not yet implemented
-						sight : modifications.sight.difficulty,
-						steep : character.sf.shooter === "m" ? 0 : lookup(modifications.steep, {
+						sight : mods.sight.difficulty,
+						steep : character.sf.shooter === "m" ? 0 : lookup(mods.steep, {
 							"down" : character.weapon.type === "sling" ? 8 : 2,
 							"up" : character.weapon.type === "thrown" ? 8 : 4
 						}, 0),
-						sidewind : character.sf.shooter === "m" ? 0 : lookup(modifications.sidewind, {
+						sidewind : character.sf.shooter === "m" ? 0 : lookup(mods.sidewind, {
 							"normal" : 4,
 							"strong" : 8
 						}, 0),
-						fast : modifications.fast ? lookup(character.sf.shooter, {
+						fast : mods.fast ? lookup(character.sf.shooter, {
 							"m" : 0,
 							"s" : 1
 						}, 2) : 0,
-						second : modifications.second ? (character.weapon.type === "thrown" ? 2 : 4) : 0,
-						other : modifications.other
+						second : mods.second ? (character.weapon.type === "thrown" ? 2 : 4) : 0,
+						other : mods.other
 					};
 
 					difficulty.aim = calculcateAim(difficulty, character);
