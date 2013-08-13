@@ -119,12 +119,12 @@
 			<td>Steilschuss / -wurf</td>
 			<td>
 				<label>
-					<input type="checkbox" data-ng-model="modifications.steep" data-ng-true-value="down">
+					<input type="checkbox" data-ng-model="modifications.steep" data-ng-disabled="character.sf.shooter=='m'" data-ng-true-value="down">
 					nach unten
 				</label>
 				&nbsp;&nbsp;&nbsp;&nbsp;
 				<label>
-					<input type="checkbox" data-ng-model="modifications.steep" data-ng-true-value="up">
+					<input type="checkbox" data-ng-model="modifications.steep" data-ng-disabled="character.sf.shooter=='m'" data-ng-true-value="up">
 					nach oben
 				</label>
 			</td>
@@ -134,12 +134,12 @@
 			<td>Seitenwind</td>
 			<td>
 				<label>
-					<input type="checkbox" data-ng-model="modifications.sidewind" data-ng-true-value="normal">
+					<input type="checkbox" data-ng-model="modifications.sidewind" data-ng-disabled="character.sf.shooter=='m'" data-ng-true-value="normal">
 					normal
 				</label>
 				&nbsp;&nbsp;&nbsp;&nbsp;
 				<label>
-					<input type="checkbox" data-ng-model="modifications.sidewind" data-ng-true-value="strong">
+					<input type="checkbox" data-ng-model="modifications.sidewind" data-ng-disabled="character.sf.shooter=='m'" data-ng-true-value="strong">
 					heftig
 				</label>
 			</td>

@@ -67,7 +67,7 @@ module.factory('RangedService', [ 'Util', function(util) {
 				size : mods.size.difficulty,
 				range : mods.range.difficulty,
 				movement : mods.movement.type === "target" ? mods.movement.target.difficulty : 0,
-				combat : mods.movement.type === "combat" ? mods.movement.combat.h * 3 + mods.movement.combat.ns * 2 : 0,
+				combat : mods.movement.type === "combat" ? (mods.movement.combat.h * 3 + mods.movement.combat.ns * 2) : 0,
 				zone : lookup(mods.zone.type, {
 					"humanoid" : mods.zone.humanoid.difficulty[character.sf.shooter],
 					"quadruped" : mods.zone.quadruped.difficulty[character.sf.shooter],
