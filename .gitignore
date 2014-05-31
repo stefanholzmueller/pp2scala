@@ -1,9 +1,13 @@
+.idea/
 target/
 test-output/
 classes/
+bower_components/
+node_modules/
 *.class
 *.jar
 *.war
 *.ear
 /.cache
 /.metadata
+/src/main/webapp/lib/
