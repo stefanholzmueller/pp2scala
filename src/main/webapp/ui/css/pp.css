@@ -1,4 +1,4 @@
-input[type=number] {
-    width: 3em;
+.form-inline input[type=number].form-control {
+    width: 4em;
+    display: inline;
 }
-

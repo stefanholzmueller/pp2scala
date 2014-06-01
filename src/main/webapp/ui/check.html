@@ -12,57 +12,82 @@
     <script src="js/utils.js"></script>
     <link rel="stylesheet" href="../lib/bootstrap/bootstrap.css">
     <link rel="stylesheet" href="css/pp.css">
-    <title>Probenprophet 2.0 - Fertigkeitsproben</title>
+    <title>Probenprophet 2.0</title>
 </head>
 <body>
 <div data-ng-controller="CheckController">
     <div class="container">
         <form class="form-inline" role="form">
-            <div class="form-group col-lg-5">
+            <div class="col-xs-9 col-lg-8">
+                <div class="col-lg-4">
                     <label>Eigenschaften</label>
-                    <input type="number" min="1" max="25" step="1" data-ng-model="check.attribute1" data-ng-change="recalculate()">
-                    <input type="number" min="1" max="25" step="1" data-ng-model="check.attribute2" data-ng-change="recalculate()">
-                    <input type="number" min="1" max="25" step="1" data-ng-model="check.attribute3" data-ng-change="recalculate()">
+
+                    <div>
+                        <input class="form-control" type="number" min="1" max="25" step="1" data-ng-model="check.attribute1"
+                               data-ng-change="recalculate()">
+                        <input class="form-control" type="number" min="1" max="25" step="1" data-ng-model="check.attribute2"
+                               data-ng-change="recalculate()">
+                        <input class="form-control" type="number" min="1" max="25" step="1" data-ng-model="check.attribute3"
+                               data-ng-change="recalculate()">
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <label for="value">Wert</label>
+                    <input class="form-control" type="number" min="-5" max="30" step="1" id="value" data-ng-model="check.value" data-ng-change="recalculate()">
+                </div>
+                <div class="col-lg-2">
+                    <label for="difficulty">Erschwernis</label>
+                    <input class="form-control" type="number" min="-20" max="50" step="1" id="difficulty" data-ng-model="check.difficulty"
+                           data-ng-change="recalculate()">
+                </div>
             </div>
-            <div class="form-group col-lg-2">
-                <label for="value">Wert</label>
-                <input type="number" min="-5" max="30" step="1" id="value" data-ng-model="check.value" data-ng-change="recalculate()">
-            </div>
-            <div class="form-group col-lg-2">
-                <label for="difficulty">Erschwernis</label>
-                <input type="number" min="-20" max="50" step="1" id="difficulty" data-ng-model="check.difficulty" data-ng-change="recalculate()">
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <button type="button" class="btn btn-primary">Zufallswurf</button>
+                        <div class="pull-right">
+                            12/12/12
+                            <br/>
+                            asdasdasdsd
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button type="button" class="btn btn-primary">Berechnung</button>
+                </div>
             </div>
         </form>
     </div>
-    <!--
-                        </li>
-                        <li class="check_form">
-                            <input type="checkbox" data-ng-model="check.minimumQuality" id="checkboxMinimumQuality" data-ng-change="recalculate()">
-                            <label for="checkboxMinimumQuality">Regel zum "Minimaleffekt" aktivieren</label>
-                        </li>
-                        <li class="check_form">
-                            <input type="checkbox" id="checkboxFesteMatrix" data-ng-change="recalculate()"
-                                    data-ng-model="check.festeMatrix" ng-disabled="check.wildeMagie || check.spruchhemmung">
-                            <label for="checkboxFesteMatrix">Vorteil "Feste Matrix"</label>
-                        </li>
-                        <li class="check_form">
-                            <input type="checkbox" id="checkboxWildeMagie" data-ng-change="recalculate()"
-                                    data-ng-model="check.wildeMagie" ng-disabled="check.festeMatrix">
-                            <label for="checkboxWildeMagie">Nachteil "Wilde Magie" / "Tollpatsch"</label>
-                        </li>
-                        <li class="check_form">
-                            <input type="checkbox" id="checkboxSpruchhemmung" data-ng-change="recalculate()"
-                                    data-ng-model="check.spruchhemmung" ng-disabled="check.festeMatrix">
-                            <label for="checkboxSpruchhemmung">Nachteil "Spruchhemmung"</label>
-                        </li>
-                    </ul>
-                </fieldset>
-            </div>
-            <div style="float: right">
-                <pre>statistics={{statistics | json}}</pre>
-                <pre>outcome={{outcome | json}}</pre>
-            </div>
-            -->
+</div>
+<!--
+                    </li>
+                    <li class="check_form">
+                        <input type="checkbox" data-ng-model="check.minimumQuality" id="checkboxMinimumQuality" data-ng-change="recalculate()">
+                        <label for="checkboxMinimumQuality">Regel zum "Minimaleffekt" aktivieren</label>
+                    </li>
+                    <li class="check_form">
+                        <input type="checkbox" id="checkboxFesteMatrix" data-ng-change="recalculate()"
+                                data-ng-model="check.festeMatrix" ng-disabled="check.wildeMagie || check.spruchhemmung">
+                        <label for="checkboxFesteMatrix">Vorteil "Feste Matrix"</label>
+                    </li>
+                    <li class="check_form">
+                        <input type="checkbox" id="checkboxWildeMagie" data-ng-change="recalculate()"
+                                data-ng-model="check.wildeMagie" ng-disabled="check.festeMatrix">
+                        <label for="checkboxWildeMagie">Nachteil "Wilde Magie" / "Tollpatsch"</label>
+                    </li>
+                    <li class="check_form">
+                        <input type="checkbox" id="checkboxSpruchhemmung" data-ng-change="recalculate()"
+                                data-ng-model="check.spruchhemmung" ng-disabled="check.festeMatrix">
+                        <label for="checkboxSpruchhemmung">Nachteil "Spruchhemmung"</label>
+                    </li>
+                </ul>
+            </fieldset>
+        </div>
+        <div style="float: right">
+            <pre>statistics={{statistics | json}}</pre>
+            <pre>outcome={{outcome | json}}</pre>
+        </div>
+        -->
 </div>
 </body>
 </html>
