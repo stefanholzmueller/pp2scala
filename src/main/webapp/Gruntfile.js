@@ -3,10 +3,17 @@ module.exports = function (grunt) {
         bower: {
 	    install: {
 	    }
-        }
+        },
+	watch: {
+		files: ['**/*'],
+		options: {
+			livereload: true
+		}
+	}
     });
 
     grunt.loadNpmTasks('grunt-bower-task');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.registerTask('dist', ['bower']);
 }
