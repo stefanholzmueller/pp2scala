@@ -4,6 +4,7 @@ test-output/
 classes/
 bower_components/
 node_modules/
+typings/
 *.class
 *.jar
 *.war
