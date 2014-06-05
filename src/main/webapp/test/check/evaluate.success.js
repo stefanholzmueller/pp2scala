@@ -1,3 +1,5 @@
+module("check.evaluate.success");
+
 var defaultOptions = {
     minimumQuality: true,
     festeMatrix: false,
@@ -7,8 +9,8 @@ var defaultOptions = {
 
 var defaultAttributes = [11, 12, 13];
 
-test("todo", function () {
-    var outcome = check.evaluate(defaultOptions, defaultAttributes, 3, -2, [1, 1, 1]);
+
+test("no spruchhemmung", function () {
+    var outcome = check.evaluate(defaultOptions, defaultAttributes, 5, 0, [10, 10, 11]);
     equal(outcome.success, true);
-    equal(outcome.quality, 3);
 });
