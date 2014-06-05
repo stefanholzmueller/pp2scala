@@ -1,4 +1,4 @@
-/// <reference path="../typings/tsd.d.ts" />
+/// <reference path="../../typings/tsd.d.ts" />
 
 module check {
 
@@ -7,8 +7,12 @@ module check {
 		if (special) {
 			return special;
 		} else {
-			return { success: true};
+			return evaluateStandard(options.minimumQuality, attributes, value, difficulty, dice);
 		}
+	}
+
+	function evaluateStandard(minimumQuality: boolean, attributes : Array<number>, value : number, difficulty : number, dice : Array<number>) {
+		return { success: true };
 	}
 
 	function evaluateSpecial(options, value, dice) {

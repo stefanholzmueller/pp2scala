@@ -47,17 +47,22 @@ test("spruchhemmung > failure", function () {
     equal(outcome.success, false);
 });
 
-test("spruchhemmung < automatic success", function () {
+test("automatic success > spruchhemmung", function () {
     var outcome = check.evaluate({spruchhemmung: true}, defaultAttributes, 5, 0, [1, 1, 15]);
     equal(outcome.success, true);
 });
 
-test("no spruchhemmung", function () {
-    var outcome = check.evaluate(defaultOptions, defaultAttributes, 5, 0, [10, 10, 11]);
-    equal(outcome.success, true);
+test("no wildeMagie", function () {
+    var outcome = check.evaluate(defaultOptions, defaultAttributes, 5, 0, [19, 5, 20]);
+    equal(outcome.success, false);
 });
 
 test("wilde magie", function () {
     var outcome = check.evaluate({wildeMagie: true}, defaultAttributes, 25, 0, [19, 10, 20]);
     equal(outcome.success, false);
+});
+
+test("no spruchhemmung", function () {
+    var outcome = check.evaluate(defaultOptions, defaultAttributes, 5, 0, [10, 10, 11]);
+    equal(outcome.success, true);
 });

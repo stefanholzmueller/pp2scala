@@ -1,4 +1,4 @@
-/// <reference path="../typings/tsd.d.ts" />
+/// <reference path="../../typings/tsd.d.ts" />
 var check;
 (function (check) {
     function evaluate(options, attributes, value, difficulty, dice) {
@@ -6,10 +6,14 @@ var check;
         if (special) {
             return special;
         } else {
-            return { success: true };
+            return evaluateStandard(options.minimumQuality, attributes, value, difficulty, dice);
         }
     }
     check.evaluate = evaluate;
+
+    function evaluateStandard(minimumQuality, attributes, value, difficulty, dice) {
+        return { success: true };
+    }
 
     function evaluateSpecial(options, value, dice) {
         if (allEqualTo(dice, 1)) {
