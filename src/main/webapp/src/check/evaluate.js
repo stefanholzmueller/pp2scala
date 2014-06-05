@@ -2,32 +2,34 @@
 var check;
 (function (check) {
     function evaluate(options, attributes, value, difficulty, dice) {
-        var special = evaluateSpecial(options, value, dice);
+        var special = specialOutcome(options, value, dice);
         if (special) {
             return special;
         } else {
-            return evaluateStandard(options.minimumQuality, attributes, value, difficulty, dice);
+            return successOrFailure(options.minimumQuality, attributes, value, difficulty, dice);
         }
     }
     check.evaluate = evaluate;
 
-    function evaluateStandard(minimumQuality, attributes, value, difficulty, dice) {
+    function successOrFailure(minimumQuality, attributes, value, difficulty, dice) {
         return { success: true };
     }
 
-    function evaluateSpecial(options, value, dice) {
+    function specialOutcome(options, value, dice) {
         if (allEqualTo(dice, 1)) {
-            return fullSuccess(options, value);
+            return new SpectacularSuccess(applyMinimumQuality(options.minimumQuality, value));
         } else if (twoEqualTo(dice, 1)) {
-            return fullSuccess(options, value);
+            return new AutomaticSuccess(applyMinimumQuality(options.minimumQuality, value));
         } else if (allEqualTo(dice, 20)) {
-            return fullFailure();
-        } else if (twoEqualTo(dice, 20)) {
-            return fullFailure();
-        } else if (twoSame(dice)) {
-            return fullFailure();
+            return new SpectacularFailure();
         } else if (options.wildeMagie && twoGreaterThan(dice, 18)) {
-            return fullFailure();
+            return new AutomaticFailure();
+        } else if (options.festeMatrix && (dice[0] + dice[1] + dice[2] > 57) && twoEqualTo(dice, 20)) {
+            return new AutomaticFailure();
+        } else if (!options.festeMatrix && twoEqualTo(dice, 20)) {
+            return new AutomaticFailure();
+        } else if (options.spruchhemmung && twoSame(dice)) {
+            return new Spruchhemmung();
         }
     }
 
@@ -57,21 +59,35 @@ var check;
         return _.filter(dice, fn).length >= 2;
     }
 
-    function fullSuccess(options, value) {
-        return {
-            success: true,
-            quality: applyMinimumQuality(options.minimumQuality, value)
-        };
-    }
-
-    function fullFailure() {
-        return {
-            success: false
-        };
-    }
-
     function applyMinimumQuality(minimumQuality, rawValue) {
         return Math.max(rawValue, minimumQuality ? 1 : 0);
     }
+
+    function SpectacularSuccess(quality) {
+        this.success = true;
+        this.quality = quality;
+    }
+    check.SpectacularSuccess = SpectacularSuccess;
+
+    function AutomaticSuccess(quality) {
+        this.success = true;
+        this.quality = quality;
+    }
+    check.AutomaticSuccess = AutomaticSuccess;
+
+    function AutomaticFailure() {
+        this.success = false;
+    }
+    check.AutomaticFailure = AutomaticFailure;
+
+    function SpectacularFailure() {
+        this.success = false;
+    }
+    check.SpectacularFailure = SpectacularFailure;
+
+    function Spruchhemmung() {
+        this.success = false;
+    }
+    check.Spruchhemmung = Spruchhemmung;
 })(check || (check = {}));
 //# sourceMappingURL=evaluate.js.map

@@ -1,5 +1,6 @@
 module("check.evaluate.success");
 
+
 var defaultOptions = {
     minimumQuality: true,
     festeMatrix: false,
