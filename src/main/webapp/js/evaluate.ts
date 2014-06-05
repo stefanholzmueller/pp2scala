@@ -3,6 +3,15 @@
 module check {
 
 	export function evaluate(options, attributes : Array<number>, value : number, difficulty : number, dice : Array<number>) {
+		var special = evaluateSpecial(options, value, dice);
+		if (special) {
+			return special;
+		} else {
+			return { success: true};
+		}
+	}
+
+	function evaluateSpecial(options, value, dice) {
 		if (allEqualTo(dice, 1)) {
 			return fullSuccess(options, value);
 		} else if (twoEqualTo(dice, 1)) {
@@ -15,8 +24,6 @@ module check {
 			return fullFailure();
 		} else if (options.wildeMagie && twoGreaterThan(dice, 18)) {
 			return fullFailure();
-		} else {
-			return { success: true};
 		}
 	}
 

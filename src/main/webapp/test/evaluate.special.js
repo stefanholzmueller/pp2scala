@@ -1,5 +1,3 @@
-//suite("special");
-
 
 var defaultOptions = {
     minimumQuality: true,
@@ -10,10 +8,6 @@ var defaultOptions = {
 
 var defaultAttributes = [11, 12, 13];
 
-
-test("test", function() {
-    console.log(check);
-});
 
 test("spectacular success", function () {
     var outcome = check.evaluate(defaultOptions, defaultAttributes, 3, -2, [1, 1, 1]);
@@ -64,6 +58,6 @@ test("no spruchhemmung", function () {
 });
 
 test("wilde magie", function () {
-    var outcome = check.evaluate(defaultOptions, defaultAttributes, 25, 0, [19, 10, 20]);
+    var outcome = check.evaluate({wildeMagie: true}, defaultAttributes, 25, 0, [19, 10, 20]);
     equal(outcome.success, false);
 });

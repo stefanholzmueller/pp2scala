@@ -2,6 +2,16 @@
 var check;
 (function (check) {
     function evaluate(options, attributes, value, difficulty, dice) {
+        var special = evaluateSpecial(options, value, dice);
+        if (special) {
+            return special;
+        } else {
+            return { success: true };
+        }
+    }
+    check.evaluate = evaluate;
+
+    function evaluateSpecial(options, value, dice) {
         if (allEqualTo(dice, 1)) {
             return fullSuccess(options, value);
         } else if (twoEqualTo(dice, 1)) {
@@ -14,11 +24,8 @@ var check;
             return fullFailure();
         } else if (options.wildeMagie && twoGreaterThan(dice, 18)) {
             return fullFailure();
-        } else {
-            return { success: true };
         }
     }
-    check.evaluate = evaluate;
 
     function allEqualTo(dice, n) {
         return _.every(dice, function (d) {
