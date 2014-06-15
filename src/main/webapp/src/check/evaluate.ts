@@ -20,7 +20,7 @@ module check {
 
 	function successOrFailureInternal(minimumQuality : boolean, effectiveAttributes : Array<number>, effectiveValue : number, value : number, dice : Array<number>) {
 		var comparisions = [ dice[0] - effectiveAttributes[0], dice[1] - effectiveAttributes[1], dice[2] - effectiveAttributes[2] ];
-		var usedPoints = sum3(_.filter(comparisions, c => c > 0));
+		var usedPoints : number = sum(_.filter(comparisions, c => c > 0));
 
 		if (usedPoints > effectiveValue) {
 			return new Failure(usedPoints - effectiveValue);
@@ -29,24 +29,26 @@ module check {
 			var cappedQuality = Math.min(leftoverPoints, value);
 			var quality = applyMinimumQuality(minimumQuality, cappedQuality);
 			if (usedPoints === 0) {
-				var worstDie = _.max(comparisions);
-				Success(quality, leftoverPoints - worstDie)
+				var worstDie = _.max(comparisions); // is <= 0 in this case
+				return new Success(quality, leftoverPoints - worstDie)
 			} else {
-				Success(quality, leftoverPoints)
+				return new Success(quality, leftoverPoints)
 			}
 		}
 	}
 
-	function sum3(array) {
-		return array[0] + array[1] + array[2];
+	function sum(array : Array<number>) : number {
+		return _.reduce(array, function (acc : number, num) {
+			return acc + num;
+		}, 0);
 	}
 
 	function specialOutcome(options, value, dice) {
-		if (allEqualTo(dice, 1)) {
+		if (all3EqualTo(dice, 1)) {
 			return new SpectacularSuccess(applyMinimumQuality(options.minimumQuality, value));
 		} else if (twoEqualTo(dice, 1)) {
 			return new AutomaticSuccess(applyMinimumQuality(options.minimumQuality, value));
-		} else if (allEqualTo(dice, 20)) {
+		} else if (all3EqualTo(dice, 20)) {
 			return new SpectacularFailure();
 		} else if (options.wildeMagie && twoGreaterThan(dice, 18)) {
 			return new AutomaticFailure();
@@ -59,8 +61,8 @@ module check {
 		}
 	}
 
-	function allEqualTo(dice, n) {
-		return _.every(dice, d => d === n);
+	function all3EqualTo(dice, n) {
+		return dice[0] === n && dice[1] === n && dice[2] === n;
 	}
 
 	function twoEqualTo(dice, n) {

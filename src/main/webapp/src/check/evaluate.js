@@ -22,7 +22,7 @@ var check;
 
     function successOrFailureInternal(minimumQuality, effectiveAttributes, effectiveValue, value, dice) {
         var comparisions = [dice[0] - effectiveAttributes[0], dice[1] - effectiveAttributes[1], dice[2] - effectiveAttributes[2]];
-        var usedPoints = sum3(_.filter(comparisions, function (c) {
+        var usedPoints = sum(_.filter(comparisions, function (c) {
             return c > 0;
         }));
 
@@ -34,23 +34,25 @@ var check;
             var quality = applyMinimumQuality(minimumQuality, cappedQuality);
             if (usedPoints === 0) {
                 var worstDie = _.max(comparisions);
-                Success(quality, leftoverPoints - worstDie);
+                return new Success(quality, leftoverPoints - worstDie);
             } else {
-                Success(quality, leftoverPoints);
+                return new Success(quality, leftoverPoints);
             }
         }
     }
 
-    function sum3(array) {
-        return array[0] + array[1] + array[2];
+    function sum(array) {
+        return _.reduce(array, function (acc, num) {
+            return acc + num;
+        }, 0);
     }
 
     function specialOutcome(options, value, dice) {
-        if (allEqualTo(dice, 1)) {
+        if (all3EqualTo(dice, 1)) {
             return new SpectacularSuccess(applyMinimumQuality(options.minimumQuality, value));
         } else if (twoEqualTo(dice, 1)) {
             return new AutomaticSuccess(applyMinimumQuality(options.minimumQuality, value));
-        } else if (allEqualTo(dice, 20)) {
+        } else if (all3EqualTo(dice, 20)) {
             return new SpectacularFailure();
         } else if (options.wildeMagie && twoGreaterThan(dice, 18)) {
             return new AutomaticFailure();
@@ -63,10 +65,8 @@ var check;
         }
     }
 
-    function allEqualTo(dice, n) {
-        return _.every(dice, function (d) {
-            return d === n;
-        });
+    function all3EqualTo(dice, n) {
+        return dice[0] === n && dice[1] === n && dice[2] === n;
     }
 
     function twoEqualTo(dice, n) {
