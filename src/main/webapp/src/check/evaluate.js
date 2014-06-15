@@ -12,7 +12,37 @@ var check;
     check.evaluate = evaluate;
 
     function successOrFailure(minimumQuality, attributes, value, difficulty, dice) {
-        return { success: true };
+        var ease = value - difficulty;
+        var effectiveValue = Math.max(ease, 0);
+        var effectiveAttributes = ease < 0 ? _.map(attributes, function (a) {
+            return a + ease;
+        }) : attributes;
+        return successOrFailureInternal(minimumQuality, effectiveAttributes, effectiveValue, value, dice);
+    }
+
+    function successOrFailureInternal(minimumQuality, effectiveAttributes, effectiveValue, value, dice) {
+        var comparisions = [dice[0] - effectiveAttributes[0], dice[1] - effectiveAttributes[1], dice[2] - effectiveAttributes[2]];
+        var usedPoints = sum3(_.filter(comparisions, function (c) {
+            return c > 0;
+        }));
+
+        if (usedPoints > effectiveValue) {
+            return new Failure(usedPoints - effectiveValue);
+        } else {
+            var leftoverPoints = effectiveValue - usedPoints;
+            var cappedQuality = Math.min(leftoverPoints, value);
+            var quality = applyMinimumQuality(minimumQuality, cappedQuality);
+            if (usedPoints === 0) {
+                var worstDie = _.max(comparisions);
+                Success(quality, leftoverPoints - worstDie);
+            } else {
+                Success(quality, leftoverPoints);
+            }
+        }
+    }
+
+    function sum3(array) {
+        return array[0] + array[1] + array[2];
     }
 
     function specialOutcome(options, value, dice) {
@@ -24,12 +54,12 @@ var check;
             return new SpectacularFailure();
         } else if (options.wildeMagie && twoGreaterThan(dice, 18)) {
             return new AutomaticFailure();
-        } else if (options.festeMatrix && (dice[0] + dice[1] + dice[2] > 57) && twoEqualTo(dice, 20)) {
+        } else if (options.festeMatrix && sumGreaterThan(dice, 57) && twoEqualTo(dice, 20)) {
             return new AutomaticFailure();
         } else if (!options.festeMatrix && twoEqualTo(dice, 20)) {
             return new AutomaticFailure();
         } else if (options.spruchhemmung && twoSame(dice)) {
-            return new Spruchhemmung();
+            return new SpruchhemmungFailure();
         }
     }
 
@@ -53,6 +83,10 @@ var check;
         return twoFiltered(dice, function (d) {
             return d > n;
         });
+    }
+
+    function sumGreaterThan(dice, n) {
+        return (dice[0] + dice[1] + dice[2] > n);
     }
 
     function twoFiltered(dice, fn) {
@@ -85,9 +119,22 @@ var check;
     }
     check.SpectacularFailure = SpectacularFailure;
 
-    function Spruchhemmung() {
+    function SpruchhemmungFailure() {
         this.success = false;
     }
-    check.Spruchhemmung = Spruchhemmung;
+    check.SpruchhemmungFailure = SpruchhemmungFailure;
+
+    function Success(quality, rest) {
+        this.success = true;
+        this.quality = quality;
+        this.rest = rest;
+    }
+    check.Success = Success;
+
+    function Failure(gap) {
+        this.success = false;
+        this.gap = gap;
+    }
+    check.Failure = Failure;
 })(check || (check = {}));
 //# sourceMappingURL=evaluate.js.map
