@@ -1,0 +1,28 @@
+name,date,error,count,cycles,hz
+"calculate","Sun Jun 15 2014 14:57:13 GMT+0200 (Mitteleuropäische Sommerzeit)",ReferenceError: check is not defined,0,0,0
+"calculate","Sun Jun 15 2014 15:00:59 GMT+0200 (Mitteleuropäische Sommerzeit)",ReferenceError: check is not defined,0,0,0
+"calculate","Sun Jun 15 2014 15:01:34 GMT+0200 (Mitteleuropäische Sommerzeit)",ReferenceError: check is not defined,0,0,0
+"calculate","Sun Jun 15 2014 18:06:20 GMT+0200 (Mitteleuropäische Sommerzeit)",ReferenceError: check is not defined,0,0,0
+"calculate","Sun Jun 15 2014 18:12:16 GMT+0200 (Mitteleuropäische Sommerzeit)",ReferenceError: check is not defined,0,0,0
+"calculate","Sun Jun 15 2014 18:14:58 GMT+0200 (Mitteleuropäische Sommerzeit)",ReferenceError: check is not defined,0,0,0
+"calculate","Sun Jun 15 2014 18:15:50 GMT+0200 (Mitteleuropäische Sommerzeit)",ReferenceError: check is not defined,0,0,0
+"calculate","Sun Jun 15 2014 18:16:10 GMT+0200 (Mitteleuropäische Sommerzeit)",ReferenceError: calculate is not defined,0,0,0
+"calculate","Sun Jun 15 2014 18:17:32 GMT+0200 (Mitteleuropäische Sommerzeit)",ReferenceError: calculate is not defined,0,0,0
+"calculate","Mon Jun 16 2014 08:51:37 GMT+0200 (Mitteleuropäische Sommerzeit)",ReferenceError: calculate is not defined,0,0,0
+"calculate","Mon Jun 16 2014 20:10:54 GMT+0200 (Mitteleuropäische Sommerzeit)",,104233,4,983978.8591875737
+"calculate","Mon Jun 16 2014 20:11:47 GMT+0200 (Mitteleuropäische Sommerzeit)",ReferenceError: calculate is not defined,0,0,0
+"test","Mon Jun 16 2014 20:11:52 GMT+0200 (Mitteleuropäische Sommerzeit)",,87691,4,998660.0947328799
+"calculate","Mon Jun 16 2014 20:12:37 GMT+0200 (Mitteleuropäische Sommerzeit)",ReferenceError: calculate is not defined,0,0,0
+"test","Mon Jun 16 2014 20:12:42 GMT+0200 (Mitteleuropäische Sommerzeit)",,98647,4,956818.7796987372
+"calculate","Mon Jun 16 2014 20:13:02 GMT+0200 (Mitteleuropäische Sommerzeit)",ReferenceError: calculate is not defined,0,0,0
+"test","Mon Jun 16 2014 20:13:07 GMT+0200 (Mitteleuropäische Sommerzeit)",,91178,4,951212.9754999313
+"calculate","Mon Jun 16 2014 20:13:25 GMT+0200 (Mitteleuropäische Sommerzeit)",ReferenceError: calculate is not defined,0,0,0
+"test","Mon Jun 16 2014 20:13:30 GMT+0200 (Mitteleuropäische Sommerzeit)",,93614,4,997327.9696108291
+"calculate","Mon Jun 16 2014 20:18:22 GMT+0200 (Mitteleuropäische Sommerzeit)",,1437680,7,26861259.736143555
+"test","Mon Jun 16 2014 20:18:28 GMT+0200 (Mitteleuropäische Sommerzeit)",,124727,4,981686.5950783407
+"calculate","Tue Jun 17 2014 07:12:03 GMT+0200 (Mitteleuropäische Sommerzeit)",,1424272,5,26403512.61814046
+"test","Tue Jun 17 2014 07:12:08 GMT+0200 (Mitteleuropäische Sommerzeit)",,128329,4,963405.2571727503
+"calculate","Tue Jun 17 2014 07:12:36 GMT+0200 (Mitteleuropäische Sommerzeit)",ReferenceError: calculate is not defined,0,0,0
+"test","Tue Jun 17 2014 07:12:42 GMT+0200 (Mitteleuropäische Sommerzeit)",,86923,4,959473.1374646026
+"calculate","Tue Jun 17 2014 07:51:27 GMT+0200 (Mitteleuropäische Sommerzeit)",,4,3,59.40353005505197
+"test","Tue Jun 17 2014 07:51:33 GMT+0200 (Mitteleuropäische Sommerzeit)",,95464,4,946290.2589836539

@@ -1,5 +1,11 @@
 module.exports = function (grunt) {
     grunt.initConfig({
+        benchmark: {
+            all: {
+                src: ['benchmarks/*.js'],
+                dest: 'benchmarks/results.csv'
+            }
+        },
         bower: {
             install: {
             }
@@ -24,6 +30,7 @@ module.exports = function (grunt) {
         }
     });
 
+    grunt.loadNpmTasks('grunt-benchmark');
     grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-tsd');
