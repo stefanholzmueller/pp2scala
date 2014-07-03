@@ -92,7 +92,7 @@ test("feste matrix > spruchhemmung", function () {
 test("spruchhemmung > feste matrix", function () {
     var outcome = check.evaluate({festeMatrix: true, spruchhemmung: true}, defaultAttributes, 25, 0, [17, 20, 20]);
     equal(outcome.success, false);
-    ok(outcome instanceof check.Spruchhemmung);
+    ok(outcome instanceof check.SpruchhemmungFailure);
 });
 
 test("feste matrix > spruchhemmung", function () {
