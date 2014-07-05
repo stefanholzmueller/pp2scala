@@ -1,3 +1,4 @@
+/// <reference path="../typings/tsd.d.ts" />
 'use strict';
 
 var module = angular.module('pp2.utils', []);
@@ -11,7 +12,7 @@ module.factory('Util', function() {
 			return Math.floor((Math.random() * pips) + 1);
 		},
 		sum : function(collection) {
-			return _.reduce(collection, function(acc, num) {
+			return _.reduce(collection, function(acc: number, num) {
 				return acc + num;
 			}, 0);
 		}
