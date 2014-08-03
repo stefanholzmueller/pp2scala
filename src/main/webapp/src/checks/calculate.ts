@@ -46,7 +46,7 @@ module Checks {
 		return { probability: probability, average: average };
 	}
 
-	export function calculatePartitioned(check : Check) : Array<{count}> {
+	export function calculatePartitioned(check : Check) : Array<{count: number}> {
 		var evaluator = _.partial(evaluate, check.options, check.attributes, check.value, check.difficulty);
 		var outcomes = _.map(COMBINATIONS, dice => evaluator(dice));
 		var successes = _.filter(outcomes, "success");

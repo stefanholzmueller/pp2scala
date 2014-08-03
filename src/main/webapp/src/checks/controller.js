@@ -21,6 +21,7 @@ module.controller('CheckController', [
             data: [
                 {
                     type: "pie",
+                    startAngle: -90,
                     dataPoints: [
                         { y: 0.350, color: "green", abc: "abcd", toolTipContent: "huhuhu {abc}" },
                         { y: 0.350, color: "yellow", abc: "abcd", toolTipContent: "huhuhu {abc}" },
@@ -30,10 +31,25 @@ module.controller('CheckController', [
             ]
         });
 
-        $scope.canvasjsPieChart.render();
+        $scope.$watch("check", function (newValue) {
+            var partitioned = Checks.calculatePartitioned(newValue);
+            $scope.canvasjsPieChart.options.data[0].dataPoints = toCanvasjsPieDataPoints(partitioned);
+            $scope.canvasjsPieChart.render();
+        }, true);
 
-        $scope.calc = function () {
-            return Checks.calculatePartitioned(check);
-        };
+        function toCanvasjsPieDataPoints(partitioned) {
+            var partitions = partitioned[0].partitions;
+            var dataPoints = _.map(partitions, function (p) {
+                return {
+                    x: p.quality,
+                    y: p.count,
+                    color: "#008000",
+                    toolTipContent: "gelungen mit {x}"
+                };
+            });
+            dataPoints.push({ y: partitioned[1].count, color: "#bb0000", toolTipContent: "misslungen" });
+            console.log(dataPoints);
+            return dataPoints;
+        }
     }]);
 //# sourceMappingURL=controller.js.map
