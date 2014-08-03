@@ -46,7 +46,9 @@ var Checks;
         var successes = _.filter(outcomes, "success");
         var counts = _.countBy(successes, "quality");
         var pairs = _.pairs(counts);
-        var sorted = _.sortBy(pairs, _.first).reverse();
+        var sorted = _.sortBy(pairs, function (a, b) {
+            return a[0] - b[0];
+        }).reverse();
         var partitions = _.map(sorted, function (x) {
             return { quality: x[0], count: x[1] };
         });
