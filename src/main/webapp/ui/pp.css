@@ -1,0 +1,4 @@
+input[type=number].form-control {
+    width: 4em;
+    display: inline;
+}
