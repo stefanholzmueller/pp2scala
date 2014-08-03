@@ -1,7 +1,7 @@
 /// <reference path="../../typings/tsd.d.ts" />
 /// <reference path='evaluate.ts'/>
-var check;
-(function (check) {
+var Checks;
+(function (Checks) {
     var MAX_PIPS = 20;
     var COMBINATIONS = buildCombinations();
 
@@ -14,11 +14,12 @@ var check;
                 }
             }
         }
+        Object.freeze(combinations);
         return combinations;
     }
 
     function calculate(options, attributes, value, difficulty) {
-        var evaluator = _.partial(check.evaluate, options, attributes, value, difficulty);
+        var evaluator = _.partial(Checks.evaluate, options, attributes, value, difficulty);
         var outcomes = _.map(COMBINATIONS, function (dice) {
             return evaluator(dice);
         });
@@ -35,6 +36,26 @@ var check;
 
         return { probability: probability, average: average };
     }
-    check.calculate = calculate;
-})(check || (check = {}));
+    Checks.calculate = calculate;
+
+    function calculatePartitioned(check) {
+        var evaluator = _.partial(Checks.evaluate, check.options, check.attributes, check.value, check.difficulty);
+        var outcomes = _.map(COMBINATIONS, function (dice) {
+            return evaluator(dice);
+        });
+        var successes = _.filter(outcomes, "success");
+        var counts = _.countBy(successes, "quality");
+        var pairs = _.pairs(counts);
+        var sorted = _.sortBy(pairs, _.first).reverse();
+        var partitions = _.map(sorted, function (x) {
+            return { quality: x[0], count: x[1] };
+        });
+
+        return [
+            { label: "gelungen", count: successes.length, partitions: partitions },
+            { label: "misslungen", count: 8000 - successes.length }
+        ];
+    }
+    Checks.calculatePartitioned = calculatePartitioned;
+})(Checks || (Checks = {}));
 //# sourceMappingURL=calculate.js.map

@@ -1,6 +1,6 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
-module check {
+module Checks {
 
 	export function evaluate(options, attributes : Array<number>, value : number, difficulty : number, dice : Array<number>) : any {
 		var special = specialOutcome(options, value, dice);

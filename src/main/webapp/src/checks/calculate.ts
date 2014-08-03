@@ -1,7 +1,19 @@
 /// <reference path="../../typings/tsd.d.ts" />
 /// <reference path='evaluate.ts'/>
 
-module check {
+module Checks {
+
+	export interface Check {
+		attributes : Array<number>;
+		value : number;
+		difficulty : number;
+		options : {
+			minimumQuality : boolean;
+			festeMatrix? : boolean;
+			wildeMagie? : boolean;
+			spruchhemmung? : boolean;
+		};
+	}
 
 	var MAX_PIPS = 20;
 	var COMBINATIONS = buildCombinations();
@@ -15,6 +27,7 @@ module check {
 				}
 			}
 		}
+		Object.freeze(combinations);
 		return combinations;
 	}
 
@@ -32,4 +45,22 @@ module check {
 
 		return { probability: probability, average: average };
 	}
+
+	export function calculatePartitioned(check : Check) : Array<{count}> {
+		var evaluator = _.partial(evaluate, check.options, check.attributes, check.value, check.difficulty);
+		var outcomes = _.map(COMBINATIONS, dice => evaluator(dice));
+		var successes = _.filter(outcomes, "success");
+		var counts = _.countBy(successes, "quality"); // { '0': 123, '1': 234 }
+		var pairs = _.pairs(counts);
+		var sorted = _.sortBy(pairs, _.first).reverse();
+		var partitions = _.map(sorted, function(x) {
+			return { quality: x[0], count: x[1]};
+		});
+
+		return [
+			{label: "gelungen", count: successes.length, partitions: partitions},
+			{label: "misslungen", count: 8000 - successes.length}
+		];
+	}
+
 }

@@ -1,6 +1,6 @@
 /// <reference path="../../typings/tsd.d.ts" />
-var check;
-(function (check) {
+var Checks;
+(function (Checks) {
     function evaluate(options, attributes, value, difficulty, dice) {
         var special = specialOutcome(options, value, dice);
         if (special) {
@@ -9,7 +9,7 @@ var check;
             return successOrFailure(options.minimumQuality, attributes, value, difficulty, dice);
         }
     }
-    check.evaluate = evaluate;
+    Checks.evaluate = evaluate;
 
     function successOrFailure(minimumQuality, attributes, value, difficulty, dice) {
         var ease = value - difficulty;
@@ -101,40 +101,40 @@ var check;
         this.success = true;
         this.quality = quality;
     }
-    check.SpectacularSuccess = SpectacularSuccess;
+    Checks.SpectacularSuccess = SpectacularSuccess;
 
     function AutomaticSuccess(quality) {
         this.success = true;
         this.quality = quality;
     }
-    check.AutomaticSuccess = AutomaticSuccess;
+    Checks.AutomaticSuccess = AutomaticSuccess;
 
     function AutomaticFailure() {
         this.success = false;
     }
-    check.AutomaticFailure = AutomaticFailure;
+    Checks.AutomaticFailure = AutomaticFailure;
 
     function SpectacularFailure() {
         this.success = false;
     }
-    check.SpectacularFailure = SpectacularFailure;
+    Checks.SpectacularFailure = SpectacularFailure;
 
     function SpruchhemmungFailure() {
         this.success = false;
     }
-    check.SpruchhemmungFailure = SpruchhemmungFailure;
+    Checks.SpruchhemmungFailure = SpruchhemmungFailure;
 
     function Success(quality, rest) {
         this.success = true;
         this.quality = quality;
         this.rest = rest;
     }
-    check.Success = Success;
+    Checks.Success = Success;
 
     function Failure(gap) {
         this.success = false;
         this.gap = gap;
     }
-    check.Failure = Failure;
-})(check || (check = {}));
+    Checks.Failure = Failure;
+})(Checks || (Checks = {}));
 //# sourceMappingURL=evaluate.js.map

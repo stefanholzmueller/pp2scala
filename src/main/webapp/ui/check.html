@@ -10,12 +10,13 @@
     <script src="../lib/lodash/lodash.compat.js"></script>
     <script src="../lib/jquery/jquery.js"></script>
     <script src="../lib/bootstrap/bootstrap.js"></script>
+    <script src="../lib/canvasjs.min.js"></script>
 
-    <script src="../src/app.js"></script>
-    <script src="../src/check/controller.js"></script>
     <script src="../src/utils.js"></script>
-    <script src="../src/check/evaluate.js"></script>
-    <script src="../src/check/calculate.js"></script>
+    <script src="../src/checks/evaluate.js"></script>
+    <script src="../src/checks/calculate.js"></script>
+    <script src="../src/app.js"></script>
+    <script src="../src/checks/controller.js"></script>
     <!--    <script src="//localhost:35729/livereload.js"></script> -->
 
     <link rel="stylesheet" href="../lib/bootstrap/bootstrap.css">
@@ -50,11 +51,14 @@
                 <div class="col-xs-offset-2 col-xs-10">
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" data-ng-model="check.minimumQuality"> Minimaleffekt
+                            <input type="checkbox" data-ng-model="check.options.minimumQuality"> Minimaleffekt
                         </label>
                     </div>
                 </div>
             </div>
+            <div id="canvasjsPieChart" style="height: 200px; width: 300px;">
+            </div>
+                {{ calc() }}
         </form>
     </div>
 </div>
