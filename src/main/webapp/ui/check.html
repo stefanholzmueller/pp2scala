@@ -29,26 +29,28 @@
     <div class="container">
         <form class="form-horizontal" role="form">
             <div class="form-group">
-                <label for="attributesInput" class="control-label col-xs-2">Eigenschaften</label>
+                <label for="attributesInput" class="control-label col-xs-6">Eigenschaften</label>
 
-                <div class="col-xs-10">
-                    <input ng-repeat="i in [0,1,2]" id="attributesInput" class="form-control col-xs-2" type="number" data-ng-model="check.attributes[i]">
+                <div class="col-xs-6">
+                    <input ng-repeat="i in [0,1,2]" id="attributesInput" class="form-control" type="number" data-ng-model="check.attributes[i]">
                 </div>
             </div>
             <div class="form-group">
-                    <label for="valueInput" class="control-label col-xs-2">Wert</label>
-                <div class="col-xs-10">
-                    <input id="valueInput" class="form-control col-xs-10" type="number" data-ng-model="check.value">
+                <label for="valueInput" class="control-label col-xs-6">Wert</label>
+
+                <div class="col-xs-6">
+                    <input id="valueInput" class="form-control" type="number" data-ng-model="check.value">
                 </div>
             </div>
             <div class="form-group">
-                    <label for="difficultyInput" class="control-label col-xs-2">Erschwernis</label>
-                <div class="col-xs-10">
-                    <input id="difficultyInput" class="form-control col-xs-10" type="number" data-ng-model="check.difficulty">
+                <label for="difficultyInput" class="control-label col-xs-6">Erschwernis</label>
+
+                <div class="col-xs-6">
+                    <input id="difficultyInput" class="form-control" type="number" data-ng-model="check.difficulty">
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-xs-offset-2 col-xs-10">
+                <div class="col-xs-offset-6 col-xs-6">
                     <div class="checkbox">
                         <label>
                             <input type="checkbox" data-ng-model="check.options.minimumQuality"> Minimaleffekt
@@ -58,7 +60,7 @@
             </div>
             <div id="canvasjsPieChart" style="height: 200px; width: 300px;">
             </div>
-                {{ calc() }}
+            {{ calc() }}
         </form>
     </div>
 </div>

@@ -15,6 +15,9 @@ module.controller('CheckController', [
         };
 
         $scope.canvasjsPieChart = new CanvasJS.Chart("canvasjsPieChart", {
+            animationEnabled: false,
+            creditLink: null,
+            creditText: null,
             data: [
                 {
                     type: "pie",
