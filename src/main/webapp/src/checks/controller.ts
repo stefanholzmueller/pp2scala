@@ -28,11 +28,7 @@ module.controller('CheckController', [ '$scope', function ($scope) {
 				axisY: {
 					margin: 0
 				},
-				dataPoints: [
-					{y: 0.350, color: "green", abc: "abcd", toolTipContent: "huhuhu {abc}" },
-					{y: 0.350, color: "yellow", abc: "abcd", toolTipContent: "huhuhu {abc}" },
-					{y: 0.350, color: "red", abc: "abcd", toolTipContent: "huhuhu {abc}" }
-				]
+				dataPoints: []
 			}
 		]
 	});

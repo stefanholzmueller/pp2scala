@@ -11,6 +11,12 @@
     <script src="../lib/jquery/jquery.js"></script>
     <script src="../lib/bootstrap/bootstrap.js"></script>
     <script src="../lib/canvasjs.min.js"></script>
+    <script src="../lib/fastclick/fastclick.js"></script>
+    <script>
+        window.addEventListener('load', function() {
+            FastClick.attach(document.body);
+        }, false);
+    </script>
 
     <script src="../src/utils.js"></script>
     <script src="../src/checks/evaluate.js"></script>
