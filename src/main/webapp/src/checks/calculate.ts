@@ -65,4 +65,8 @@ module Checks {
 		];
 	}
 
+	export var calculatePartitionedMemoized = _.memoize(calculatePartitioned, function(check) { // simple cache key
+		return _.sortBy(check.attributes) + "|" + check.value + "|" + check.difficulty + "|" + check.options.minimumQuality;
+	});
+
 }

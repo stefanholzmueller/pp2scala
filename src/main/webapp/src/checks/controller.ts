@@ -16,12 +16,18 @@ module.controller('CheckController', [ '$scope', function ($scope) {
 
 	$scope.canvasjsPieChart = new CanvasJS.Chart("canvasjsPieChart", {
 		animationEnabled: false,
-		creditLink: null,
-		creditText: null,
+//		creditLink: null,
+//		creditText: null,
 		data: [
 			{
 				type: "pie",
 				startAngle: -90,
+				axisX: {
+					margin: 0
+				},
+				axisY: {
+					margin: 0
+				},
 				dataPoints: [
 					{y: 0.350, color: "green", abc: "abcd", toolTipContent: "huhuhu {abc}" },
 					{y: 0.350, color: "yellow", abc: "abcd", toolTipContent: "huhuhu {abc}" },
@@ -32,7 +38,7 @@ module.controller('CheckController', [ '$scope', function ($scope) {
 	});
 
 	$scope.$watch("check", function (newValue) {
-		var partitioned = Checks.calculatePartitioned(newValue);
+		var partitioned = Checks.calculatePartitionedMemoized(newValue);
 		$scope.canvasjsPieChart.options.data[0].dataPoints = toCanvasjsPieDataPoints(partitioned);
 		$scope.canvasjsPieChart.render();
 	}, true);

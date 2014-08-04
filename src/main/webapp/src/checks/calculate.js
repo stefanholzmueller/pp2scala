@@ -59,5 +59,9 @@ var Checks;
         ];
     }
     Checks.calculatePartitioned = calculatePartitioned;
+
+    Checks.calculatePartitionedMemoized = _.memoize(calculatePartitioned, function (check) {
+        return _.sortBy(check.attributes) + "|" + check.value + "|" + check.difficulty + "|" + check.options.minimumQuality;
+    });
 })(Checks || (Checks = {}));
 //# sourceMappingURL=calculate.js.map
